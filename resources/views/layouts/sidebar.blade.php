@@ -5,10 +5,10 @@
                     <li class="menu-title">
                         <span>Main Menu</span>
                     </li>
-                    <li class="submenu active">
+                    <li class="submenu ">
                         <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="index.html" class="active">Admin Dashboard</a></li>
+                            <li><a href="{{ URL::to('/') }}" class="">Admin Dashboard</a></li>
                             <li><a href="teacher-dashboard.html">Teacher Dashboard</a></li>
                             <li><a href="student-dashboard.html">Student Dashboard</a></li>
                         </ul>
@@ -87,10 +87,16 @@
                     <li>
                         <a href="time-table.html"><i class="fas fa-table"></i> <span>Time Table</span></a>
                     </li> --}}
-                    <li>
-                        <a href="library.html"><i class="fas fa-book"></i> <span>Library</span></a>
+                    <li class="submenu ">
+                        <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a href="{{ URL::to('/library') }}" class="">Books</a></li>
+                            <li><a href="{{ URL::to('/book-borrow') }}">Book Borrowing</a></li>
+                            <li><a href="{{ URL::to('/book-return') }}">Book Returns</a></li>
+                            <li><a href="edit-teacher.html">Reports</a></li>
+                        </ul>
                     </li>
-                    <li class="submenu">
+                    {{-- <li class="submenu">
                         <a href="#"
                             ><i class="fa fa-newspaper"></i> <span> Blogs</span>
                             <span class="menu-arrow"></span>
@@ -100,10 +106,8 @@
                             <li><a href="add-blog.html">Add Blog</a></li>
                             <li><a href="edit-blog.html">Edit Blog</a></li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="settings.html"><i class="fas fa-cog"></i> <span>Settings</span></a>
-                    </li>
+                    </li> --}}
+
                     <li class="menu-title">
                         <span>Pages</span>
                     </li>
@@ -119,18 +123,7 @@
                     <li>
                         <a href="blank-page.html"><i class="fas fa-file"></i> <span>Blank Page</span></a>
                     </li>
-                    <li class="menu-title">
-                        <span>Others</span>
-                    </li>
-                    <li>
-                        <a href="sports.html"><i class="fas fa-baseball-ball"></i> <span>Sports</span></a>
-                    </li>
-                    <li>
-                        <a href="hostel.html"><i class="fas fa-hotel"></i> <span>Hostel</span></a>
-                    </li>
-                    <li>
-                        <a href="transport.html"><i class="fas fa-bus"></i> <span>Transport</span></a>
-                    </li>
+                    
             </ul>
         </div>
     </div>
