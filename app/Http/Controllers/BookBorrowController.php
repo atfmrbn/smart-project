@@ -11,7 +11,11 @@ class BookBorrowController extends Controller
      */
     public function index()
     {
-        return view('library.borrow.index');
+        $data = [
+            'title' => 'Borrowed Books List'
+        ];
+
+        return view('library.borrow.index', $data);
     }
 
     /**
@@ -19,7 +23,11 @@ class BookBorrowController extends Controller
      */
     public function create()
     {
-        return view('library.borrow.borrow_form');
+        $data = [
+            'title' => 'Check Out a Book'
+        ]; 
+
+        return view('library.borrow.borrow_form', $data);
     }
 
     /**

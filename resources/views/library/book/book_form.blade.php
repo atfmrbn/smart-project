@@ -1,23 +1,27 @@
 @extends("layouts.main")
 @section('container')
 
-<form>
+<form method="POST" action="{{ URL::to('book') }}" autocomplete="off" enctype="multipart/form-data">
+    @csrf
     <div class="row">
         <div class="col-12">
-            <h5 class="form-title"><span>Book Information</span></h5>
+            <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
-        <div class="col-12 col-sm-4">
+
+        {{-- <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label>Book ID <span class="login-danger">*</span></label>
                 <input type="text" class="form-control">
             </div>
-        </div>
+        </div> --}}
+
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label>Book Name <span class="login-danger">*</span></label>
                 <input type="text" class="form-control">
             </div>
         </div>
+
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label>Category <span class="login-danger">*</span></label>

@@ -1,23 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Book;
+use App\Models\BookCategory;
 use Illuminate\Http\Request;
 
-class BookController extends Controller
+class BookCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $books = Book::all();
+        $categories = BookCategory::all();
 
         $data = [
-            'title' => 'Books'
+            'title' => 'Book Categories'
         ];
 
-        return view('library.book.index', compact('books'), $data);
+        return view('library.book-category.index', compact('categories'), $data);
     }
 
     /**
@@ -26,10 +26,9 @@ class BookController extends Controller
     public function create()
     {
         $data = [
-            'title' => 'Add Book'
+            'title' => 'Add Category'
         ];
-
-        return view('library.book.book_form', $data);
+        return view('library.book-category.category_form', $data);
     }
 
     /**

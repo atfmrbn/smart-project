@@ -11,7 +11,11 @@ class BookReturnController extends Controller
      */
     public function index()
     {
-        return view("library.return.index");
+        $data = [
+            'title' => 'Returned Books List'
+        ];
+
+        return view("library.return.index", $data);
     }
 
     /**
@@ -19,7 +23,11 @@ class BookReturnController extends Controller
      */
     public function create()
     {
-        return view("library.return.return_form");
+        $data = [
+            'title' => 'Return a Book'
+        ];
+
+        return view("library.return.return_form", $data);
     }
 
     /**

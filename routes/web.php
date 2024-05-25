@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\BookBorrowController;
+use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookReturnController;
-use App\Http\Controllers\BorrowController;
-use App\Http\Controllers\LibraryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,33 +21,26 @@ Route::get('/', function () {
     return view('dashboard.index');
 });
 
-// books
-Route::controller(BookController::class)->group(function () {
-    Route::get('library/', 'index');
-    Route::get('library/add-book', 'create');
+// book categories
+Route::controller(BookCategoryController::class)->group(function () {
+    Route::get('book-category/', 'index');
+    Route::get('book-category/add', 'create');
 });
 
+// books
+Route::controller(BookController::class)->group(function () {
+    Route::get('book/', 'index');
+    Route::get('book/add', 'create');
+});
+
+// borrow book
 Route::controller(BookBorrowController::class)->group(function () {
     Route::get('book-borrow/', 'index');
     Route::get('book-borrow/add-borrow', 'create');
 });
 
+// return book
 Route::controller(BookReturnController::class)->group(function () {
     Route::get('book-return/', 'index');
     Route::get('book-return/add-return', 'create');
 });
-
-
-// Route::get('/library', [LibraryController::class, 'index']);
-Route::prefix('/')->group(
-    function (){
-        // Route::resource('/library', LibraryController::class);
-        // Route::resource('/category', CategoryController::class);
-        // Route::resource('/menu', MenuController::class);
-        // Route::resource('/receipt', ReceiptController::class);
-        // Route::resource('/receipt-detail', ReceiptDetailController::class);
-        // Route::get('/report', [ReportController::class, 'index']);
-
-    }
-);
-

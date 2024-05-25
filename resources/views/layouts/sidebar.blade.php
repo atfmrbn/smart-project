@@ -90,7 +90,8 @@
                     <li class="submenu ">
                         <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="{{ URL::to('/library') }}" class="">Books</a></li>
+                            <li><a href="{{ URL::to('/book') }}" class="">Books</a></li>
+                            <li><a href="{{ URL::to('/book-category') }}" class="">Book Category</a></li>
                             <li><a href="{{ URL::to('/book-borrow') }}">Book Borrowing</a></li>
                             <li><a href="{{ URL::to('/book-return') }}">Book Returns</a></li>
                             <li><a href="edit-teacher.html">Reports</a></li>
