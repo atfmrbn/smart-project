@@ -3,9 +3,6 @@
           <a href="{{ URL::to('/') }}" class="logo">
             <img src="{{ URL::to('assets/img/logo.png') }}" alt="Logo" />
           </a>
-          <a href="index.html" class="logo logo-small">
-            <img src="{{ URL::to('assets/img/logo-small.png') }}" alt="Logo" width="30" height="30" />
-          </a>
         </div>
 
         {{-- <div class="menu-toggle">
