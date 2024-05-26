@@ -1,28 +1,36 @@
 @extends("layouts.main")
 @section('container')
 
-<form>
+
+<h5>{{ isset($category) ? 'Edit' : 'Add' }} Category</h5>
+<br>
+@if(isset($category))
+<form method="POST" action="{{ route('book-category.update', $category->id) }}" autocomplete="off" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+@else
+<form method="POST" action="{{ route('book-category.store') }}" autocomplete="off" enctype="multipart/form-data">
+@endif
+    @csrf
+    <div class="row">
+        <div class="col-12 col-sm-12">
+            <div class="form-group">
+                <label for="name">Name <span class="login-danger">*</span></label>
+                <input type="text" name="name" id="name" class="form-control" 
+                value="{{ isset($category) ? $category->name : old('name') }}" required>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12">
+            <div class="form-group">
+                <label for="description">Description <span class="login-danger">*</span></label>
+                <input type="text" name="description" id="description" class="form-control" 
+                value="{{ isset($category) ? $category->description : old('description') }}" required>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
-            <h5 class="form-title"><span>{{ $title }}</span></h5>
-        </div>
-        <div class="col-12 col-sm-6">
-            <div class="form-group local-forms">
-                <label>Name <span class="login-danger">*</span></label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-12 col-sm-6">
-            <div class="form-group local-forms">
-                <label>Description <span class="login-danger">*</span></label>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        
-        <div class="col-12">
-            <div class="student-submit">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
 </form>

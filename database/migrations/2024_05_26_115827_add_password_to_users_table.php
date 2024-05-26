@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('curriculums', function (Blueprint $table) {
-            $table->id();
-            $table->string('year');
-            $table->string('description');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('password')->after('username');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('curriculums');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('password');
+        });
     }
 };

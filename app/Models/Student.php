@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Student extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-    public function category()
+    public function user()
     {
-        return $this->belongsTo(BookCategory::class);
+        return $this->belongsTo(User::class);
     }
 }

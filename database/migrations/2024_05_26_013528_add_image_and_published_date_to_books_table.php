@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('curriculums', function (Blueprint $table) {
-            $table->id();
-            $table->string('year');
-            $table->string('description');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('books', function (Blueprint $table) {
+            $table->string('image')->nullable()->after('isbn');
+            $table->year('published_year')->after('publisher');
         });
     }
 
@@ -25,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('curriculums');
+        Schema::table('books', function (Blueprint $table) {
+            $table->dropColumn('image');
+            $table->dropColumn('published_year');
+        });
     }
 };

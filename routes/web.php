@@ -6,6 +6,7 @@ use App\Http\Controllers\BookBorrowController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookReturnController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,22 +26,49 @@ Route::get('/', function () {
 
 Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
 
-// book categories
-Route::get('book-category', [BookCategoryController::class, 'index']);
-Route::get('book-category/add', [BookCategoryController::class, 'create']);
-
-// books
-Route::get('book', [BookController::class, 'index']);
-Route::get('book/add', [BookController::class, 'create']);
-
-// borrow book
-Route::get('book-borrow', [BookBorrowController::class, 'index']);
-Route::get('book-borrow/add-borrow', [BookBorrowController::class, 'create']);
-
-// return book
-Route::get('book-return', [BookReturnController::class, 'index']);
-Route::get('book-return/add-return', [BookReturnController::class, 'create']);
-
 Route::get('teacher/teacher-list', [TeacherController::class, 'index']);
 Route::get('teacher/teacher-list/add', [TeacherController::class, 'create']);
 Route::post('teacher/teacher-list', [TeacherController::class, 'store']);
+
+Route::controller(BookCategoryController::class)->group(function () {
+    Route::get('book-category/', 'index')->name('book-category.index');
+    Route::get('book-category/add', 'create')->name('book-category.create');
+    Route::post('book-category/', 'store')->name('book-category.store');
+    Route::get('book-category/{id}/edit', 'edit')->name('book-category.edit');
+    Route::put('book-category/{id}/update', 'update')->name('book-category.update');
+    Route::delete('book-category/{id}', 'destroy')->name('book-category.destroy');
+});
+
+// books
+Route::controller(BookController::class)->group(function () {
+    Route::get('book/', 'index')->name('book.index');;
+    Route::get('book/add', 'create')->name('book.create');;
+    Route::post('book/', 'store')->name('book.store');
+    Route::get('book/{id}/edit', 'edit')->name('book.edit');
+    Route::put('book/{id}/update', 'update')->name('book.update');
+    Route::delete('book/{id}', 'destroy')->name('book.destroy');
+});
+
+// borrow book
+Route::controller(BookBorrowController::class)->group(function () {
+    Route::get('book-borrow/', 'index');
+    Route::get('book-borrow/add', 'create');
+});
+
+// return book
+Route::controller(BookReturnController::class)->group(function () {
+    Route::get('book-return/', 'index');
+    Route::get('book-return/add', 'create');
+});
+
+Route::controller(StudentController::class)->group(function () {
+    // Route::resource('/student/student-teacher-classroom', StudentController::class);
+    Route::get('/student/student-teacher-classroom', 'index');
+    Route::get('/student/student-teacher-classroom/add', 'create');
+    Route::post('/student/student-teacher-classroom', 'store');
+    Route::get('/student/student-teacher-classroom/{id}/edit', 'edit');
+    Route::put('/student/student-teacher-classroom/{id}/update', 'update');
+    Route::delete('/student/student-teacher-classroom/delete/{id}', 'destroy');
+
+});
+
