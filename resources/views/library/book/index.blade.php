@@ -14,36 +14,38 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="student-thread">
-            <tr class="text-center">
-                <th>#</th>
+            <tr class="text-right">
+                <th>No</th>
                 <th>Title</th>
+                <th>Category</th>
                 <th>Author</th>
                 <th>Publisher</th>
                 <th>Description</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($books as $index => $book)
-            <tr>
+            <tr class="align-middle">
                 <td class="text-center">{{ $index + 1 }}</td>
-                <td>{{ $book->title }}</td>
+                <td class="wrap">{{ $book->title }}</td>
+                <td>{{ $book->Category->name }}</td>
                 <td>{{ $book->author }}</td>
                 <td>{{ $book->publisher }}</td>
-                <td>{{ $book->description }}</td>
-                <td>
+                <td class="">{{ $book->description }}</td>
+                <td class="text-center">
                     @if ($book->status == "available")
                         <span class="badge badge-success">Available</span>
                     @else
                         <span class="badge badge-danger">Unavailable</span>
                     @endif
                 </td>
-                <td class="align-middle text-center">
+                <td class=" text-center">
                     <div class="d-flex justify-content-center align-items-center">
-                        <a href="{{ URL::to('library/edit-book/'.$book->id) }}" class="btn btn-sm btn-outline-primary me-2">
+                        <a href="{{ URL::to('book/' . $book->id . '/edit') }}" class="btn btn-sm btn-outline-primary me-2">
                             <i class="fas fa-edit"></i>
                         </a>
                         <form method="POST" action="{{ URL::to('book/' . $book->id) }}">

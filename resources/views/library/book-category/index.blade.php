@@ -14,10 +14,10 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+    <table id="example" class="table table-striped " style="width:100%">
         <thead class="student-thread">
             <tr>
-                <th>#</th>
+                <th>No</th>
                 <th>Category</th>
                 <th>Description</th>
                 <th class="text-center">Action</th>
@@ -25,13 +25,13 @@
         </thead>
         <tbody>
             @foreach ($categories as $index => $category)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
+                <tr >
+                    <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->description }}</td>
                     <td class="align-middle text-center">
                         <div class="d-flex justify-content-center align-items-center">
-                            <a href="{{ URL::to('book-category/edit/'.$category->id) }}" class="btn btn-sm btn-outline-primary me-2">
+                            <a href="{{ URL::to('book-category/' . $category->id . '/edit') }}" class="btn btn-sm btn-outline-primary me-2">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form method="POST" action="{{ URL::to('book-category/' . $category->id) }}">
