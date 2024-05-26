@@ -41,7 +41,7 @@
             </div>
           </div>
         </div>
-      </div> 
+      </div>
       <!-- end main content -->
 
       {{-- footetr --}}

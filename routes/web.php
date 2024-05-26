@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\BookBorrowController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
@@ -19,10 +21,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard.index');
+    return view('dashboard.admin');
 });
 
-// book categories
+Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
+
+Route::get('teacher/teacher-list', [TeacherController::class, 'index']);
+Route::get('teacher/teacher-list/add', [TeacherController::class, 'create']);
+Route::post('teacher/teacher-list', [TeacherController::class, 'store']);
+
 Route::controller(BookCategoryController::class)->group(function () {
     Route::get('book-category/', 'index')->name('book-category.index');
     Route::get('book-category/add', 'create')->name('book-category.create');
@@ -64,3 +71,4 @@ Route::controller(StudentController::class)->group(function () {
     Route::delete('/student/student-teacher-classroom/delete/{id}', 'destroy');
 
 });
+
