@@ -16,8 +16,8 @@
                     <li class="submenu">
                         <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                         <ul>
-                            <li><a href="students.html">Student List</a></li>
-                            <li><a href="student-details.html">Student View</a></li>
+                            <li><a href="{{ URL::to('/student/student-teacher-classroom') }}">Student List</a></li>
+                            <li><a href="{{ URL::to('/student/student-teacher-classroom/student_detail') }}">Student View</a></li>
                             <li><a href="add-student.html">Student Add</a></li>
                             <li><a href="edit-student.html">Student Edit</a></li>
                         </ul>
