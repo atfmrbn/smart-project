@@ -47,8 +47,8 @@ class StudentController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
-            'email' => 'required',
             'password' => 'required|min:3',
+            'email' => 'required',
             'gender' => 'required',
             'born_date'=> 'required',
             'phone'=> 'required',
@@ -104,8 +104,8 @@ class StudentController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users,username,' . $id,
-            'email' => 'required|unique:users,email,' . $id,
             'password' => 'nullable|min:3',
+            'email' => 'required|unique:users,email,' . $id,
             'gender' => 'required',
             'born_date'=> 'required',
             'phone'=> 'required',
@@ -116,11 +116,11 @@ class StudentController extends Controller
         try {
             $student = User::find($id);
             
-            if($request->password){
-                $data['password'] = Hash::make($data["password"]);
-            }else {
-                $data['password'] = $student->password;
-            }
+            // if($request->password){
+            //     $data['password'] = Hash::make($data["password"]);
+            // }else {
+            //     $data['password'] = $student->password;
+            // }
 
             $student->update($data);
 
