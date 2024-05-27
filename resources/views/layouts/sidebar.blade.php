@@ -32,6 +32,15 @@
           </ul>
         </li>
         <li class="submenu">
+            <a href="#"><i class="fas fa-book"></i> <span> Librarian</span> <span class="menu-arrow"></span></a>
+            <ul>
+              <li><a href="{{ URL::to('/librarian/librarian-list') }}" class="">Librarian List</a></li>
+              <li><a href="teacher-details.html">View</a></li>
+              <li><a href="add-teacher.html">Add</a></li>
+              <li><a href="edit-teacher.html">Edit</a></li>
+            </ul>
+          </li>
+        <li class="submenu">
           <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/book') }}" class="">Books</a></li>
@@ -41,9 +50,9 @@
             <li><a href="edit-teacher.html">Reports</a></li>
           </ul>
         </li>
-        <li class="menu-title">
+        {{-- <li class="menu-title">
           <span>Pages</span>
-        </li>
+        </li> --}}
 
         {{--
         <li class="submenu">
@@ -103,8 +112,8 @@
           <a href="time-table.html"><i class="fas fa-table"></i> <span>Time Table</span></a>
         </li>
         --}}
-        
-        <li class="submenu">
+
+        {{-- <li class="submenu">
           <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/book') }}" class="">Books</a></li>
@@ -113,7 +122,7 @@
             <li><a href="{{ URL::to('/book-return') }}">Book Returns</a></li>
             <li><a href="edit-teacher.html">Reports</a></li>
           </ul>
-        </li>
+        </li> --}}
         {{--
         <li class="submenu">
           <a href="#"
