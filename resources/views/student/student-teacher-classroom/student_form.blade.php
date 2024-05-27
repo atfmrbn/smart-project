@@ -6,7 +6,7 @@
         </div>
     @endif
     @if (isset($student))
-        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}" autocomplete="off">
             @method('put')
         @else
             <form method="POST" action="{{ URL::to('student/student-teacher-classroom') }}" autocomplete="off">
