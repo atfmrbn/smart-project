@@ -16,15 +16,16 @@ class StudentController extends Controller
         $students = User::where('role', 'Student')->get();
 
         $data = [
-            'title' => 'Students'
+            'title' => 'Students',
+            'students' => $students,
         ];
 
-        if($students->isEmpty()) {
-            // Jika tidak ada data students, pastikan untuk mengembalikan array kosong
-            $students = [];
-        }
+        // if($students->isEmpty()) {
+        //     // Jika tidak ada data students, pastikan untuk mengembalikan array kosong
+        //     $students = [];
+        // }
 
-        return view('student/student-teacher-classroom.index', compact('students'), $data);
+        return view('student/student-teacher-classroom.index', $data);
     }
 
     /**
@@ -75,7 +76,7 @@ class StudentController extends Controller
             'student'=> $student,
         ];
 
-        return view('student/student-teacher-classroom.student_detail', compact('student'), $data);
+        return view('student/student-teacher-classroom.student_detail', $data);
 
     }
 
@@ -116,17 +117,17 @@ class StudentController extends Controller
         try {
             $student = User::find($id);
             
-            // if($request->password){
-            //     $data['password'] = Hash::make($data["password"]);
-            // }else {
-            //     $data['password'] = $student->password;
-            // }
+            if($request->password){
+                $data['password'] = Hash::make($data["password"]);
+            }else {
+                $data['password'] = $student->password;
+            }
 
             $student->update($data);
 
-            return redirect('student/student-teacher-classroom.student_form')->with("successMessage", "Edit data sukses");
+            return redirect('student/student-teacher-classroom')->with("successMessage", "Edit data sukses");
         } catch (\Throwable $th) {
-            return redirect('student/student-teacher-classroom.student_form')->with("errorMessage", $th->getMessage());
+            return redirect('student/student-teacher-classroom')->with("errorMessage", $th->getMessage());
         }
     }
 
