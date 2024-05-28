@@ -11,7 +11,7 @@
             <label for="description">Description</label>
             <input type="text" id="description" name="description" class="form-control" value="{{ $classroom_type->description }}" readonly>
         </div>
-        <a href="{{ URL::to('curriculum/')  }}" class="btn btn-sm btn-secondary">Back</a>
+        <a href="{{ URL::to('classroom/classroom-type/')  }}" class="btn btn-sm btn-secondary">Back</a>
     </div>
 </div>
 

@@ -7,7 +7,7 @@ use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookReturnController;
-
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\CurriculumController;
 
@@ -67,14 +67,19 @@ Route::controller(BookReturnController::class)->group(function () {
     Route::get('book-return/add', 'create');
 });
 
-Route::controller(StudentController::class)->group(function () {
-    // Route::resource('/student/student-teacher-classroom', StudentController::class);
-    Route::get('/student/student-teacher-classroom', 'index');
-    Route::get('/student/student-teacher-classroom/add', 'create');
-    Route::post('/student/student-teacher-classroom', 'store');
-    Route::get('/student/student-teacher-classroom/{id}/edit', 'edit');
-    Route::put('/student/student-teacher-classroom/{id}/update', 'update');
-    Route::delete('/student/student-teacher-classroom/delete/{id}', 'destroy');
+// Route::controller(StudentController::class)->group(function () {
+//     // Route::resource('/student/student-teacher-classroom', StudentController::class);
+//     Route::get('/student/student-teacher-classroom', 'index');
+//     Route::get('/student/student-teacher-classroom/add', 'create');
+//     Route::post('/student/student-teacher-classroom', 'store');
+//     Route::get('/student/student-teacher-classroom/{id}/edit', 'edit');
+//     Route::put('/student/student-teacher-classroom/{id}/update', 'update');
+//     Route::delete('/student/student-teacher-classroom/delete/{id}', 'destroy');
 
-});
+// });
+
+Route::resource('/student/student-teacher-classroom', StudentController::class);
+Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
+Route::resource('/classroom', ClassroomController::class);
+
 

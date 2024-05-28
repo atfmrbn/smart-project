@@ -32,6 +32,15 @@
           </ul>
         </li>
         <li class="submenu">
+          <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Classroom</span> <span class="menu-arrow"></span></a>
+          <ul>
+            <li><a href="{{ URL::to('classroom/') }}">Classroom List</a></li>
+            <li><a href="{{ URL::to('classroom/classroom-type/') }}" class="">Classroom Type</a></li>
+            <li><a href="add-teacher.html">Subjects</a></li>
+            <li><a href="edit-teacher.html">Attendances</a></li>
+          </ul>
+        </li>
+        <li class="submenu">
           <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/book') }}" class="">Books</a></li>
