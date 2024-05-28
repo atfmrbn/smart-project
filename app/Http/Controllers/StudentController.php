@@ -69,12 +69,12 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        // $student = User::where('id', $id)->where('role', 'Student')->first();
+        $student = User::where('id', $id)->where('role', 'Student')->first();
 
-        // $data = [
-        //     'title' => 'Student Detail',
-        //     'student'=> $student,
-        // ];
+        $data = [
+            'title' => 'Student Detail',
+            'student'=> $student,
+        ];
 
         return view('student/student-teacher-classroom.student_detail', compact('student'), $data);
 
