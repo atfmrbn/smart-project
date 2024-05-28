@@ -6,7 +6,8 @@
         </div>
     @endif
     @if (isset($student))
-        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}" autocomplete="off"
+            enctype="multipart/form-data">
             @method('put')
         @else
             <form method="POST" action="{{ URL::to('student/student-teacher-classroom') }}" autocomplete="off">
@@ -36,6 +37,19 @@
                     class="form-control @error('username')is-invalid @enderror"
                     value="{{ isset($student) ? $student->username : old('username') }}">
                 @error('username')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="password">Password <span class="login-danger">*</span></label>
+                <input type="password" id="password" name="password"
+                    class="form-control @error('password')is-invalid @enderror"
+                    value="{{ isset($student) ? $student->password : old('password') }}">
+                @error('password')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

@@ -44,14 +44,17 @@ Route::controller(BookReturnController::class)->group(function () {
     Route::get('book-return/add', 'create')->name('book-return.create');
 });
 
-Route::controller(StudentController::class)->group(function () {
-    Route::get('/student/student-teacher-classroom', 'index')->name('student.index');
-    Route::get('/student/student-teacher-classroom/add', 'create')->name('student.create');
-    Route::post('/student/student-teacher-classroom', 'store')->name('student.store');
-    Route::get('/student/student-teacher-classroom/{id}/edit', 'edit')->name('student.edit');
-    Route::put('/student/student-teacher-classroom/{id}/update', 'update')->name('student.update');
-    Route::delete('/student/student-teacher-classroom/delete/{id}', 'destroy')->name('student.destroy');
-});
+// Route::controller(StudentController::class)->group(function () {
+//     // Route::resource('/student/student-teacher-classroom', StudentController::class);
+//     Route::get('/student/student-teacher-classroom', 'index');
+//     Route::get('/student/student-teacher-classroom/add', 'create');
+//     Route::post('/student/student-teacher-classroom', 'store');
+//     Route::get('/student/student-teacher-classroom/{id}/edit', 'edit');
+//     Route::put('/student/student-teacher-classroom/{id}/update', 'update');
+//     Route::delete('/student/student-teacher-classroom/delete/{id}', 'destroy');
+// });
+Route::resource('/student/student-teacher-classroom', StudentController::class);
+
 
 Route::controller(TeacherController::class)->group(function () {
     Route::get('/teacher/teacher-list', 'index')->name('teacher.index');

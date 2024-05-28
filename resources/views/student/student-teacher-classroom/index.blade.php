@@ -1,6 +1,18 @@
 @extends("layouts.main")
 @section("container")
 
+@if (session()->has("successMessage"))
+    <div class="alert alert-success">
+        {{ session("successMessage") }}
+    </div>
+@endif
+
+@if (session()->has("errorMessage"))
+    <div class="alert alert-danger">
+        {{ session("errorMessage") }}
+    </div>
+@endif
+
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
@@ -8,7 +20,7 @@
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
             <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-            <a href="{{ URL::to('student/student-teacher-classroom/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a href="{{ URL::to('student/student-teacher-classroom/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -46,7 +58,7 @@
                         <a href="{{ URL::to('student/student-teacher-classroom/'.$student->id). '/edit' }}" class="btn btn-sm btn-outline-primary me-2">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/delete/' .$student->id) }}">
+                        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/' .$student->id) }}">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus siswa {{ $student->name }} ?')">

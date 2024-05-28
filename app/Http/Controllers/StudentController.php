@@ -16,15 +16,16 @@ class StudentController extends Controller
         $students = User::where('role', 'Student')->get();
 
         $data = [
-            'title' => 'Students'
+            'title' => 'Students',
+            'students' => $students,
         ];
 
-        if($students->isEmpty()) {
-            // Jika tidak ada data students, pastikan untuk mengembalikan array kosong
-            $students = [];
-        }
+        // if($students->isEmpty()) {
+        //     // Jika tidak ada data students, pastikan untuk mengembalikan array kosong
+        //     $students = [];
+        // }
 
-        return view('student/student-teacher-classroom.index', compact('students'), $data);
+        return view('student/student-teacher-classroom.index', $data);
     }
 
     /**
@@ -47,8 +48,8 @@ class StudentController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
-            'email' => 'required',
             'password' => 'required|min:3',
+            'email' => 'required',
             'gender' => 'required',
             'born_date'=> 'required',
             'phone'=> 'required',
@@ -75,7 +76,7 @@ class StudentController extends Controller
             'student'=> $student,
         ];
 
-        return view('student/student-teacher-classroom.student_detail', compact('student'), $data);
+        return view('student/student-teacher-classroom.student_detail', $data);
 
     }
 
@@ -104,8 +105,8 @@ class StudentController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users,username,' . $id,
-            'email' => 'required|unique:users,email,' . $id,
             'password' => 'nullable|min:3',
+            'email' => 'required|unique:users,email,' . $id,
             'gender' => 'required',
             'born_date'=> 'required',
             'phone'=> 'required',
@@ -124,9 +125,9 @@ class StudentController extends Controller
 
             $student->update($data);
 
-            return redirect('student/student-teacher-classroom.student_form')->with("successMessage", "Edit data sukses");
+            return redirect('student/student-teacher-classroom')->with("successMessage", "Edit data sukses");
         } catch (\Throwable $th) {
-            return redirect('student/student-teacher-classroom.student_form')->with("errorMessage", $th->getMessage());
+            return redirect('student/student-teacher-classroom')->with("errorMessage", $th->getMessage());
         }
     }
 
