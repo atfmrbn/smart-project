@@ -25,10 +25,7 @@ class BookCategoryController extends Controller
      */
     public function create()
     {
-        $data = [
-            'title' => 'Add Category'
-        ];
-        return view('library.book-category.category_form', $data);
+        return view('library.book-category.category_form');
     }
 
     /**
@@ -36,15 +33,18 @@ class BookCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $messages = [
+            'name.required' => 'Tolong isi namenya.',
+            'description.required' => 'Isi donk description',
+        ]; 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ], $messages);
+
+        BookCategory::create($data);          
+        return redirect()->route('book-category.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -52,7 +52,9 @@ class BookCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = BookCategory::findOrFail($id);
+
+        return view('library.book-category.category_form', compact('category'));
     }
 
     /**
@@ -60,7 +62,25 @@ class BookCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $messages = [
+            'name.required' => 'Name is required.',
+            'description.required' => 'description is required.',
+        ]; 
+
+        $data = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ], $messages);
+
+        // try {
+        $category = BookCategory::find($id);
+
+        $category->update($data);
+
+            // return redirect('category');
+        // } catch (\Throwable $th) {
+            return redirect()->route('book-category.index')->with('success', 'Category updated successfully');
+        // }
     }
 
     /**
@@ -68,6 +88,9 @@ class BookCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = BookCategory::find($id);
+        $category->delete();
+
+        return redirect()->route('book-category.index')->with('success', 'Category deleted successfully');
     }
 }

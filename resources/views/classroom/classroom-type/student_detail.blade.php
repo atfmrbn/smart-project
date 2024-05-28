@@ -8,26 +8,27 @@
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
             <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-            <a href="{{ URL::to('book-return/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
-    </div>
+</div>
 
 <div class="table-responsive">
-    <table id="example" class="table table-striped table-bordered" style="width:100%">
+    <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
         <thead class="student-thread">
-            <tr>
-                <th>No</th>
-                <th>Patron</th>
+            <tr class="text-center">
+                <th>#</th>
+                <th>Name</th>
                 <th>Description</th>
-                <th>Checkout Date</th>
-                <th>Due Date</th>
-                <th>Penalty</th>
-                <th class="text-end">Action</th>
             </tr>
         </thead>
         <tbody>
-            
+            @foreach ($classroom_types as $index => $classroom_type)
+            <tr>
+                <td class="text-center">{{ $index + 1 }}</td>
+                <td>{{ $classroom_type->name }}</td>
+                <td>{{ $classroom_type->description }}</td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

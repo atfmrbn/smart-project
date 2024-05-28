@@ -31,6 +31,9 @@
                             <li><a href="edit-teacher.html">Teacher Edit</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ URL :: to ('/curriculum') }}"><i class="fas fa-school"></i> <span> Curriculums</span></a>
+                    </li>
                     {{-- <li class="submenu">
                         <a href="#"><i class="fas fa-building"></i> <span> Departments</span> <span class="menu-arrow"></span></a>
                         <ul>
