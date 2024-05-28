@@ -72,6 +72,19 @@
         </div>
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
+                <label for="password">Password <span class="login-danger">*</span></label>
+                <input type="password" id="password" name="password"
+                    class="form-control @error('password')is-invalid @enderror"
+                    value="{{ isset($student) ? $student->password : old('password') }}">
+                @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
                 <label for="email">Email <span class="login-danger">*</span></label>
                 <input type="email" id="email" name="email" class="form-control @error('email')is-invalid @enderror"
                     value="{{ isset($student) ? $student->email : old('email') }}">
