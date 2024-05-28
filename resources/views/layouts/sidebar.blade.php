@@ -17,7 +17,7 @@
           <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/student/student-teacher-classroom') }}">Student List</a></li>
-            <li><a href="{{ URL::to('/student/student-view') }}">Student View</a></li>
+            <li><a href="{{ URL::to('/student/student-teacher-classroom/student_detail') }}">Student View</a></li>
             <li><a href="add-student.html">Student Add</a></li>
             <li><a href="edit-student.html">Student Edit</a></li>
           </ul>
@@ -128,21 +128,24 @@
         </li>
         --}}
 
-        <li class="menu-title">
-          <span>Pages</span>
-        </li>
-        <li class="submenu">
-          <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
-          <ul>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="register.html">Register</a></li>
-            <li><a href="forgot-password.html">Forgot Password</a></li>
-            <li><a href="error-404.html">Error Page</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="blank-page.html"><i class="fas fa-file"></i> <span>Blank Page</span></a>
-        </li>
+                    <li class="menu-title">
+                        <span>Pages</span>
+                    </li>
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
+                        <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="forgot-password.html">Forgot Password</a></li>
+                        <li><a href="error-404.html">Error Page</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="blank-page.html"><i class="fas fa-file"></i> <span>Blank Page</span></a>
+                    </li>
+  
+            </ul>
+          </li>
       </ul>
     </div>
   </div>

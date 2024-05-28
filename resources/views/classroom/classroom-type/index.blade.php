@@ -20,7 +20,7 @@
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
             <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-            <a href="{{ URL::to('student/student-teacher-classroom/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a href="{{ URL::to('classroom/classroom-type/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -31,37 +31,26 @@
             <tr class="text-center">
                 <th>#</th>
                 <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Gender</th>
-                <th>Date of Birth</th>
-                <th>Phone</th>
-                <th>NIK</th>
-                <th>Address</th>
+                <th>Description</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($students as $index => $student)
+            @foreach ($classroom_types as $index => $classroom_type)
             <tr>
                 <td class="text-center">{{ $index + 1 }}</td>
-                <td>{{ $student->name }}</td>
-                <td>{{ $student->username }}</td>
-                <td>{{ $student->email }}</td>
-                <td>{{ $student->gender }}</td>
-                <td>{{ $student->born_date }}</td>
-                <td>{{ $student->phone }}</td>
-                <td>{{ $student->nik }}</td>
-                <td>{{ $student->address }}</td>
+                <td class="text-center">{{ $classroom_type->name }}</td>
+                <td class="text-center">{{ $classroom_type->description }}</td>
                 <td class="align-middle text-center">
                     <div class="d-flex justify-content-center align-items-center">
-                        <a href="{{ URL::to('student/student-teacher-classroom/'.$student->id). '/edit' }}" class="btn btn-sm btn-outline-primary me-2">
+                        <a href="{{ URL::to('classroom/classroom-type/' . $classroom_type->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                        <a href="{{ URL::to('classroom/classroom-type/'.$classroom_type->id). '/edit' }}" class="btn btn-sm btn-outline-primary me-2">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/' .$student->id) }}">
+                        <form method="POST" action="{{ URL::to('classroom/classroom-type/' .$classroom_type->id) }}">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus siswa {{ $student->name }} ?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus siswa {{ $classroom_type->name }} ?')">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>

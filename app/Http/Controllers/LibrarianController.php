@@ -6,26 +6,25 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class TeacherController extends Controller
+class LibrarianController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-
     {
-        $teachers = User::where('role', 'Teacher')->get();
+        $librarians = User::where('role', 'Librarian')->get();
 
         $data = [
-            'title' => 'Teachers'
+            'title' => 'Librarians'
         ];
 
-        if ($teachers->isEmpty()) {
-            // Jika tidak ada data teachers, pastikan untuk mengembalikan array kosong
-            $teachers = [];
+        if ($librarians->isEmpty()) {
+            // Jika tidak ada data librarians, pastikan untuk mengembalikan array kosong
+            $librarians = [];
         }
 
-        return view('teacher/teacher-list.index', compact('teachers'), $data);
+        return view('librarian/librarian-list.index', compact('librarians'), $data);
     }
 
     /**
@@ -34,10 +33,10 @@ class TeacherController extends Controller
     public function create()
     {
         $data = [
-            'title' => 'Add Teacher'
+            'title' => 'Add Librarian'
         ];
 
-        return view('teacher/teacher-list.form', $data);
+        return view('librarian/librarian-list.form', $data);
     }
 
     /**
@@ -45,7 +44,6 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
@@ -62,22 +60,7 @@ class TeacherController extends Controller
         $data['password'] = Hash::make($data["password"]);
         User::create($data);
 
-
-        return redirect()->route('teacher.index')->with('successMessage', 'Add data sukses');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $teacher = User::find($id);
-        $data = [
-            "title" => "Teacher Detail",
-            "teacher" => $teacher,
-        ];
-
-        return view('teacher.detail', $data);
+        return redirect()->route('librarian.index')->with('successMessage', 'Add data sukses');
     }
 
     /**
@@ -85,16 +68,16 @@ class TeacherController extends Controller
      */
     public function edit(string $id)
     {
-        $teacher = User::where('id', $id)->where('role', 'Teacher')->first();
-        if (!$teacher) {
-            return redirect()->route('teacher.index')->with("errorMessage", "Data tidak ditemukan");
+        $librarian = User::where('id', $id)->where('role', 'Librarian')->first();
+        if (!$librarian) {
+            return redirect()->route('librarian.index')->with("errorMessage", "Data tidak ditemukan");
         }
         $data = [
-            "title" => "Edit Teacher",
-            "teacher" => $teacher,
+            "title" => "Edit Librarian",
+            "librarian" => $librarian,
         ];
 
-        return view('teacher/teacher-list.form', compact('teacher'), $data);
+        return view('librarian/librarian-list.form', compact('librarian'), $data);
     }
 
     /**
@@ -116,19 +99,19 @@ class TeacherController extends Controller
         ]);
 
         try {
-            $teacher = User::findOrFail($id);
+            $librarian = User::findOrFail($id);
 
             if ($request->filled('password')) {
                 $data['password'] = Hash::make($data['password']);
             } else {
-                $data['password'] = $teacher->password;
+                $data['password'] = $librarian->password;
             }
 
-            $teacher->update($data);
+            $librarian->update($data);
 
-            return redirect()->route('teacher.index')->with('successMessage', 'Edit data sukses');
+            return redirect()->route('librarian.index')->with('successMessage', 'Edit data sukses');
         } catch (\Throwable $th) {
-            return redirect()->route('teacher.edit', $id)->with('errorMessage', $th->getMessage());
+            return redirect()->route('librarian.edit', $id)->with('errorMessage', $th->getMessage());
         }
     }
 
@@ -138,11 +121,11 @@ class TeacherController extends Controller
     public function destroy(string $id)
     {
         try {
-            $teacher = User::where('id', $id)->where('role', 'Teacher')->firstOrFail();
-            $teacher->delete();
-            return redirect()->route('teacher.index')->with('successMessage', 'Delete data sukses');
+            $librarian = User::where('id', $id)->where('role', 'Librarian')->firstOrFail();
+            $librarian->delete();
+            return redirect()->route('librarian.index')->with('successMessage', 'Delete data sukses');
         } catch (\Throwable $th) {
-            return redirect()->route('teacher.index')->with('errorMessage', $th->getMessage());
+            return redirect()->route('librarian.index')->with('errorMessage', $th->getMessage());
         }
     }
 }

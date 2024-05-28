@@ -1,61 +1,64 @@
-@extends('layouts.main')
-@section('container')
+@extends("layouts.main")
+@section("container")
 
-@if(session()->has("successMessage"))
-    <div class="alert alert-success">
-        {{ session("successMessage") }}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col">
+            <h3 class="page-title">{{ $title }}</h3>
+        </div>
+        <div class="col-auto text-end float-end ms-auto download-grp">
+            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+            <a href="{{ route('teacher.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        </div>
     </div>
-@endif
+</div>
 
-@if(session()->has("errorMessage"))
-    <div class="alert alert-danger">
-        {{ session("errorMessage") }}
-    </div>
-@endif
-
-<a href="{{ URL::to('teacher/teacher-list/add') }}" class="btn btn-success mb-3">Add</a>
-
-
-<table id="datatable1" class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th width=5%>No</th>
-            <th>Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>Born Date</th>
-            <th>Phone</th>
-            <th>NIK</th>
-            <th>Address</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($users as $index => $user)
+<div class="table-responsive">
+    <table class="table border-0 star-teacher table-hover table-center mb-0 datatable table-striped">
+        <thead class="teacher-thread">
+            <tr class="text-center">
+                <th>#</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+                <th>Phone</th>
+                <th>NIK</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($teachers as $index => $teacher)
             <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->username }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->gender }}</td>
-                <td>{{ $user->born_date }}</td>
-                <td>{{ $user->phone }}</td>
-                <td>{{ $user->NIK }}</td>
-                <td>{{ $user->address }}</td>
-                <td>
-                    <div class="d-flex">
-                    <a href="{{ URL::to('user/' . $user->id) }}" class="btn btn-sm btn-info mr-4">Show</a>
-                    <a href="{{ URL::to('user/' . $user->id. '/edit') }}" class="btn btn-sm btn-warning mr-4">Edit</a>
-                    <form action="{{ URL::to('user/' . $user->id) }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Anda yakin mau menghapus data ini {{ $user->name }}?')">Delete</button>
-                    </form>
+                <td class="text-center">{{ $index + 1 }}</td>
+                <td>{{ $teacher->name }}</td>
+                <td>{{ $teacher->username }}</td>
+                <td>{{ $teacher->email }}</td>
+                <td>{{ $teacher->gender }}</td>
+                <td>{{ $teacher->born_date }}</td>
+                <td>{{ $teacher->phone }}</td>
+                <td>{{ $teacher->nik }}</td>
+                <td>{{ $teacher->address }}</td>
+                <td class="align-middle text-center">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a href="{{ route('teacher.edit', $teacher->id) }}" class="btn btn-sm btn-outline-primary me-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form method="POST" action="{{ route('teacher.destroy', $teacher->id) }}">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus siswa {{ $teacher->name }} ?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
                     </div>
                 </td>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 @endsection
