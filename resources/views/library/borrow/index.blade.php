@@ -17,17 +17,41 @@
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="student-thread">
             <tr>
-                <th>No</th>
-                <th>Patron</th>
-                <th>Description</th>
-                <th>Checkout Date</th>
-                <th>Due Date</th>
-                <th>Penalty</th>
-                <th class="text-end">Action</th>
+                <th class="text-center">No</th>
+                <th class="text-center">Patron</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Checkout Date</th>
+                <th class="text-center">Due Date</th>
+                <th class="text-center">Penalty</th>
+                <th class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>
-            
+            @foreach ($borrows as $index => $borrow)
+            <tr class="align-middle">
+                <td class="text-center">{{ $index + 1 }}</td>
+                <td>{{ $borrow->user->name }}</td>
+                <td>{{ $borrow->description }}</td>
+                <td>{{ $borrow->checkout_date }}</td>
+                <td>{{ $borrow->due_date }}</td>
+                <td>{{ $borrow->returned_date }}</td>
+                <td class=" text-center">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a href="{{ URL::to('book-borrow/' . $borrow->id . '/edit') }}" class="btn btn-sm btn-outline-primary me-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form method="POST" action="{{ URL::to('book-borrow/' . $borrow->id) }}">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus peminjaman buku oleh {{ $borrow->user->name }} ?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+
+            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
