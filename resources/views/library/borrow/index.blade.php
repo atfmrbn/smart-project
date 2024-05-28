@@ -14,10 +14,10 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="student-thread">
             <tr>
-                <th>ID</th>
+                <th>No</th>
                 <th>Patron</th>
                 <th>Description</th>
                 <th>Checkout Date</th>
