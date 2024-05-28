@@ -12,6 +12,7 @@ class TeacherController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+
     {
         $teachers = User::where('role', 'Teacher')->get();
 
@@ -44,6 +45,7 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
@@ -60,7 +62,22 @@ class TeacherController extends Controller
         $data['password'] = Hash::make($data["password"]);
         User::create($data);
 
+
         return redirect()->route('teacher.index')->with('successMessage', 'Add data sukses');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $teacher = User::find($id);
+        $data = [
+            "title" => "Teacher Detail",
+            "teacher" => $teacher,
+        ];
+
+        return view('teacher.detail', $data);
     }
 
     /**
