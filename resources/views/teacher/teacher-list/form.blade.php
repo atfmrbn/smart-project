@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('container')
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -60,11 +61,11 @@
                 <label for="email">Email <span class="login-danger">*</span></label>
                 <input type="email" id="email" name="email" class="form-control @error('email')is-invalid @enderror"
                     value="{{ isset($teacher) ? $teacher->email : old('email') }}">
-                @error('email')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
             </div>
         </div>
         <div class="col-12 col-sm-4">
