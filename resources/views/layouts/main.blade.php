@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
 
+    {{-- data table --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
   </head>
 
@@ -41,7 +42,7 @@
             </div>
           </div>
         </div>
-      </div> 
+      </div>
       <!-- end main content -->
 
       {{-- footetr --}}

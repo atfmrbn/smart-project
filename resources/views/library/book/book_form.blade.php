@@ -24,7 +24,7 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="category_id">Category <span class="login-danger">*</span></label>
-                <select name="category_id" id="category_id" class="form-control select">
+                <select name="category_id" id="category_id" class="form-control data-select-2">
                     <option value="">Select Category</option>
                     @foreach ($categories as $category) 
                         <option value="{{ $category->id }}" {{ (isset($book) && $book->category_id == $category->id) ? 'selected' : '' }}>
