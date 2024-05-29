@@ -46,6 +46,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'identity_number' => 'required',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
             'email' => 'required',
@@ -69,12 +70,12 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        // $student = User::where('id', $id)->where('role', 'Student')->first();
+        $student = User::where('id', $id)->where('role', 'Student')->first();
 
-        // $data = [
-        //     'title' => 'Student Detail',
-        //     'student'=> $student,
-        // ];
+        $data = [
+            'title' => 'Student Detail',
+            'student'=> $student,
+        ];
 
         return view('student/student-teacher-classroom.student_detail', compact('student'), $data);
 
@@ -103,6 +104,7 @@ class StudentController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
+            'identity_number' => 'required',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users,username,' . $id,
             'email' => 'required|unique:users,email,' . $id,

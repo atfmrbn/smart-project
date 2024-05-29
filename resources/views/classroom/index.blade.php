@@ -20,7 +20,7 @@
             <tr>
                 <th width="5%">No.</th>
                 <th>Classroom Type ID</th>
-                <th>Classroom Type Name</th>
+                {{-- <th>Classroom Type Name</th> --}}
                 <th>Name</th>
                 <th width="10%">Action</th>
             </tr>
