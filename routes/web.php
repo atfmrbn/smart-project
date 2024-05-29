@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\BookBorrowController;
+use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
@@ -41,7 +41,7 @@ Route::controller(BookController::class)->group(function () {
     Route::delete('book/{id}', 'destroy')->name('book.destroy');
 });
 
-Route::controller(BookBorrowController::class)->group(function () {
+Route::controller(BorrowingBookController::class)->group(function () {
     Route::get('book-borrow/', 'index')->name('book-borrow.index');
     Route::get('book-borrow/add', 'create')->name('book-borrow.create');
     Route::post('book-borrow/', 'store')->name('book-borrow.store');

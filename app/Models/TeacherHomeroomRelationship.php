@@ -9,4 +9,9 @@ class TeacherHomeroomRelationship extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function studentTeacherHomeroomRelationship()
+    {
+        return $this->hasMany(StudentTeacherHomeroomRelationship::class);
+    }
 }

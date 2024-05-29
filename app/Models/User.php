@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
 
     protected $fillable = [
+        'identity_number',
         'name',
         'username',
         'password',
@@ -50,4 +51,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public static function getActiveStudent($defaultCurriculumId)
+    {
+      return self::select('users.id', 'users.identity_number', 'users.name', 'classrooms.name as classroom_name')
+            ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
+            ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
+            ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
+            ->where('teacher_homeroom_relationships.curriculum_id', $defaultCurriculumId)
+            ->get();
+    }
 }
