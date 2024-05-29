@@ -10,11 +10,9 @@ use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\CurriculumController;
-
 use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
-use App\Models\BorrowingBook;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
