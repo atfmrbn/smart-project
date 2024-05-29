@@ -48,8 +48,8 @@ class StudentController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
-            'password' => 'required|min:3',
             'email' => 'required',
+            'password' => 'required|min:3',
             'gender' => 'required',
             'born_date'=> 'required',
             'phone'=> 'required',
@@ -58,7 +58,7 @@ class StudentController extends Controller
             'role' => 'required',
         ]);
 
-        $data['password'] = Hash::make($data["password"]);
+        // $data['password'] = Hash::make($data["password"]);
         User::create($data);
 
         return redirect('student/student-teacher-classroom')->with("successMessage", "Add data sukses");
@@ -76,7 +76,7 @@ class StudentController extends Controller
             'student'=> $student,
         ];
 
-        return view('student/student-teacher-classroom.student_detail', $data);
+        return view('student/student-teacher-classroom.student_detail', compact('student'), $data);
 
     }
 
@@ -94,7 +94,7 @@ class StudentController extends Controller
             "student" => $student,
         ];
 
-        return view('student/student-teacher-classroom.student_form', compact('student'), $data);
+        return view('student/student-teacher-classroom.student_form', $data);
     }
 
     /**
@@ -105,7 +105,6 @@ class StudentController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users,username,' . $id,
-            'password' => 'nullable|min:3',
             'email' => 'required|unique:users,email,' . $id,
             'gender' => 'required',
             'born_date'=> 'required',
@@ -117,11 +116,11 @@ class StudentController extends Controller
         try {
             $student = User::find($id);
             
-            if($request->password){
-                $data['password'] = Hash::make($data["password"]);
-            }else {
-                $data['password'] = $student->password;
-            }
+            // if($request->password){
+            //     $data['password'] = Hash::make($data["password"]);
+            // }else {
+            //     $data['password'] = $student->password;
+            // }
 
             $student->update($data);
 

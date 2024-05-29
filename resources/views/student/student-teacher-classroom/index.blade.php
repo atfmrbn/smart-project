@@ -55,6 +55,7 @@
                 <td>{{ $student->address }}</td>
                 <td class="align-middle text-center">
                     <div class="d-flex justify-content-center align-items-center">
+                        <a href="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
                         <a href="{{ URL::to('student/student-teacher-classroom/'.$student->id). '/edit' }}" class="btn btn-sm btn-outline-primary me-2">
                             <i class="fas fa-edit"></i>
                         </a>
