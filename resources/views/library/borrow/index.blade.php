@@ -30,7 +30,7 @@
             @foreach ($borrows as $index => $borrow)
             <tr class="align-middle">
                 <td class="text-center">{{ $index + 1 }}</td>
-                <td>{{ $borrow->user->name }}</td>
+                <td>{{ $borrow->classroom_name }} - {{ $borrow->identity_number }}  - {{ $borrow->name }}</td>
                 <td>{{ $borrow->description }}</td>
                 <td>{{ $borrow->checkout_date }}</td>
                 <td>{{ $borrow->due_date }}</td>
