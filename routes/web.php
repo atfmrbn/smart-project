@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\BookBorrowController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
@@ -14,6 +13,7 @@ use App\Http\Controllers\CurriculumController;
 
 use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use App\Models\BorrowingBook;
 use Illuminate\Support\Facades\Route;
 
@@ -69,19 +69,19 @@ Route::controller(BookReturnController::class)->group(function () {
     Route::get('book-return/add', 'create');
 });
 
-// Route::controller(StudentController::class)->group(function () {
-//     // Route::resource('/student/student-teacher-classroom', StudentController::class);
-//     Route::get('/student/student-teacher-classroom', 'index');
-//     Route::get('/student/student-teacher-classroom/add', 'create');
-//     Route::post('/student/student-teacher-classroom', 'store');
-//     Route::get('/student/student-teacher-classroom/{id}/edit', 'edit');
-//     Route::put('/student/student-teacher-classroom/{id}/update', 'update');
-//     Route::delete('/student/student-teacher-classroom/delete/{id}', 'destroy');
-// });
+// Student
 Route::resource('/student/student-teacher-classroom', StudentController::class);
+
+// Classroom Type
 Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
+
+// Classroom
 Route::resource('/classroom', ClassroomController::class);
 
+// Subject
+Route::resource('subject', SubjectController::class);
+
+//Route::resource('/teacher', TeacherController::class);
 Route::controller(CurriculumController::class)->group(function () {
     Route::get('/curriculum', 'index')->name('curriculum.index');
     Route::get('curriculum/add', 'create')->name('curriculum.create');
@@ -90,6 +90,7 @@ Route::controller(CurriculumController::class)->group(function () {
     Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
     Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
 });
+//         Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
 
 Route::controller(TeacherController::class)->group(function () {
     Route::get('/teacher/teacher-list', 'index')->name('teacher.index');

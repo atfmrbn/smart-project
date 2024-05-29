@@ -47,7 +47,7 @@
                     <td>{{ $curriculum->updated_at }}</td> --}}
                     <td class="align-middle text-center">
                         <div class="d-flex justify-content-center align-items-center">
-                        <a href="{{ URL::to('curriculum/' . $curriculum->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                        <a title="Lihat" href="{{ URL::to('curriculum/' . $curriculum->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
                         <a href="{{ URL::to('curriculum/' . $curriculum->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
                         <form action="{{ URL::to('curriculum/' . $curriculum->id) }}" method="post">
                             @csrf

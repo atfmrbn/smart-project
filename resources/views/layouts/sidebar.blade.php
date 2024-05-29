@@ -38,18 +38,19 @@
                 <li><a href="{{ route('librarian.create') }}">Librarian Add</a></li>
             </ul>
         </li>
+
         <li class="submenu">
-          <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Classroom</span> <span class="menu-arrow"></span></a>
+          <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Classrooms</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('classroom/') }}">Classroom List</a></li>
             <li><a href="{{ URL::to('classroom/classroom-type/') }}" class="">Classroom Type</a></li>
-            <li><a href="add-teacher.html">Subjects</a></li>
+            <li><a href="{{ URL::to('/subject') }}">Subject</a></li>
             <li><a href="edit-teacher.html">Attendances</a></li>
           </ul>
         </li>
 
         <li class="nav-item">
-            <a href="{{ URL :: to ('/curriculum') }}"><i class="fas fa-school"></i> <span> Curriculums</span></a>
+            <a href="{{ URL::to('/curriculum') }}"><i class="fas fa-school"></i> <span> Curriculums</span></a>
         </li>
 
         <li class="submenu">
@@ -62,26 +63,17 @@
             <li><a href="edit-teacher.html">Reports</a></li>
           </ul>
         </li>
-        
 
-        <li class="menu-title">
-            <span>Pages</span>
-        </li>
+        <li class="menu-title"><span>Pages</span></li>
         <li class="submenu">
             <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
             <ul>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="register.html">Register</a></li>
-            <li><a href="forgot-password.html">Forgot Password</a></li>
-            <li><a href="error-404.html">Error Page</a></li>
+              <li><a href="login.html">Login</a></li>
+              <li><a href="register.html">Register</a></li>
+              <li><a href="forgot-password.html">Forgot Password</a></li>
+              <li><a href="error-404.html">Error Page</a></li>
             </ul>
         </li>
-        <li>
-            <a href="blank-page.html"><i class="fas fa-file"></i> <span>Blank Page</span></a>
-        </li>
-  
-            </ul>
-          </li>
       </ul>
     </div>
   </div>
