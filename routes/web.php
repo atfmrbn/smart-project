@@ -10,6 +10,7 @@ use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -71,6 +72,9 @@ Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
 
 // Classroom
 Route::resource('/classroom', ClassroomController::class);
+
+// Extracurricular
+Route::resource('/extracurricular', ExtracurricularController::class);
 
 // Subject
 Route::resource('subject', SubjectController::class);
