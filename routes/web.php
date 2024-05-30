@@ -14,6 +14,7 @@ use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
     return view('dashboard.admin');
@@ -21,7 +22,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
 
-
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/home', function() {
+    return 'Welcome, you are logged in!';
+})->middleware('auth');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::controller(BookCategoryController::class)->group(function () {
     Route::get('book-category/', 'index')->name('book-category.index');
@@ -88,7 +94,7 @@ Route::controller(CurriculumController::class)->group(function () {
     Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
     Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
 });
-//         Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
+//  Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
 
 Route::controller(TeacherController::class)->group(function () {
     Route::get('/teacher/teacher-list', 'index')->name('teacher.index');
