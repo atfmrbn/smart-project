@@ -30,7 +30,7 @@
                 <tr>
                     <td class="align-middle">{{ $index + 1 }}</td>
                     <td class="align-middle">{{ $classroom->classroom_type_id }}</td>
-                    {{-- <td class="align-middle">{{ $classroom->classroom_type->name }}</td> --}}
+                    <td class="align-middle">{{ $classroom->classroom_type->name }}</td>
                     <td class="align-middle">{{ $classroom->name }}</td>
                     <td>
                         <div class="d-flex">
