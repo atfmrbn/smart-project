@@ -12,8 +12,8 @@
         <div class="col-6">
             <div class="form-group">
                 <label for="year">Year</label>
-                <input type="text" id="year" name="year" class="form-control  
-                @error('year')is-invalid @enderror" value="{{ isset($curriculum)? 
+                <input type="text" id="year" name="year" class="form-control
+                @error('year')is-invalid @enderror" value="{{ isset($curriculum)?
                 $curriculum->year : old('year')}}">
                 @error('year')
                 <div class="invalid-feedback">
@@ -23,10 +23,21 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" id="description" name="description" class="form-control  
-                @error('description')is-invalid @enderror" value="{{ isset($curriculum)? 
+                <input type="text" id="description" name="description" class="form-control
+                @error('description')is-invalid @enderror" value="{{ isset($curriculum)?
                 $curriculum->description : old('description')}}">
                 @error('description')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="is_default">Is_Default</label>
+                <input type="text" id="is_default" name="is_default" class="form-control
+                @error('is_default')is-invalid @enderror" value="{{ isset($curriculum)?
+                $curriculum->is_default : old('is_default')}}">
+                @error('is_default')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
