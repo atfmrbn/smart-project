@@ -14,6 +14,7 @@ class Curriculum extends Model
     protected $fillable = [
         'year',
         'description',
+        'is_default',
     ];
 
     protected $table = 'curriculums';

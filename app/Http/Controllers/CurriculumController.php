@@ -127,27 +127,31 @@ class CurriculumController extends Controller
         return redirect()->route('curriculum.index')->with('success', 'Curriculum deleted successfully.');
     }
 
-    // public function setDefault(string $id)
-    // {
-    //       try {
-    //         DB::beginTransaction();
+    public function setDefault(string $id)
+    {
+        try {
+            DB::beginTransaction();
 
-    //         //update all curriculum is_default to be 0
+            $curriculum = Curriculum::find($id);
+            if ($curriculum->is_default) {
+                // If the curriculum is already default, set it to 0
+                $curriculum->update(['is_default' => 0]);
+                $message = "Curriculum unset as default successfully";
+            } else {
+                // Set all curriculums' is_default to 0
+                Curriculum::where('is_default', 1)->update(['is_default' => 0]);
 
-    //         //update selected curriculum is_default to be 1
-    //         $curriculum = Curriculum::find($id);
-    //         $curriculum->update(['is_default' => 1]);
+                // Set selected curriculum's is_default to 1
+                $curriculum->update(['is_default' => 1]);
+                $message = "Curriculum set as default successfully";
+            }
 
-            
-    
-  
-
-    //         DB::commit();
-    //         return redirect()->route('patientadmin.index')->with("successMessage", "Tambah data sukses");    
-    //     } catch (\Throwable $th) {
-    //         DB::rollback();            
-    //         return redirect()->route('patientadmin.index')->with("errorMessage", $th->getMessage());
-    //     } 
-
-    // }
+            DB::commit();
+            return redirect()->route('curriculum.index')->with("successMessage", $message);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            \Log::error($th->getMessage());
+            return redirect()->route('curriculum.index')->with("errorMessage", $th->getMessage());
+        }
+    }
 }
