@@ -53,7 +53,7 @@ Route::controller(BookController::class)->group(function () {
 // Route::put('book-borrow/{id}/return', [BorrowingBookDetail::class, 'returnBook'])->name('book-borrow.return');
 Route::resource('book-borrow', BorrowingBookController::class);
 Route::put('book-borrow-detail/{id}/return', [BookBorrowDetailController::class, 'returnBook'])->name('book-borrow-detail.return');
-
+Route::get('book-borrow-download', [BorrowingBookController::class, 'download']);
 
 // borrow book detail
 Route::controller(BookBorrowDetailController::class)->group(function () {

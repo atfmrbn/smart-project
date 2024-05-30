@@ -16,7 +16,7 @@
     <div class="col-12 col-sm-6">
         <div class="form-group local-forms">
             <label for="student_id">Patron <span class="login-danger">*</span></label>
-            <select name="student_id" id="student_id" class="form-control data-select-2">
+            <select name="student_id" id="student_id" class="form-control data-select-2" {{ isset($borrow) ? 'disabled' : '' }}>
                 <option value="">Select Patron</option>
                 @foreach ($students as $student)
                     <option value="{{ $student->id }}" {{ (isset($borrow) && $borrow->student_id == $student->id) ? 'selected' : '' }}>
@@ -30,29 +30,33 @@
     <div class="col-12 col-sm-6">
         <div class="form-group local-forms">
             <label for="description">Description <span class="login-danger">*</span></label>
-            <input type="text" id="description" name="description" class="form-control" value="{{ isset($borrow) ? $borrow->description : old('description') }}" placeholder="Add description">
+            <input type="text" id="description" name="description" class="form-control" value="{{ isset($borrow) ? $borrow->description : old('description') }}" {{ isset($borrow) ? 'disabled' : '' }} placeholder="Add description">
         </div>
     </div>
 
     <div class="col-12 col-sm-6">
         <div class="form-group local-forms">
             <label for="checkout_date">Checkout Date <span class="login-danger">*</span></label>
-            <input type="date" id="checkout_date" name="checkout_date" class="form-control" value="{{ isset($borrow) ? $borrow->checkout_date : old('checkout_date') }}">
+            <input type="date" id="checkout_date" name="checkout_date" class="form-control" value="{{ isset($borrow) ? $borrow->checkout_date : old('checkout_date') }}" {{ isset($borrow) ? 'disabled' : '' }}>
         </div>
     </div>
 
     <div class="col-12 col-sm-6">
         <div class="form-group local-forms">
             <label for="due_date">Due Date <span class="login-danger">*</span></label>
-            <input type="date" id="due_date" name="due_date" class="form-control" value="{{ isset($borrow) ? $borrow->due_date : old('due_date') }}">
+            <input type="date" id="due_date" name="due_date" class="form-control" value="{{ isset($borrow) ? $borrow->due_date : old('due_date') }}" {{ isset($borrow) ? 'disabled' : '' }}>
         </div>
     </div>
-    
+
     <div class="col-12">
         <div class="student-submit">
+            @if(!isset($borrow))
             <button type="submit" class="btn btn-primary">Submit</button>
+            @endif
+            <a href="{{ URL::to('book-borrow')}}" class="btn btn-link">Back</a>
         </div>
     </div>
+
 </div>
 
 </form>
@@ -71,6 +75,7 @@
 <div class="row">
     {{-- <div class="col-md-5 border">
         <div class="row"> --}}
+            @if($canBorrow)
         <form action="{{ route('book-borrow-detail.store') }}" method="POST" autocomplete="off" class="mt-4">
             @csrf
             <input type="hidden" name="borrowing_book_id" value="{{ $borrow->id }}">
@@ -84,6 +89,7 @@
             </select>
             <button type="submit" class="btn btn-primary btn-block">Select</button>
         </form>
+        @endif
         {{-- </div> --}}
     {{-- </div> --}}
 
