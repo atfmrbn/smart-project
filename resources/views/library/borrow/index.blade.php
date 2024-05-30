@@ -8,7 +8,7 @@
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
             <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-            <a href="{{ URL::to('book-borrow/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a href="{{ URL::to('book-borrow/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -22,7 +22,7 @@
                 <th class="text-center">Description</th>
                 <th class="text-center">Checkout Date</th>
                 <th class="text-center">Due Date</th>
-                <th class="text-center">Penalty</th>
+                {{-- <th class="text-center">Penalty</th> --}}
                 <th class="text-center">Action</th>
             </tr>
         </thead>
@@ -34,10 +34,10 @@
                 <td>{{ $borrow->description }}</td>
                 <td>{{ $borrow->checkout_date }}</td>
                 <td>{{ $borrow->due_date }}</td>
-                <td>{{ $borrow->returned_date }}</td>
+                {{-- <td>{{ $borrow->returned_date }}</td> --}}
                 <td class=" text-center">
                     <div class="d-flex justify-content-center align-items-center">
-                        <a href="{{ URL::to('book-borrow/' . $borrow->id . '/edit') }}" class="btn btn-sm btn-outline-primary me-2">
+                        <a href="{{ route('book-borrow.edit', $borrow->id) }}" class="btn btn-sm btn-outline-primary me-2">
                             <i class="fas fa-edit"></i>
                         </a>
                         <form method="POST" action="{{ URL::to('book-borrow/' . $borrow->id) }}">
