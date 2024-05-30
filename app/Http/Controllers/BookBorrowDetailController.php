@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
+use Carbon\Carbon;
 
 class BookBorrowDetailController extends Controller
 {
@@ -40,25 +41,24 @@ class BookBorrowDetailController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input
-    $data = $request->validate([
-        'borrowing_book_id' => 'required',
-        'book_id' => [
-            'required', 'exists:books,id', function ($attribute, $value, $fail) use ($request) {
-            $borrowDetailExists = BorrowingBookDetail::where('borrowing_book_id', $request->borrowing_book_id)
-                ->where('book_id', $value)
-                ->exists();
+        $data = $request->validate([
+            'borrowing_book_id' => 'required',
+            'book_id' => [
+                'required', 'exists:books,id', function ($attribute, $value, $fail) use ($request) {
+                $borrowDetailExists = BorrowingBookDetail::where('borrowing_book_id', $request->borrowing_book_id)
+                    ->where('book_id', $value)
+                    ->exists();
 
-            if ($borrowDetailExists) {
-                $fail('Buku ini sudah dipilih.');
-            }
-        }],
-    ]);
+                if ($borrowDetailExists) {
+                    $fail('Buku ini sudah dipilih.');
+                }
+            }],
+        ]);
 
-    // $book = Book::findOrFail($data['book_id']);
-    BorrowingBookDetail::create($data);
+        // $book = Book::findOrFail($data['book_id']);
+        BorrowingBookDetail::create($data);
 
-    return redirect('book-borrow/'.$data['borrowing_book_id'].'/edit')->with('error', 'Buku ini sudah dipilih sebelumnya.');
+        return redirect('book-borrow/'.$data['borrowing_book_id'].'/edit')->with('error', 'Buku ini sudah dipilih sebelumnya.');
     }
 
     /**
@@ -70,5 +70,29 @@ class BookBorrowDetailController extends Controller
         $borrowDetail->delete();
 
         return redirect()->back();
+    }
+
+    // public function returnBook(Request $request, string $id)
+    // {
+    //     $borrowDetail = BorrowingBookDetail::findOrFail($id);
+    //     $borrowDetail->returned_date = now(); // Atur tanggal pengembalian ke tanggal saat ini
+    //     $borrowDetail->save();
+
+    //     return redirect()->back()->with('success', 'Book returned successfully');
+    // }
+
+    public function returnBook(Request $request, string $id)
+    {
+        $borrowDetail = BorrowingBookDetail::findOrFail($id);
+        $borrowDetail->returned_date = Carbon::now(); // Set the return date to current date
+
+        // Calculate the penalty
+        $penalty = $borrowDetail->calculatePenalty();
+        $borrowDetail->penalty = $penalty;
+
+        $borrowDetail->save();
+
+        // Redirect back to the borrowing book details page
+        return redirect()->back()->with('success', 'Book returned successfully with a penalty of ' . $penalty);
     }
 }
