@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
+use App\Models\Configuration;
 use Carbon\Carbon;
 
 class BookBorrowDetailController extends Controller
@@ -83,16 +84,21 @@ class BookBorrowDetailController extends Controller
 
     public function returnBook(Request $request, string $id)
     {
-        $borrowDetail = BorrowingBookDetail::findOrFail($id);
-        $borrowDetail->returned_date = Carbon::now(); // Set the return date to current date
+        $configuration = Configuration::first();
+        $borrowDetail = BorrowingBookDetail::with("borrowingBook")->findOrFail($id);
+
+        $now = Carbon::now();
+        $borrowDetail->returned_date = $now; // Set the return date to current date
 
         // Calculate the penalty
-        $penalty = $borrowDetail->calculatePenalty();
-        $borrowDetail->penalty = $penalty;
+        $dueDate = Carbon::parse($borrowDetail->borrowingBook->due_date);
+        $diffInDays = $dueDate->diffInDays($now);
+        $borrowDetail->penalty = $diffInDays * $configuration->book_penalty;
 
         $borrowDetail->save();
 
         // Redirect back to the borrowing book details page
-        return redirect()->back()->with('success', 'Book returned successfully with a penalty of ' . $penalty);
+        return redirect()->back()->with('success', 'Book returned successfully with a penalty of ');
     }
+    
 }

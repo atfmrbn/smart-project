@@ -16,6 +16,12 @@ class BorrowingBookDetail extends Model
     {
         return $this->belongsTo(Book::class);
     }
+
+    public function borrowingBook()
+    {
+        return $this->belongsTo(BorrowingBook::class);
+    }
+
     public function calculatePenalty()
     {
         if (!$this->returned_date || !$this->due_date) {
