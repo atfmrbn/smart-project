@@ -44,6 +44,7 @@ class ClassroomController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
+            'classroom_type_id' => 'required|exists:classroom_types,id',
         ]);
 
         try {
@@ -55,8 +56,6 @@ class ClassroomController extends Controller
         } catch (\Throwable $th) {
             return redirect('classroom')->with("errorMessage", $th->getMessage());
 
-        } finally{
-            return redirect('classroom');
         }
     }
 
@@ -79,7 +78,20 @@ class ClassroomController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $classroom = Classroom::find($id);
+        if (!$classroom) {
+            return redirect('classroom')->with("errorMessage", "Data tidak ditemukan");
+        }
+        
+        $classroom_types = ClassroomType::orderby('name')->get(); 
+        
+        $data = [
+            "title" => "Edit Classroom",
+            "classroom" => $classroom,
+            "classroom_types" => $classroom_types, 
+        ];
+    
+        return view('classroom.classroom_form', $data);
     }
 
     /**
@@ -87,7 +99,20 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'classroom_type_id' => 'required|exists:classroom_types,id',
+        ]);
+
+        try {
+            $classroom = Classroom::find($id);
+            $classroom->update($data);
+
+            return redirect('classroom')->with("successMessage", "Edit data sukses");
+        } catch (\Throwable $th) {
+            return redirect('classroom')->with("errorMessage", $th->getMessage());
+        
+        }
     }
 
     /**
@@ -95,6 +120,13 @@ class ClassroomController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $classroom = Classroom::find($id);
+            $classroom->delete();
+
+            return redirect('classroom')->with("successMessage", "Delete data sukses");
+        } catch (\Throwable $th){
+            return redirect('classroom')->with("errorMessage", $th->getMessage());
+        }
     }
 }

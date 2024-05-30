@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Curriculum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-            use Illuminate\Support\Facades\DB;
 class CurriculumController extends Controller
 {
     /**
@@ -127,25 +127,25 @@ class CurriculumController extends Controller
         return redirect()->route('curriculum.index')->with('success', 'Curriculum deleted successfully.');
     }
 
-    public function setDefault(string $id)
-    {
-          try {
-            DB::beginTransaction();
+    // public function setDefault(string $id)
+    // {
+    //       try {
+    //         DB::beginTransaction();
 
-            //update all curriculum is_default to be 0
+    //         //update all curriculum is_default to be 0
 
-            //update selected curriculum is_default to be 1
-            $curriculum = Curriculum::find($id);
-            $curriculum->update(['is_default' => 1]);
+    //         //update selected curriculum is_default to be 1
+    //         $curriculum = Curriculum::find($id);
+    //         $curriculum->update(['is_default' => 1]);
             
     
   
 
-            DB::commit();
-            return redirect()->route('patientadmin.index')->with("successMessage", "Tambah data sukses");    
-        } catch (\Throwable $th) {
-            DB::rollback();            
-            return redirect()->route('patientadmin.index')->with("errorMessage", $th->getMessage());
-        } 
-    }
+    //         DB::commit();
+    //         return redirect()->route('patientadmin.index')->with("successMessage", "Tambah data sukses");    
+    //     } catch (\Throwable $th) {
+    //         DB::rollback();            
+    //         return redirect()->route('patientadmin.index')->with("errorMessage", $th->getMessage());
+    //     } 
+    // }
 }
