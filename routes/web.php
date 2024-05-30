@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherHomeroomRelationshipController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
@@ -107,3 +108,13 @@ Route::controller(LibrarianController::class)->group(function () {
     Route::put('/librarian/librarian-list/{id}', 'update')->name('librarian.update');
     Route::delete('/librarian/librarian-list/{id}', 'destroy')->name('librarian.destroy');
 });
+
+Route::controller(TeacherHomeroomRelationshipController::class)->group(function () {
+    Route::get('/teacher/teacher-homeroom', 'index')->name('teacher-homeroom.index');
+    Route::get('/teacher/teacher-homeroom/add', 'create')->name('teacher-homeroom.create');
+    Route::post('/teacher/teacher-homeroom', 'store')->name('teacher-homeroom.store');
+    Route::get('/teacher/teacher-homeroom/{id}/edit', 'edit')->name('teacher-homeroom.edit');
+    Route::put('/teacher/teacher-homeroom/{id}', 'update')->name('teacher-homeroom.update');
+    Route::delete('/teacher/teacher-homeroom/{id}', 'destroy')->name('teacher-homeroom.destroy');
+});
+
