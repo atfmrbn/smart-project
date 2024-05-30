@@ -39,8 +39,8 @@
                 @foreach ($classroom_types as $index => $classroom_type)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
-                        <td class="text-center">{{ $classroom_type->name }}</td>
-                        <td class="text-center">{{ $classroom_type->description }}</td>
+                        <td>{{ $classroom_type->name }}</td>
+                        <td>{{ $classroom_type->description }}</td>
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 <a href="{{ URL::to('classroom/classroom-type/' . $classroom_type->id) }}"

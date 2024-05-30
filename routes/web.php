@@ -13,6 +13,7 @@ use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
+use App\Models\BorrowingBookDetail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,15 +42,10 @@ Route::controller(BookController::class)->group(function () {
     Route::delete('book/{id}', 'destroy')->name('book.destroy');
 });
 
-Route::controller(BorrowingBookController::class)->group(function () {
-    Route::get('book-borrow/', 'index')->name('book-borrow.index');
-    Route::get('book-borrow/add', 'create')->name('book-borrow.create');
-    Route::post('book-borrow/', 'store')->name('book-borrow.store');
-    Route::get('book-borrow/{id}/edit', 'edit')->name('book-borrow.edit');
-    Route::put('book-borrow/{id}/update', 'update')->name('book-borrow.update');
-    Route::delete('book-borrow/{id}', 'destroy')->name('book-borrow.destroy');
+// Route::put('book-borrow/{id}/return', [BorrowingBookDetail::class, 'returnBook'])->name('book-borrow.return');
+Route::resource('book-borrow', BorrowingBookController::class);
+Route::put('book-borrow-detail/{id}/return', [BookBorrowDetailController::class, 'returnBook'])->name('book-borrow-detail.return');
 
-});
 
 // borrow book detail
 Route::controller(BookBorrowDetailController::class)->group(function () {

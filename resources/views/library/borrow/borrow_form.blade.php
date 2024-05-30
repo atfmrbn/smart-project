@@ -95,6 +95,8 @@
                     <th style="width: 5%; text-align: center">No</th>
                     <th style="text-align: center">Book</th>
                     <th style="text-align: center">Category</th>
+                    <th style="text-align: center">Returned</th>
+                    <th style="text-align: center">Penalty</th>
                     <th style="width: 10%; text-align: center">Action</th>
                 </tr>
             </thead>
@@ -104,14 +106,31 @@
                     <td class="align-middle" style="text-align: center">{{ $index + 1 }}</td>
                     <td class="align-middle">{{ $borrowDetail->book->title }}</td>
                     <td class="align-middle">{{ $borrowDetail->book->category->name }}</td>
+                    <td class="align-middle" style="text-align: center;">
+                        @if($borrowDetail->returned_date)
+                            <span class="badge bg-success">Returned</span>
+                        @else
+                            <span class="badge bg-warning">Not Returned</span>
+                        @endif
+                    </td>
+                    <td class="align-middle" style="text-align: center;">
+                        {{ $borrowDetail->penalty ? 'Rp. ' . number_format($borrowDetail->penalty, 0, ',', '.') : 'No Penalty' }}
+                    </td>
                     <td class="align-middle">
                         <div class="text-center">
-                            {{-- <a href="{{ URL::to('book-borrow/' . $borrowDetail->id . '/edit') }}" class="btn btn-sm btn-outline-primary ms-2"><i class="fas fa-edit"></i></a> --}}
-
+                            <form method="POST" action="{{ route('book-borrow-detail.return', $borrowDetail->id) }}">
+                                @csrf
+                                @method('put')
+                                <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('Anda yakin mau mengembalikan buku ini?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
+                                    <i class="fas fa-book"></i> Return
+                                </button>
+                            </form>
                             <form method="POST" action="{{ route('book-borrow-detail.destroy', $borrowDetail->id) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus detail peminjaman untuk buku {{ $borrowDetail->book->title }}?')"><i class="fas fa-trash"></i></button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus detail peminjaman untuk buku {{ $borrowDetail->book->title }}?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </form>
                         </div>
                     </td>
@@ -119,6 +138,7 @@
                 @endforeach
             </tbody>
         </table>
+
     </div>
 </div>
 @endif

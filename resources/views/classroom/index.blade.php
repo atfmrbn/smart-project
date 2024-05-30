@@ -34,16 +34,16 @@
                         <td class="align-middle">{{ $classroom->name }}</td>
                         <td>
                             <div class="d-flex">
-                                <a href="{{ URL::to('classroom/' . $classroom->id) }}"
-                                    class="btn btn-sm btn-info mr-2">Show</a>
-                                <a href="{{ URL::to('classroom/' . $classroom->id) . '/edit' }}"
-                                    class="btn btn-sm btn-warning mr-2">Edit</a>
-
+                                <a title="Lihat" href="{{ URL::to('classroom/' . $classroom->id) }}"
+                                    class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                                <a href="{{ URL::to('classroom/' . $classroom->id . '/edit') }}"
+                                    class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
                                 <form action="{{ URL::to('classroom/' . $classroom->id) }}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Anda yakin mau menghapus data ini {{ $classroom->name }} ?')">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger me-2"
+                                        onclick="return confirm('Anda yakin mau menghapus data ini {{ $classroom->name }} ?')"><i
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             </div>
                         </td>

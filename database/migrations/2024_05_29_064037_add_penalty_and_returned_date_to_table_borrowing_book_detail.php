@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('borrowing_book_details', function (Blueprint $table) {
+            $table->dateTime('returned_date')->nullable()->after('book_id');
+            $table->string('penalty')->nullable()->after('returned_date');
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('borrowing_book_details', function (Blueprint $table) {
+            Schema::dropIfExists('borrowing_book_details');
         });
     }
 };
