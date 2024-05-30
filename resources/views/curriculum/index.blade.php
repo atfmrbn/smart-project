@@ -20,7 +20,7 @@
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
             <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-            <a href="{{ URL::to('curriculum/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a href="{{ route('curriculum.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
     </div>
 </div>
@@ -29,11 +29,10 @@
     <table id="datatable1" class="table table-bordered table-striped">
         <thead>
             <tr class="text-center">
-                <th>ID</th>
+                <th>#</th>
                 <th>Year</th>
                 <th>Description</th>
-                {{-- <th>Created At</th>
-                <th>Updated At</th> --}}
+                <th>Is Default</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -43,19 +42,25 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $curriculum->year }}</td>
                     <td>{{ $curriculum->description }}</td>
-                    {{-- <td>{{ $curriculum->created_at }}</td>
-                    <td>{{ $curriculum->updated_at }}</td> --}}
+                    <td>{{ $curriculum->is_default ? '1' : '0' }}</td>
                     <td class="align-middle text-center">
                         <div class="d-flex justify-content-center align-items-center">
-                        <a title="Lihat" href="{{ URL::to('curriculum/' . $curriculum->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                        <a href="{{ URL::to('curriculum/' . $curriculum->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
-                        <form action="{{ URL::to('curriculum/' . $curriculum->id) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-sm btn-outline-danger me-2" onclick="return confirm('Anda yakin mau menghapus data ini {{ $curriculum->name }}?')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
+                            <a title="Lihat" href="{{ URL::to('curriculum/' . $curriculum->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                            <a title="Edit" href="{{ URL::to('curriculum/' . $curriculum->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
+                            <form action="{{ URL::to('curriculum/' . $curriculum->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" title="Hapus" class="btn btn-sm btn-outline-danger me-2" onclick="return confirm('Anda yakin mau menghapus data ini {{ $curriculum->name }}?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                            <form action="{{ route('curriculum.setDefault', $curriculum->id) }}" method="post">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" title="Default" class="btn btn-sm btn-outline-warning me-2" {{ $curriculum->is_default ? '' : '' }}>
+                                    <i class="fas fa-pen"></i> {{ $curriculum->is_default ? '' : '' }}
+                                </button>
+                            </form>
                         </div>
                     </td>
                 </tr>

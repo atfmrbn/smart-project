@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Curriculum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-            use Illuminate\Support\Facades\DB;
 class CurriculumController extends Controller
 {
     /**
@@ -129,23 +129,29 @@ class CurriculumController extends Controller
 
     public function setDefault(string $id)
     {
-          try {
+        try {
             DB::beginTransaction();
 
-            //update all curriculum is_default to be 0
-
-            //update selected curriculum is_default to be 1
             $curriculum = Curriculum::find($id);
-            $curriculum->update(['is_default' => 1]);
-            
-    
-  
+            if ($curriculum->is_default) {
+                // If the curriculum is already default, set it to 0
+                $curriculum->update(['is_default' => 0]);
+                $message = "Curriculum unset as default successfully";
+            } else {
+                // Set all curriculums' is_default to 0
+                Curriculum::where('is_default', 1)->update(['is_default' => 0]);
+
+                // Set selected curriculum's is_default to 1
+                $curriculum->update(['is_default' => 1]);
+                $message = "Curriculum set as default successfully";
+            }
 
             DB::commit();
-            return redirect()->route('patientadmin.index')->with("successMessage", "Tambah data sukses");    
+            return redirect()->route('curriculum.index')->with("successMessage", $message);
         } catch (\Throwable $th) {
-            DB::rollback();            
-            return redirect()->route('patientadmin.index')->with("errorMessage", $th->getMessage());
-        } 
+            DB::rollback();
+            \Log::error($th->getMessage());
+            return redirect()->route('curriculum.index')->with("errorMessage", $th->getMessage());
+        }
     }
 }

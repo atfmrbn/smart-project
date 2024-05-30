@@ -17,7 +17,7 @@
           <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/student/student-teacher-classroom') }}">Student List</a></li>
-            <li><a href="{{ URL::to('/student/student-teacher-classroom/student_detail') }}">Student View</a></li>
+            <li><a href="{{ URL::to('/extracurricular') }}">Extracurriculars</a></li>
             <li><a href="add-student.html">Student Add</a></li>
             <li><a href="edit-student.html">Student Edit</a></li>
           </ul>
@@ -26,7 +26,7 @@
           <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="">Teacher List</a></li>
-            <li><a href="teacher-details.html">Class</a></li>
+            <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}">Teacher Homeroom</a></li>
             <li><a href="add-teacher.html">Subjects</a></li>
             <li><a href="edit-teacher.html">Attendances</a></li>
           </ul>

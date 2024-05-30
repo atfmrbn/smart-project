@@ -47,6 +47,7 @@ class TeacherController extends Controller
     {
 
         $data = $request->validate([
+            'identity_number' => 'required',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
             'email' => 'required|email|unique:users',
@@ -103,6 +104,7 @@ class TeacherController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
+            'identity_number' => 'required',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users,username,' . $id,
             'email' => 'required|email|unique:users,email,' . $id,

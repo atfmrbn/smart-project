@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherHomeroomRelationshipController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
@@ -10,9 +11,11 @@ use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
+use App\Models\BorrowingBookDetail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
@@ -47,15 +50,10 @@ Route::controller(BookController::class)->group(function () {
     Route::delete('book/{id}', 'destroy')->name('book.destroy');
 });
 
-Route::controller(BorrowingBookController::class)->group(function () {
-    Route::get('book-borrow/', 'index')->name('book-borrow.index');
-    Route::get('book-borrow/add', 'create')->name('book-borrow.create');
-    Route::post('book-borrow/', 'store')->name('book-borrow.store');
-    Route::get('book-borrow/{id}/edit', 'edit')->name('book-borrow.edit');
-    Route::put('book-borrow/{id}/update', 'update')->name('book-borrow.update');
-    Route::delete('book-borrow/{id}', 'destroy')->name('book-borrow.destroy');
+// Route::put('book-borrow/{id}/return', [BorrowingBookDetail::class, 'returnBook'])->name('book-borrow.return');
+Route::resource('book-borrow', BorrowingBookController::class);
+Route::put('book-borrow-detail/{id}/return', [BookBorrowDetailController::class, 'returnBook'])->name('book-borrow-detail.return');
 
-});
 
 // borrow book detail
 Route::controller(BookBorrowDetailController::class)->group(function () {
@@ -82,10 +80,14 @@ Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
 // Classroom
 Route::resource('/classroom', ClassroomController::class);
 
+// Extracurricular
+Route::resource('/extracurricular', ExtracurricularController::class);
+
 // Subject
 Route::resource('subject', SubjectController::class);
 
 //Route::resource('/teacher', TeacherController::class);
+
 Route::controller(CurriculumController::class)->group(function () {
     Route::get('/curriculum', 'index')->name('curriculum.index');
     Route::get('curriculum/add', 'create')->name('curriculum.create');
@@ -95,6 +97,11 @@ Route::controller(CurriculumController::class)->group(function () {
     Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
 });
 //  Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
+
+
+Route::resource('curriculum', CurriculumController::class);
+Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
+
 
 Route::controller(TeacherController::class)->group(function () {
     Route::get('/teacher/teacher-list', 'index')->name('teacher.index');
@@ -113,3 +120,13 @@ Route::controller(LibrarianController::class)->group(function () {
     Route::put('/librarian/librarian-list/{id}', 'update')->name('librarian.update');
     Route::delete('/librarian/librarian-list/{id}', 'destroy')->name('librarian.destroy');
 });
+
+Route::controller(TeacherHomeroomRelationshipController::class)->group(function () {
+    Route::get('/teacher/teacher-homeroom', 'index')->name('teacher-homeroom.index');
+    Route::get('/teacher/teacher-homeroom/add', 'create')->name('teacher-homeroom.create');
+    Route::post('/teacher/teacher-homeroom', 'store')->name('teacher-homeroom.store');
+    Route::get('/teacher/teacher-homeroom/{id}/edit', 'edit')->name('teacher-homeroom.edit');
+    Route::put('/teacher/teacher-homeroom/{id}', 'update')->name('teacher-homeroom.update');
+    Route::delete('/teacher/teacher-homeroom/{id}', 'destroy')->name('teacher-homeroom.destroy');
+});
+
