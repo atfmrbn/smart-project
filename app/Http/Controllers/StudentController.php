@@ -46,6 +46,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'identity_number' => 'required',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
             'email' => 'required',
@@ -103,6 +104,7 @@ class StudentController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
+            'identity_number' => 'required',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users,username,' . $id,
             'email' => 'required|unique:users,email,' . $id,

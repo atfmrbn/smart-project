@@ -10,7 +10,6 @@
                 <input type="text" id="name" name="name" class="form-control" value="{{ $student->name }}" readonly>
             </div>
         </div>
-
         <div class="col-12">
             <div class="form-group local-forms">
                 <label for="username">Username <span class="login-danger">*</span></label>
@@ -67,4 +66,5 @@
         </div>
     </div>
     </form>
+
 @endsection

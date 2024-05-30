@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Curriculum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-            use Illuminate\Support\Facades\DB;
 class CurriculumController extends Controller
 {
     /**
@@ -138,14 +138,16 @@ class CurriculumController extends Controller
     //         $curriculum = Curriculum::find($id);
     //         $curriculum->update(['is_default' => 1]);
 
-
-
+            
+    
+  
 
     //         DB::commit();
-    //         return redirect()->route('patientadmin.index')->with("successMessage", "Tambah data sukses");
+    //         return redirect()->route('patientadmin.index')->with("successMessage", "Tambah data sukses");    
     //     } catch (\Throwable $th) {
-    //         DB::rollback();
+    //         DB::rollback();            
     //         return redirect()->route('patientadmin.index')->with("errorMessage", $th->getMessage());
-    //     }
+    //     } 
+
     // }
 }
