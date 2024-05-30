@@ -17,6 +17,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Models\BorrowingBookDetail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
     return view('dashboard.admin');
@@ -24,7 +25,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
 
-
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/home', function() {
+    return 'Welcome, you are logged in!';
+})->middleware('auth');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::controller(BookCategoryController::class)->group(function () {
     Route::get('book-category/', 'index')->name('book-category.index');
@@ -82,17 +88,20 @@ Route::resource('subject', SubjectController::class);
 
 //Route::resource('/teacher', TeacherController::class);
 
+Route::controller(CurriculumController::class)->group(function () {
+    Route::get('/curriculum', 'index')->name('curriculum.index');
+    Route::get('curriculum/add', 'create')->name('curriculum.create');
+    Route::post('/curriculum', 'store')->name('curriculum.store');
+    Route::get('curriculum/{id}/edit', 'edit')->name('curriculum.edit');
+    Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
+    Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
+});
+//  Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
+
+
 Route::resource('curriculum', CurriculumController::class);
 Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
-// Route::controller(CurriculumController::class)->group(function () {
-//     Route::get('/curriculum', 'index')->name('curriculum.index');
-//     Route::get('curriculum/add', 'create')->name('curriculum.create');
-//     Route::post('/curriculum', 'store')->name('curriculum.store');
-//     Route::get('curriculum/{id}/edit', 'edit')->name('curriculum.edit');
-//     Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
-//     Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
-// });
-//         Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
+
 
 Route::controller(TeacherController::class)->group(function () {
     Route::get('/teacher/teacher-list', 'index')->name('teacher.index');
