@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-
+    
     <div class="table-responsive">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
@@ -31,9 +31,31 @@
                     <th>ID</th>
                     <th>Year</th>
                     <th>Description</th>
-                    {{-- <th>Created At</th>
-                <th>Updated At</th> --}}
                     <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($curriculums as $index => $curriculum)
+                <tr class="text-center">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $curriculum->year }}</td>
+                    <td>{{ $curriculum->description }}</td>
+                    <td>{{ $curriculum->is_default }}</td>
+                    {{-- <td>{{ $curriculum->created_at }}</td>
+                    <td>{{ $curriculum->updated_at }}</td> --}}
+                    <td class="align-middle text-center">
+                        <div class="d-flex justify-content-center align-items-center">
+                        <a title="Lihat" href="{{ URL::to('curriculum/' . $curriculum->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                        <a href="{{ URL::to('curriculum/' . $curriculum->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
+                        <form action="{{ URL::to('curriculum/' . $curriculum->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-outline-danger me-2" onclick="return confirm('Anda yakin mau menghapus data ini {{ $curriculum->name }}?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                        </div>
+                    </td>
                 </tr>
             </thead>
             <tbody>

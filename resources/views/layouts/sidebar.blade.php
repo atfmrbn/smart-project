@@ -26,7 +26,7 @@
           <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="">Teacher List</a></li>
-            <li><a href="teacher-details.html">Class</a></li>
+            <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}">Teacher Homeroom</a></li>
             <li><a href="add-teacher.html">Subjects</a></li>
             <li><a href="edit-teacher.html">Attendances</a></li>
           </ul>
