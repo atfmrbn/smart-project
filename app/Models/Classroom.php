@@ -9,7 +9,7 @@ class Classroom extends Model
 {
     protected $guarded = [];
 
-    public function classroom_type()
+    public function classroomType()
     {
         return $this->belongsTo(ClassroomType::class);
     }
