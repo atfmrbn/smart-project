@@ -32,6 +32,7 @@
                 <th>ID</th>
                 <th>Year</th>
                 <th>Description</th>
+                <th>Is Default</th>
                 {{-- <th>Created At</th>
                 <th>Updated At</th> --}}
                 <th>Actions</th>
@@ -43,6 +44,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $curriculum->year }}</td>
                     <td>{{ $curriculum->description }}</td>
+                    <td>{{ $curriculum->is_default }}</td>
                     {{-- <td>{{ $curriculum->created_at }}</td>
                     <td>{{ $curriculum->updated_at }}</td> --}}
                     <td class="align-middle text-center">

@@ -137,6 +137,7 @@ class CurriculumController extends Controller
     //         //update selected curriculum is_default to be 1
     //         $curriculum = Curriculum::find($id);
     //         $curriculum->update(['is_default' => 1]);
+
             
     
   
@@ -147,5 +148,6 @@ class CurriculumController extends Controller
     //         DB::rollback();            
     //         return redirect()->route('patientadmin.index')->with("errorMessage", $th->getMessage());
     //     } 
+
     // }
 }
