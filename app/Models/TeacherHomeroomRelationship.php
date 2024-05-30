@@ -18,13 +18,18 @@ class TeacherHomeroomRelationship extends Model
     protected $table = 'teacher_homeroom_relationships';
     protected $guarded = [];
 
-    public function user()
+    public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
     public function curriculum()
     {
         return $this->belongsTo(Curriculum::class, 'curriculum_id');
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class, 'classroom_id');
     }
 
     public function studentTeacherHomeroomRelationship()
