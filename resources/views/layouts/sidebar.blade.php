@@ -53,6 +53,10 @@
             <a href="{{ URL::to('/curriculum') }}"><i class="fas fa-school"></i> <span> Curriculums</span></a>
         </li>
 
+        <li class="nav-item">
+          <a href="{{ URL :: to ('/task-type') }}"><i class="fas fa-tags"></i> <span> Task Type</span></a>
+      </li>
+
         <li class="submenu">
           <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
           <ul>
