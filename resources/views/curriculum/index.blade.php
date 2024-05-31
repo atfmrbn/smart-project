@@ -42,7 +42,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $curriculum->year }}</td>
                     <td>{{ $curriculum->description }}</td>
-                    <td>{{ $curriculum->is_default ? '1' : '0' }}</td>
+                    <td>{{ $curriculum->is_default ? 'Default' : '' }}</td>
                     <td class="align-middle text-center">
                         <div class="d-flex justify-content-center align-items-center">
                             <a title="Lihat" href="{{ URL::to('curriculum/' . $curriculum->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
