@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-6">
             <div class="form-group">
-                <label for="classroom_type_id">Classroom Type ID</label>
+                <label for="classroomType_id">Classroom Type ID</label>
                 <select class="form-control" name="classroom_type_id" id="classroom_type_id">
                     @foreach ($classroom_types as $classroom_type)
                         <option value="{{ $classroom_type->id }}"

@@ -25,7 +25,7 @@ class StudentController extends Controller
         //     $students = [];
         // }
 
-        return view('student/student-teacher-classroom.index', $data);
+        return view('student/student-list.index', $data);
     }
 
     /**
@@ -37,7 +37,7 @@ class StudentController extends Controller
             'title' => 'Add Student'
         ];
 
-        return view('student/student-teacher-classroom.student_form', $data);
+        return view('student/student-list.student_form', $data);
     }
 
     /**
@@ -62,7 +62,7 @@ class StudentController extends Controller
         // $data['password'] = Hash::make($data["password"]);
         User::create($data);
 
-        return redirect('student/student-teacher-classroom')->with("successMessage", "Add data sukses");
+        return redirect('student/student-list')->with("successMessage", "Add data sukses");
     }
 
     /**
@@ -77,7 +77,7 @@ class StudentController extends Controller
             'student'=> $student,
         ];
 
-        return view('student/student-teacher-classroom.student_detail', compact('student'), $data);
+        return view('student/student-list.student_detail', compact('student'), $data);
 
     }
 
@@ -88,14 +88,14 @@ class StudentController extends Controller
     {
         $student = User::where('id', $id)->where('role', 'Student')->first();
         if (!$student) {
-            return redirect('student/student-teacher-classroom')->with("errorMessage", "Data tidak ditemukan");
+            return redirect('student/student-list')->with("errorMessage", "Data tidak ditemukan");
         }
         $data = [
             "title" => "Edit User",
             "student" => $student,
         ];
 
-        return view('student/student-teacher-classroom.student_form', $data);
+        return view('student/student-list.student_form', $data);
     }
 
     /**
@@ -126,9 +126,9 @@ class StudentController extends Controller
 
             $student->update($data);
 
-            return redirect('student/student-teacher-classroom')->with("successMessage", "Edit data sukses");
+            return redirect('student/student-list')->with("successMessage", "Edit data sukses");
         } catch (\Throwable $th) {
-            return redirect('student/student-teacher-classroom')->with("errorMessage", $th->getMessage());
+            return redirect('student/student-list')->with("errorMessage", $th->getMessage());
         }
     }
 
@@ -140,9 +140,9 @@ class StudentController extends Controller
         try {
             $student = User::where('id', $id)->where('role', 'Student')->first();
             $student->delete();
-            return redirect('student/student-teacher-classroom')->with("successMessage", "Delete data sukses");
+            return redirect('student/student-list')->with("successMessage", "Delete data sukses");
         } catch (\Throwable $th){
-            return redirect('student/student-teacher-classroom')->with("errorMessage", $th->getMessage());
+            return redirect('student/student-list')->with("errorMessage", $th->getMessage());
         }
     }
 }
