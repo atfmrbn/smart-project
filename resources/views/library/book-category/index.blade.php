@@ -31,13 +31,13 @@
                     <td>{{ $category->description }}</td>
                     <td class="align-middle text-center">
                         <div class="d-flex justify-content-center align-items-center">
-                            <a href="{{ URL::to('book-category/' . $category->id . '/edit') }}" class="btn btn-sm btn-outline-primary me-2">
+                            <a href="{{ URL::to('book-category/' . $category->id . '/edit') }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form method="POST" action="{{ URL::to('book-category/' . $category->id) }}">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus buku {{ $category->name }} ?')">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Anda yakin mau menghapus buku {{ $category->name }} ?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

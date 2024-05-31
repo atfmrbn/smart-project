@@ -58,7 +58,7 @@
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" title="Default" class="btn btn-sm btn-outline-warning me-2" {{ $curriculum->is_default ? '' : '' }}>
-                                    <i class="fas fa-pen"></i> {{ $curriculum->is_default ? '' : '' }}
+                                    <i class="fas fa-check"></i> {{ $curriculum->is_default ? '' : '' }}
                                 </button>
                             </form>
                         </div>

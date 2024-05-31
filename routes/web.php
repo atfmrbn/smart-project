@@ -88,18 +88,19 @@ Route::resource('subject', SubjectController::class);
 
 //Route::resource('/teacher', TeacherController::class);
 
-Route::controller(CurriculumController::class)->group(function () {
-    Route::get('/curriculum', 'index')->name('curriculum.index');
-    Route::get('curriculum/add', 'create')->name('curriculum.create');
-    Route::post('/curriculum', 'store')->name('curriculum.store');
-    Route::get('curriculum/{id}/edit', 'edit')->name('curriculum.edit');
-    Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
-    Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
-});
+    // Route::controller(CurriculumController::class)->group(function () {
+    //     Route::get('/curriculum', 'index')->name('curriculum.index');
+    //     Route::get('curriculum/add', 'create')->name('curriculum.create');
+    //     Route::post('/curriculum', 'store')->name('curriculum.store');
+    //     Route::get('curriculum/{id}/edit', 'edit')->name('curriculum.edit');
+    //     Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
+    //     Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
+    // });
 //  Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
 
 
 Route::resource('curriculum', CurriculumController::class);
+
 Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
 
 
