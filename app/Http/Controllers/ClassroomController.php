@@ -14,9 +14,9 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        $classrooms = Classroom::with('classroom_type')->orderby('id')->get();
+        $classrooms = Classroom::with('classroomType')->orderBy('id')->get();
         $data = [
-            "title" => "Classrooms",
+            "title" => "Ruang Kelas",
             "classrooms" => $classrooms,
         ];
 
@@ -28,9 +28,9 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        $classroom_types = ClassroomType::orderby('name')->get();
+        $classroom_types = ClassroomType::orderBy('name')->get();
         $data = [
-            "title" => "Add Classroom",
+            "title" => "Tambah Ruang Kelas",
             "classroom_types" => $classroom_types,
         ];
 
@@ -48,14 +48,10 @@ class ClassroomController extends Controller
         ]);
 
         try {
-
             Classroom::create($data);
-
-            return redirect('classroom')->with("successMessage", "Add data sukses");
-            
+            return redirect('classroom')->with("successMessage", "Penambahan data berhasil.");
         } catch (\Throwable $th) {
             return redirect('classroom')->with("errorMessage", $th->getMessage());
-
         }
     }
 
@@ -66,7 +62,7 @@ class ClassroomController extends Controller
     {
         $classroom = Classroom::find($id);
         $data = [
-            "title" => "Classroom Detail",
+            "title" => "Detail Ruang Kelas",
             "classroom" => $classroom,
         ];
 
@@ -83,10 +79,10 @@ class ClassroomController extends Controller
             return redirect('classroom')->with("errorMessage", "Data tidak ditemukan");
         }
         
-        $classroom_types = ClassroomType::orderby('name')->get(); 
+        $classroom_types = ClassroomType::orderBy('name')->get(); 
         
         $data = [
-            "title" => "Edit Classroom",
+            "title" => "Edit Ruang Kelas",
             "classroom" => $classroom,
             "classroom_types" => $classroom_types, 
         ];
@@ -108,10 +104,9 @@ class ClassroomController extends Controller
             $classroom = Classroom::find($id);
             $classroom->update($data);
 
-            return redirect('classroom')->with("successMessage", "Edit data sukses");
+            return redirect('classroom')->with("successMessage", "Perubahan data berhasil.");
         } catch (\Throwable $th) {
             return redirect('classroom')->with("errorMessage", $th->getMessage());
-        
         }
     }
 
@@ -124,8 +119,8 @@ class ClassroomController extends Controller
             $classroom = Classroom::find($id);
             $classroom->delete();
 
-            return redirect('classroom')->with("successMessage", "Delete data sukses");
-        } catch (\Throwable $th){
+            return redirect('classroom')->with("successMessage", "Penghapusan data berhasil.");
+        } catch (\Throwable $th) {
             return redirect('classroom')->with("errorMessage", $th->getMessage());
         }
     }
