@@ -19,7 +19,7 @@
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
                 <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                <a href="{{ URL::to('student/student-teacher-classroom/create') }}" class="btn btn-primary"><i
+                <a href="{{ URL::to('student/student-list/create') }}" class="btn btn-primary"><i
                         class="fas fa-plus"></i></a>
             </div>
         </div>
@@ -55,14 +55,14 @@
                         <td>{{ $student->address }}</td>
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}"
+                                <a href="{{ URL::to('student/student-list/' . $student->id) }}"
                                     class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                                <a href="{{ URL::to('student/student-teacher-classroom/' . $student->id) . '/edit' }}"
+                                <a href="{{ URL::to('student/student-list/' . $student->id) . '/edit' }}"
                                     class="btn btn-sm btn-outline-primary me-2">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form method="POST"
-                                    action="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}">
+                                    action="{{ URL::to('student/student-list/' . $student->id) }}">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-sm btn-outline-danger"

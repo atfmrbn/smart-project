@@ -6,10 +6,10 @@
         </div>
     @endif
     @if (isset($student))
-        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('student/student-list/' . $student->id) }}" autocomplete="off" enctype="multipart/form-data">
             @method('put')
         @else
-            <form method="POST" action="{{ URL::to('student/student-teacher-classroom') }}" autocomplete="off">
+            <form method="POST" action="{{ URL::to('student/student-list') }}" autocomplete="off">
     @endif
     @csrf
     <div class="row">
@@ -139,7 +139,7 @@
         <div class="col-12">
             <div class="student-submit">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ URL::to('student/student-teacher-classroom/') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ URL::to('student/student-list/') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>

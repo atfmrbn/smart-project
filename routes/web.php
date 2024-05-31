@@ -72,7 +72,7 @@ Route::controller(BookReturnController::class)->group(function () {
 });
 
 // Student
-Route::resource('/student/student-teacher-classroom', StudentController::class);
+Route::resource('/student/student-list', StudentController::class);
 
 // Classroom Type
 Route::resource('/classroom/classroom-type', ClassroomTypeController::class);

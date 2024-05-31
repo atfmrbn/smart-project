@@ -61,7 +61,7 @@
         </div>
         <div class="col-12">
             <div class="student-submit">
-                <a href="{{ URL::to('student/student-teacher-classroom/') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ URL::to('student/student-list/') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>
