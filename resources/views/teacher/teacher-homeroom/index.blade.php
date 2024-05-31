@@ -28,9 +28,9 @@
             @foreach ($teacher_homerooms as $index => $teacher_homeroom)
             <tr>
                 <td class="text-center">{{ $index + 1 }}</td>
-                <td>{{ $teacher_homeroom->teacher_id}}</td>
-                <td>{{ $teacher_homeroom->classroom_id }}</td>
-                <td>{{ $teacher_homeroom->curriculum_id }}</td>
+                <td>{{ $teacher_homeroom->teacher->name}}</td>
+                <td>{{ $teacher_homeroom->classroom->classroomType->name }} - {{ $teacher_homeroom->classroom->name }}</td>
+                <td>{{ $teacher_homeroom->curriculum->year }}</td>
                 <td class="align-middle text-center">
                     <div class="d-flex justify-content-center align-items-center">
                         <a href="{{ route('teacher-homeroom.edit', $teacher_homeroom->id) }}" class="btn btn-sm btn-outline-primary me-2">

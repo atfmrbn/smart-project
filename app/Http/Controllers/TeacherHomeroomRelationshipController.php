@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
 use App\Models\TeacherHomeroomRelationship;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,8 +15,12 @@ class TeacherHomeroomRelationshipController extends Controller
      */
     public function index()
     {
-        $teacher_homerooms = TeacherHomeroomRelationship::whereNotNull('teacher_id')->get();
-
+        $teacher_homerooms = TeacherHomeroomRelationship::
+        with('teacher', 'curriculum', 'classroom')
+        ->where('curriculum_id', $this->defaultCurriculum->id)
+        // ->orderBy('classroom_id')
+        ->get();
+        // dd($teacher_homerooms[2]->classroom);
         $data = [
             'title' => 'Teacher Homerooms',
             'teacher_homerooms' => $teacher_homerooms->isEmpty() ? [] : $teacher_homerooms,
@@ -28,15 +34,13 @@ class TeacherHomeroomRelationshipController extends Controller
      */
     public function create()
     {
-        // $teacher_homerooms = TeacherHomeroomRelationship::select('teacher_homeroom_relationships.*', 'users.name', 'classrooms.name as classroom_name')
-        //     ->join('users', 'users.id', '=', 'teacher_homeroom_relationships.teacher_id')
-        //     ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
-        //     ->where('teacher_homeroom_relationships.curriculum_id', 2)
-        //     ->get();
+        $teachers = User::where('role', 'Teacher')->get();
+        $classrooms = Classroom::with('classroomType')->get();
 
         return view('teacher.teacher-homeroom.form', [
             'title' => 'Add Teacher Homeroom',
-            'teacher_homerooms' => $teacher_homerooms
+            'teachers' => $teachers,
+            'classrooms' => $classrooms,            
         ]);
     }
 
@@ -46,11 +50,11 @@ class TeacherHomeroomRelationshipController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required',
-            'classroom' => 'required',
-            'curriculum' => 'required',
+            'teacher_id' => 'required',
+            'classroom_id' => 'required',
         ]);
-
+        $data['curriculum_id'] = $this->defaultCurriculum->id;
+  
         TeacherHomeroomRelationship::create($data);
 
         return redirect()->route('teacher-homeroom.index')->with('successMessage', 'Data successfully added');

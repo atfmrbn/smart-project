@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
 use App\Models\TeacherHomeroomRelationship;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -18,13 +19,7 @@ class BorrowingBookController extends Controller
      */
     public function index()
     {
-        $borrows = BorrowingBook::select('borrowing_books.*', 'users.name', 'classrooms.name as classroom_name')
-        ->join('users', 'users.id', '=', 'borrowing_books.student_id')
-        ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
-        ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
-        ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
-        ->where('teacher_homeroom_relationships.curriculum_id', 2)
-        ->get();
+        $borrows = BorrowingBook::getActiveBorrowingBook($this->defaultCurriculum->id);
 
         $data = [
             'title' => 'Borrowed Books List',
@@ -104,11 +99,13 @@ class BorrowingBookController extends Controller
         $students = User::getActiveStudent($this->defaultCurriculum->id);
 
         $books = Book::with('category')->orderby('title')->get();
+        $now = Carbon::now();
         
         $data = [
             'borrow' => $borrow,
             'students' => $students,
             'books' => $books,
+            'canBorrow' => $borrow->checkout_date == $now->toDateString()
         ];
 
         return view('library.borrow.borrow_form', $data);
@@ -119,7 +116,7 @@ class BorrowingBookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return redirect()->route('book-borrow.index');
     }
 
     /**
@@ -131,5 +128,19 @@ class BorrowingBookController extends Controller
         $borrow->delete();
 
         return redirect()->route('book-borrow.index')->with('success', 'Borrow Book deleted successfully');
+    }
+
+    public function download()
+    {
+        $borrows = BorrowingBook::getActiveBorrowingBook($this->defaultCurriculum->id);
+
+        $data = [
+            'title' => 'Borrowed Books List',
+            'borrows' => $borrows 
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.borrow.report', $data);
+
+	    return $pdf->download('laporan-perpustakaan-pdf');
     }
 }
