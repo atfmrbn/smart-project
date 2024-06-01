@@ -12,20 +12,15 @@ class TeacherController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-
     {
         $teachers = User::where('role', 'Teacher')->get();
 
         $data = [
-            'title' => 'Teachers'
+            'title' => 'Teachers',
+            'teachers' => $teachers
         ];
 
-        if ($teachers->isEmpty()) {
-            // Jika tidak ada data teachers, pastikan untuk mengembalikan array kosong
-            $teachers = [];
-        }
-
-        return view('teacher/teacher-list.index', compact('teachers'), $data);
+        return view('teacher.teacher-list.index', $data);
     }
 
     /**
@@ -37,7 +32,7 @@ class TeacherController extends Controller
             'title' => 'Add Teacher'
         ];
 
-        return view('teacher/teacher-list.form', $data);
+        return view('teacher.teacher-list.form', $data);
     }
 
     /**
@@ -45,9 +40,8 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = $request->validate([
-            'identity_number' => 'required',
+            'identity_number' => 'required|unique:users,identity_number',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
             'email' => 'required|email|unique:users',
@@ -55,14 +49,13 @@ class TeacherController extends Controller
             'gender' => 'required',
             'born_date' => 'required|date',
             'phone' => 'required',
-            'nik' => 'required|unique:users',
+            'nik' => 'required|unique:users,nik',
             'address' => 'required',
             'role' => 'required',
         ]);
 
-        $data['password'] = Hash::make($data["password"]);
+        $data['password'] = Hash::make($data['password']);
         User::create($data);
-
 
         return redirect()->route('teacher.index')->with('successMessage', 'Add data sukses');
     }
@@ -74,8 +67,8 @@ class TeacherController extends Controller
     {
         $teacher = User::find($id);
         $data = [
-            "title" => "Teacher Detail",
-            "teacher" => $teacher,
+            'title' => 'Teacher Detail',
+            'teacher' => $teacher,
         ];
 
         return view('teacher.detail', $data);
@@ -88,14 +81,14 @@ class TeacherController extends Controller
     {
         $teacher = User::where('id', $id)->where('role', 'Teacher')->first();
         if (!$teacher) {
-            return redirect()->route('teacher.index')->with("errorMessage", "Data tidak ditemukan");
+            return redirect()->route('teacher.index')->with('errorMessage', 'Data tidak ditemukan');
         }
         $data = [
-            "title" => "Edit Teacher",
-            "teacher" => $teacher,
+            'title' => 'Edit Teacher',
+            'teacher' => $teacher,
         ];
 
-        return view('teacher/teacher-list.form', compact('teacher'), $data);
+        return view('teacher.teacher-list.form', $data);
     }
 
     /**
@@ -104,7 +97,7 @@ class TeacherController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
-            'identity_number' => 'required',
+            'identity_number' => 'required|unique:users,identity_number,' . $id,
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users,username,' . $id,
             'email' => 'required|email|unique:users,email,' . $id,
@@ -123,7 +116,7 @@ class TeacherController extends Controller
             if ($request->filled('password')) {
                 $data['password'] = Hash::make($data['password']);
             } else {
-                $data['password'] = $teacher->password;
+                unset($data['password']);
             }
 
             $teacher->update($data);
