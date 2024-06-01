@@ -16,7 +16,8 @@ class LibrarianController extends Controller
         $librarians = User::where('role', 'Librarian')->get();
 
         $data = [
-            'title' => 'Librarians'
+            'title' => 'Librarians',
+            'librarians' => $librarians
         ];
 
         if ($librarians->isEmpty()) {
@@ -24,7 +25,7 @@ class LibrarianController extends Controller
             $librarians = [];
         }
 
-        return view('librarian/librarian-list.index', compact('librarians'), $data);
+        return view('librarian/librarian-list.index', $data);
     }
 
     /**
@@ -77,7 +78,7 @@ class LibrarianController extends Controller
             "librarian" => $librarian,
         ];
 
-        return view('librarian/librarian-list.form', compact('librarian'), $data);
+        return view('librarian/librarian-list.form', $data);
     }
 
     /**

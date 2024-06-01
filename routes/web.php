@@ -106,6 +106,7 @@ Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefau
 
 Route::resource('task-type', TaskTypeController::class);
 
+Route::resource('book-return', BookReturnController::class);
 
 Route::controller(TeacherController::class)->group(function () {
     Route::get('/teacher/teacher-list', 'index')->name('teacher.index');

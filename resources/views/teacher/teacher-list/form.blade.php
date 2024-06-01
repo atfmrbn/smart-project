@@ -48,7 +48,7 @@
                 <label for="password">Password <span class="login-danger">*</span></label>
                 <input type="password" id="password" name="password"
                     class="form-control @error('password')is-invalid @enderror"
-                    value="{{ isset($student) ? $student->password : old('password') }}">
+                    value="{{ isset($teacher) ? $teacher->password : old('password') }}">
                 @error('password')
                     <div class="invalid-feedback">
                         {{ $message }}

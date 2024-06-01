@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BorrowingBook;
+use App\Models\BorrowingBookDetail;
 use Illuminate\Http\Request;
 
 class BookReturnController extends Controller
@@ -11,11 +13,20 @@ class BookReturnController extends Controller
      */
     public function index()
     {
+        // $data = [
+        //     'title' => 'Returned Books List'
+        // ];
+
+        // return view("library.return.index", $data);
+        $returns = BorrowingBook::getinactiveBorrowingBook($this->defaultCurriculum->id);
+        // $returns = BorrowingBookDetail::getActiveBorrowingBookDetail($this->defaultCurriculum->id);
+
         $data = [
-            'title' => 'Returned Books List'
+            'title' => 'Returned Books List',
+            'returns' => $returns 
         ];
 
-        return view("library.return.index", $data);
+        return view('library.return.index', $data);
     }
 
     /**
