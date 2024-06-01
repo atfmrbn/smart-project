@@ -18,6 +18,18 @@
         </div>
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
+                <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
+                <input type="text" id="identity_number" name="identity_number" class="form-control @error('identity_number')is-invalid @enderror"
+                    value="{{ isset($student) ? $student->identity_number : old('identity_number') }}">
+                @error('identity_number')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
                 <label for="name">Student Name <span class="login-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control @error('name')is-invalid @enderror"
                     value="{{ isset($student) ? $student->name : old('name') }}">

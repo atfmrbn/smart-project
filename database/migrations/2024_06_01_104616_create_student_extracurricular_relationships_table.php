@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('extracurriculars', function (Blueprint $table) {
+        Schema::create('student_extracurricular_relationships', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('student_id');
+            $table->foreignId('extracurricular_id');
             $table->unsignedBigInteger('admin_id');
             $table->string('description');
             $table->timestamps();
@@ -29,6 +29,11 @@ return new class extends Migration
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
+
+            $table->foreign('extracurricular_id')
+                  ->references('id')
+                  ->on('extracurriculars')
+                  ->onDelete('cascade');
         });
     }
 
@@ -37,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('extracurriculars');
+        Schema::dropIfExists('student_extracurricular_relationships');
     }
 };
