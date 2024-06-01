@@ -18,7 +18,7 @@ class TeacherHomeroomRelationshipController extends Controller
         $teacher_homerooms = TeacherHomeroomRelationship::
         with('teacher', 'curriculum', 'classroom')
         ->where('curriculum_id', $this->defaultCurriculum->id)
-        // ->orderBy('classroom_id')
+        ->orderBy('classroom_id')
         ->get();
         // dd($teacher_homerooms[2]->classroom);
         $data = [
@@ -40,7 +40,7 @@ class TeacherHomeroomRelationshipController extends Controller
         return view('teacher.teacher-homeroom.form', [
             'title' => 'Add Teacher Homeroom',
             'teachers' => $teachers,
-            'classrooms' => $classrooms,            
+            'classrooms' => $classrooms,
         ]);
     }
 
@@ -54,7 +54,7 @@ class TeacherHomeroomRelationshipController extends Controller
             'classroom_id' => 'required',
         ]);
         $data['curriculum_id'] = $this->defaultCurriculum->id;
-  
+
         TeacherHomeroomRelationship::create($data);
 
         return redirect()->route('teacher-homeroom.index')->with('successMessage', 'Data successfully added');
@@ -79,10 +79,14 @@ class TeacherHomeroomRelationshipController extends Controller
     public function edit(string $id)
     {
         $teacher_homeroom = TeacherHomeroomRelationship::findOrFail($id);
+        $teachers = User::where('role', 'Teacher')->get();
+        $classrooms = Classroom::with('classroomType')->get();
 
         return view('teacher.teacher-homeroom.form', [
-            'title' => 'Edit Teacher',
+            'title' => 'Edit Teacher Homeroom',
             'teacher_homeroom' => $teacher_homeroom,
+            'teachers' => $teachers,
+            'classrooms' => $classrooms,
         ]);
     }
 
@@ -92,16 +96,8 @@ class TeacherHomeroomRelationshipController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
-            'name' => 'required',
-            'username' => 'required|alpha_num|unique:users,username,' . $id,
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|min:3',
-            'gender' => 'required',
-            'born_date' => 'required|date',
-            'phone' => 'required',
-            'nik' => 'required|unique:users,nik,' . $id,
-            'address' => 'required',
-            'role' => 'required',
+            'teacher_id' => 'required',
+            'classroom_id' => 'required',
         ]);
 
         try {
