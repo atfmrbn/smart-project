@@ -95,7 +95,7 @@
 
     <div class="col-md-12 mt-5">
         {{-- <table class="table table-bordered table-striped mt-2 table-responsive"> --}}
-        <table id="example" class="table table-striped table-bordered">
+        <table id="example" class="table table-responsive table-striped table-bordered">
             <thead>
                 <tr>
                     <th style="width: 5%; text-align: center">No</th>
@@ -123,18 +123,18 @@
                         {{ $borrowDetail->penalty ? 'Rp. ' . number_format($borrowDetail->penalty, 0, ',', '.') : 'No Penalty' }}
                     </td>
                     <td class="align-middle">
-                        <div class="text-center">
+                        <div class="text-center d-flex">
                             <form method="POST" action="{{ route('book-borrow-detail.return', $borrowDetail->id) }}">
                                 @csrf
                                 @method('put')
-                                <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('Anda yakin mau mengembalikan buku ini?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
-                                    <i class="fas fa-book"></i> Return
+                                <button type="submit" class="btn btn-sm btn-outline-success ms-2" title="Return  Book" onclick="return confirm('Anda yakin mau mengembalikan buku ini?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
+                                    <i class="fas fa-undo"></i>
                                 </button>
                             </form>
                             <form method="POST" action="{{ route('book-borrow-detail.destroy', $borrowDetail->id) }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus detail peminjaman untuk buku {{ $borrowDetail->book->title }}?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
+                                <button type="submit" class="btn btn-sm btn-outline-danger ms-2" title="Delete" onclick="return confirm('Anda yakin mau menghapus detail peminjaman untuk buku {{ $borrowDetail->book->title }}?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

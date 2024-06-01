@@ -27,6 +27,19 @@
                     @enderror
                 </div>
             </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="password">Password <span class="login-danger">*</span></label>
+                <input type="password" id="password" name="password"
+                    class="form-control @error('password')is-invalid @enderror"
+                    value="{{ isset($teacher) ? $teacher->password : old('password') }}">
+                @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+
             <div class="col-12 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="name">Teacher Name <span class="login-danger">*</span></label>

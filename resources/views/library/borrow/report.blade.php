@@ -11,7 +11,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>    
 </head>
 <body>
-    <h1 class="text-center">Laporan Peminjaman Buku Aktif</h1>
+<h5 class="text-center">Laporan Peminjaman Buku Aktif</h5>
+<br><br>
 <div class="table-responsive">
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="student-thread">

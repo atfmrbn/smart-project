@@ -37,13 +37,13 @@
                 {{-- <td>{{ $borrow->returned_date }}</td> --}}
                 <td class=" text-center">
                     <div class="d-flex justify-content-center align-items-center">
-                        <a href="{{ route('book-borrow.edit', $borrow->id) }}" class="btn btn-sm btn-outline-primary me-2">
+                        <a href="{{ route('book-borrow.edit', $borrow->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
                             <i class="fas fa-edit"></i>
                         </a>
                         <form method="POST" action="{{ URL::to('book-borrow/' . $borrow->id) }}">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Anda yakin mau menghapus peminjaman buku oleh {{ $borrow->user->name }} ?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Anda yakin mau menghapus peminjaman buku oleh {{ $borrow->user->name }} ?')">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
