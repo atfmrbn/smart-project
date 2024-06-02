@@ -11,9 +11,10 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
     protected $defaultCurriculum ;
+    
     public function __construct() {
         // membuat global variable, curriculum yang default/sedang berjalan
-        // $this->defaultCurriculum = Curriculum::where("is_default", "1")->first();
+         $this->defaultCurriculum = Curriculum::where("is_default", "1")->first();
     }
 }
 

@@ -13,7 +13,7 @@ class CurriculumController extends Controller
      */
     public function index()
     {
-        $curriculums = Curriculum::all();
+        $curriculums = Curriculum::orderBy('year', 'desc')->get();
         $data = [
             "title" => "Curriculums",
             "curriculums" => $curriculums

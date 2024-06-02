@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Extracurricular;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class ExtracurricularController extends Controller
@@ -13,15 +12,11 @@ class ExtracurricularController extends Controller
      */
     public function index()
     {
-        $extracurriculars = Extracurricular::select('extracurriculars.*')
-            ->join('users', 'extracurriculars.id', '=', 'users.id')
-            ->where('users.role', 'Student')
-            ->orderBy('extracurriculars.id')
-            ->get();
+        $extracurriculars = Extracurricular::orderBy('name')->get();
 
         $data = [
-            "title" => "Extracurriculars",
-            "extracurriculars" => $extracurriculars,
+            'title' => 'Extracurriculars',
+            'extracurriculars' => $extracurriculars,
         ];
 
         return view('extracurricular.index', $data);
@@ -32,12 +27,8 @@ class ExtracurricularController extends Controller
      */
     public function create()
     {
-        $students = User::where('role', 'Student')->orderBy('name')->get();
-        $admins = User::where('role', 'Admin')->orderBy('name')->get();
         $data = [
-            "title" => "Add Extracurricular",
-            "students" => $students,
-            "admins" => $admins,
+            'title' => 'Add Extracurricular'
         ];
 
         return view('extracurricular.extracurricular_form', $data);
@@ -50,20 +41,12 @@ class ExtracurricularController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'student_id' => 'required|exists:users,id',
-            'admin_id' => 'required|exists:users,id',
+            'description' => 'required',
         ]);
 
-        try {
+        Extracurricular::create($data);
 
-            Extracurricular::create($data);
-
-            return redirect('extracurricular')->with("successMessage", "Add data sukses");
-            
-        } catch (\Throwable $th) {
-            return redirect('extracurricular')->with("errorMessage", $th->getMessage());
-
-        }
+        return redirect('extracurricular')->with("successMessage", "Add data sukses");
     }
 
     /**
@@ -71,7 +54,14 @@ class ExtracurricularController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $extracurricular = Extracurricular::find($id);
+
+        $data = [
+            'title' => 'Extracurricular Detail',
+            'extracurricular'=> $extracurricular,
+        ];
+
+        return view('extracurricular.extracurricular_detail', $data);
     }
 
     /**
@@ -79,7 +69,16 @@ class ExtracurricularController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $extracurricular = Extracurricular::find($id);
+        if (!$extracurricular) {
+            return redirect('extracurricular')->with("errorMessage", "Data tidak ditemukan");
+        }
+        $data = [
+            "title" => "Edit Extracurricular",
+            "extracurricular" => $extracurricular,
+        ];
+
+        return view('extracurricular.extracurricular_form', compact('extracurricular'), $data);
     }
 
     /**
@@ -87,7 +86,20 @@ class ExtracurricularController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        try {
+            $extracurricular = Extracurricular::find($id);
+
+            $extracurricular->update($data);
+
+            return redirect('extracurricular')->with("successMessage", "Edit data sukses");
+        } catch (\Throwable $th) {
+            return redirect('extracurricular')->with("errorMessage", $th->getMessage());
+        }
     }
 
     /**
@@ -95,6 +107,12 @@ class ExtracurricularController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $extracurricular = Extracurricular::find($id);
+            $extracurricular->delete();
+            return redirect('extracurricular')->with("successMessage", "Delete data sukses");
+        } catch (\Throwable $th){
+            return redirect('extracurricular')->with("errorMessage", $th->getMessage());
+        }
     }
 }

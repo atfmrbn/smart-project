@@ -1,23 +1,25 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\TeacherHomeroomRelationshipController;
-use App\Http\Controllers\BookBorrowDetailController;
-use App\Http\Controllers\BookCategoryController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\BookReturnController;
-use App\Http\Controllers\BorrowingBookController;
-use App\Http\Controllers\ClassroomController;
-use App\Http\Controllers\ClassroomTypeController;
-use App\Http\Controllers\CurriculumController;
-use App\Http\Controllers\ExtracurricularController;
-use App\Http\Controllers\LibrarianController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\SubjectController;
 use App\Models\BorrowingBookDetail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TaskTypeController;
+use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LibrarianController;
+use App\Http\Controllers\BookReturnController;
+use App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\BookCategoryController;
+use App\Http\Controllers\BorrowingBookController;
+use App\Http\Controllers\ClassroomTypeController;
+use App\Http\Controllers\ExtracurricularController;
+use App\Http\Controllers\BookBorrowDetailController;
+use App\Http\Controllers\StudentExtracurricularRelationshipController;
+use App\Http\Controllers\TeacherHomeroomRelationshipController;
 
 Route::get('/', function () {
     return view('dashboard.admin');
@@ -72,7 +74,7 @@ Route::controller(BookReturnController::class)->group(function () {
 });
 
 // Student
-Route::resource('/student/student-teacher-classroom', StudentController::class);
+Route::resource('/student/student-list', StudentController::class);
 
 // Classroom Type
 Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
@@ -83,25 +85,32 @@ Route::resource('/classroom', ClassroomController::class);
 // Extracurricular
 Route::resource('/extracurricular', ExtracurricularController::class);
 
+// Extracurricular Student
+Route::resource('/extracurricular-student', StudentExtracurricularRelationshipController::class);
+
 // Subject
 Route::resource('subject', SubjectController::class);
 
 //Route::resource('/teacher', TeacherController::class);
 
-Route::controller(CurriculumController::class)->group(function () {
-    Route::get('/curriculum', 'index')->name('curriculum.index');
-    Route::get('curriculum/add', 'create')->name('curriculum.create');
-    Route::post('/curriculum', 'store')->name('curriculum.store');
-    Route::get('curriculum/{id}/edit', 'edit')->name('curriculum.edit');
-    Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
-    Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
-});
+// Route::controller(CurriculumController::class)->group(function () {
+//     Route::get('/curriculum', 'index')->name('curriculum.index');
+//     Route::get('curriculum/add', 'create')->name('curriculum.create');
+//     Route::post('/curriculum', 'store')->name('curriculum.store');
+//     Route::get('curriculum/{id}/edit', 'edit')->name('curriculum.edit');
+//     Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
+//     Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
+// });
 //  Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
 
 
 Route::resource('curriculum', CurriculumController::class);
+
 Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
 
+Route::resource('task-type', TaskTypeController::class);
+
+Route::resource('book-return', BookReturnController::class);
 
 Route::controller(TeacherController::class)->group(function () {
     Route::get('/teacher/teacher-list', 'index')->name('teacher.index');

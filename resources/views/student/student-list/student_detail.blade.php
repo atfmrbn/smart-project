@@ -6,6 +6,13 @@
         </div>
         <div class="col-12">
             <div class="form-group local-forms">
+                <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
+                <input type="number" min="0" id="identity_number" name="identity_number" class="form-control"
+                    value="{{ $student->identity_number }}" readonly>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group local-forms">
                 <label for="name">Student Name <span class="login-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control" value="{{ $student->name }}" readonly>
             </div>
@@ -61,7 +68,7 @@
         </div>
         <div class="col-12">
             <div class="student-submit">
-                <a href="{{ URL::to('student/student-teacher-classroom/') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ URL::to('student/student-list/') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>

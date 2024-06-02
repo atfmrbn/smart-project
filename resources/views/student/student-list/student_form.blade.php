@@ -6,15 +6,27 @@
         </div>
     @endif
     @if (isset($student))
-        <form method="POST" action="{{ URL::to('student/student-teacher-classroom/' . $student->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('student/student-list/' . $student->id) }}" autocomplete="off" enctype="multipart/form-data">
             @method('put')
         @else
-            <form method="POST" action="{{ URL::to('student/student-teacher-classroom') }}" autocomplete="off">
+            <form method="POST" action="{{ URL::to('student/student-list') }}" autocomplete="off">
     @endif
     @csrf
     <div class="row">
         <div class="col-12">
             <h5 class="form-title"><span>{{ $title }}</span></h5>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+                <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
+                <input type="text" id="identity_number" name="identity_number" class="form-control @error('identity_number')is-invalid @enderror"
+                    value="{{ isset($student) ? $student->identity_number : old('identity_number') }}">
+                @error('identity_number')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
         </div>
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
@@ -139,7 +151,7 @@
         <div class="col-12">
             <div class="student-submit">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ URL::to('student/student-teacher-classroom/') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ URL::to('student/student-list/') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>

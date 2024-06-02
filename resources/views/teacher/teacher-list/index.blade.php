@@ -17,6 +17,7 @@
             <thead class="teacher-thread">
                 <tr class="text-center">
                     <th>#</th>
+                    <th>Identity Number</th>
                     <th>Name</th>
                     <th>Username</th>
                     <th>Email</th>
@@ -32,6 +33,7 @@
                 @foreach ($teachers as $index => $teacher)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
+                        <td>{{ $teacher->identity_number }}</td>
                         <td>{{ $teacher->name }}</td>
                         <td>{{ $teacher->username }}</td>
                         <td>{{ $teacher->email }}</td>

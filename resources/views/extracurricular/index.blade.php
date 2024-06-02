@@ -20,10 +20,6 @@
                 <tr>
                     <th width="5%">No.</th>
                     <th>Name</th>
-                    <th class="text-center">Student ID</th>
-                    <th>Student Name</th>
-                    <th>Admin ID</th>
-                    <th>Admin Name</th>
                     <th>Description</th>
                     <th width="10%">Action</th>
                 </tr>
@@ -33,10 +29,6 @@
                     <tr>
                         <td class="align-middle">{{ $index + 1 }}</td>
                         <td class="align-middle">{{ $extracurricular->name }}</td>
-                        <td class="align-middle text-center">{{ $extracurricular->student_id }}</td>
-                        <td class="align-middle">{{ $extracurricular->user->name }}</td>
-                        <td class="align-middle text-center">{{ $extracurricular->admin_id }}</td>
-                        <td class="align-middle">{{ $extracurricular->user->name }}</td>
                         <td class="align-middle">{{ $extracurricular->description }}</td>
                         <td>
                             <div class="d-flex">
