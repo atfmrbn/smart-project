@@ -133,9 +133,9 @@ class StudentExtracurricularRelationshipController extends Controller
             $extracurricular_student = StudentExtracurricularRelationship::findOrFail($id);
             $extracurricular_student->delete();
 
-            return redirect('extracurricular-student.index')->with('successMessage', 'Data successfully deleted');
+            return redirect('extracurricular-student')->with('successMessage', 'Data successfully deleted');
         } catch (\Throwable $th) {
-            return redirect('extracurricular-student.index')->with('errorMessage', $th->getMessage());
+            return redirect('extracurricular-student')->with('errorMessage', $th->getMessage());
         }
     }
 }
