@@ -9,10 +9,7 @@ class StudentExtracurricularRelationship extends Model
 {
     use HasFactory;
 
-    use HasFactory;
-
     protected $fillable = [
-        'name',
         'student_id',
         'extracurricular_id',
         'admin_id',
@@ -31,6 +28,6 @@ class StudentExtracurricularRelationship extends Model
 
     public function extracurricular()
     {
-      return $this->belongsTo(Extracurricular::class);
+        return $this->belongsTo(Extracurricular::class, 'extracurricular_id');
     }
 }
