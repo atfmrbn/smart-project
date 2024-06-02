@@ -18,8 +18,8 @@ use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
+use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\TeacherHomeroomRelationshipController;
-use App\Models\StudentExtracurricularRelationship;
 
 Route::get('/', function () {
     return view('dashboard.admin');
@@ -86,7 +86,7 @@ Route::resource('/classroom', ClassroomController::class);
 Route::resource('/extracurricular', ExtracurricularController::class);
 
 // Extracurricular Student
-Route::resource('/extracurricular/extracurricular-student-relationship', StudentExtracurricularRelationship::class);
+Route::resource('/extracurricular/extracurricular-student', StudentExtracurricularRelationshipController::class);
 
 // Subject
 Route::resource('subject', SubjectController::class);
