@@ -20,6 +20,8 @@ use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\TeacherHomeroomRelationshipController;
+use App\Http\Controllers\TeacherSubjectRelationshipController;
+use App\Http\Controllers\TeacherClassroomRelationshipController;
 
 Route::get('/', function () {
     return view('dashboard.admin');
@@ -139,3 +141,5 @@ Route::controller(TeacherHomeroomRelationshipController::class)->group(function 
     Route::delete('/teacher/teacher-homeroom/{id}', 'destroy')->name('teacher-homeroom.destroy');
 });
 
+Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
+Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);

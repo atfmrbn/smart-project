@@ -28,8 +28,8 @@
           <ul>
             <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="">Teacher List</a></li>
             <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}">Teacher Homeroom</a></li>
-            <li><a href="add-teacher.html">Subjects</a></li>
-            <li><a href="edit-teacher.html">Attendances</a></li>
+            <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="">Teacher Classroom</a></li>
+            <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="">Teacher Subject</a></li>
           </ul>
         </li>
         <li class="submenu">
