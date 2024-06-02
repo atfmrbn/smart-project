@@ -1,11 +1,11 @@
 @extends('layouts.main')
 @section('container')
-    @if (isset($extracurricular))
-        <form method="POST" action="{{ URL::to('extracurricular/extracurricular-student/' . $extracurricular->id) }}"
-            autocomplete="off" enctype="multipart/form-data">
+    @if (isset($extracurricular_student))
+        <form method="POST" action="{{ URL::to('extracurricular-student/' . $extracurricular_student->id) }}"
+            autocomplete="off">
             @method('put')
     @else
-        <form method="POST" action="{{ URL::to('extracurricular/extracurricular-student') }}" autocomplete="off">
+        <form method="POST" action="{{ URL::to('extracurricular-student') }}" autocomplete="off">
     @endif
     @csrf
     <div class="row">
@@ -29,7 +29,7 @@
             <div class="form-group">
                 <label for="extracurricular_id">Extracurricular Name</label>
                 <select class="form-control" name="extracurricular_id" id="extracurricular_id" required>
-                    <option value="">Select Admin</option>
+                    <option value="">Select Extracurricular</option>
                     @foreach ($extracurriculars as $extracurricular)
                         <option value="{{ $extracurricular->id }}"
                             {{ isset($extracurricular_student) ? ($extracurricular_student->extracurricular_id === $extracurricular->id ? ' selected' : '') : (old('extracurricular_id') == $extracurricular->id ? ' selected' : '') }}>
@@ -72,7 +72,7 @@
             <div class="col-12">
                 <div class="student-submit">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{ URL::to('extracurricular/extracurricular-student/') }}" class="btn btn-secondary">Back</a>
+                    <a href="{{ URL::to('extracurricular-student/') }}" class="btn btn-secondary">Back</a>
                 </div>
             </div>
         </div>

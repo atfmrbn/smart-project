@@ -18,7 +18,7 @@
           <ul>
             <li><a href="{{ URL::to('/student/student-list') }}">Student List</a></li>
             <li><a href="{{ URL::to('/extracurricular') }}">Extracurricular Activities</a></li>
-            <li><a href="{{ URL::to('/extracurricular/extracurricular-student') }}">Extracurricular Participants</a></li>
+            <li><a href="{{ URL::to('/extracurricular-student') }}">Extracurricular Participants</a></li>
             {{-- <li><a href="add-student.html">Student Add</a></li>
             <li><a href="edit-student.html">Student Edit</a></li> --}}
           </ul>

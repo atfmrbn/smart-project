@@ -20,7 +20,7 @@
                         <input type="text" id="description" name="description" class="form-control" value="{{ $extracurricular_student->description }}" readonly>
                     </div>
                     <div class="form-group">
-                        <a href="{{ URL::to('extracurricular/extracurricular-student/') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ URL::to('extracurricular-student/') }}" class="btn btn-secondary">Back</a>
                     </div>
                 </div>
             </div>

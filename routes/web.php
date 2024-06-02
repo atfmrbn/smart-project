@@ -86,7 +86,7 @@ Route::resource('/classroom', ClassroomController::class);
 Route::resource('/extracurricular', ExtracurricularController::class);
 
 // Extracurricular Student
-Route::resource('/extracurricular/extracurricular-student', StudentExtracurricularRelationshipController::class);
+Route::resource('/extracurricular-student', StudentExtracurricularRelationshipController::class);
 
 // Subject
 Route::resource('subject', SubjectController::class);

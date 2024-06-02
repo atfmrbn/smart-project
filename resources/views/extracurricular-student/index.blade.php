@@ -12,7 +12,7 @@
         </div>
     @endif
 
-    <a href="{{ URL::to('extracurricular/extracurricular-student/create') }}" class="btn btn-primary mb-3">
+    <a href="{{ URL::to('extracurricular-student/create') }}" class="btn btn-primary mb-3">
         <i class="fas fa-plus" aria-hidden="true"></i> Add</a>
     <div class="table-responsive">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -35,12 +35,12 @@
                         <td>
                             <div class="d-flex">
                                 <a title="View"
-                                    href="{{ URL::to('extracurricular/extracurricular-student/' . $extracurricular_student->id) }}"
+                                    href="{{ URL::to('extracurricular-student/' . $extracurricular_student->id) }}"
                                     class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                                <a href="{{ URL::to('extracurricular/extracurricular-student/' . $extracurricular_student->id . '/edit') }}"
+                                <a href="{{ URL::to('extracurricular-student/' . $extracurricular_student->id . '/edit') }}"
                                     class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
                                 <form
-                                    action="{{ URL::to('extracurricular/extracurricular-student/' . $extracurricular_student->id) }}"
+                                    action="{{ URL::to('extracurricular-student/' . $extracurricular_student->id) }}"
                                     method="post">
                                     @csrf
                                     @method('delete')
