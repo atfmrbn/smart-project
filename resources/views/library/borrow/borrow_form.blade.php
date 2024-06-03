@@ -64,7 +64,15 @@
 
 @if(isset($borrow))
 <hr class="mt-4">
-<h5 class="mt-5">Book Borrowing Details</h5>
+<div class="row align-items-center mt-5">
+    <div class="col">
+        <h5>Book Borrowing Details</h5>
+    </div>
+    <div class="col-auto text-end float-end ms-auto download-grp">
+        <a href="{{ URL::to('book-borrow-detail-download') }}" class="btn btn-primary me-2 mb-3"><i class="fas fa-download"></i> Download</a>
+    </div>
+</div>
+
 
 {{-- @if(session()->has("errorMessage"))
     <div class="alert alert-danger">
@@ -93,8 +101,9 @@
         {{-- </div> --}}
     {{-- </div> --}}
 
-    <div class="col-md-12 mt-5">
+    <div class="col-md-12 mt-2">
         {{-- <table class="table table-bordered table-striped mt-2 table-responsive"> --}}
+
         <table id="example" class="table table-responsive table-striped table-bordered">
             <thead>
                 <tr>

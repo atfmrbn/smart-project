@@ -60,7 +60,10 @@ Route::controller(BookController::class)->group(function () {
 // Route::put('book-borrow/{id}/return', [BorrowingBookDetail::class, 'returnBook'])->name('book-borrow.return');
 Route::resource('book-borrow', BorrowingBookController::class);
 Route::put('book-borrow-detail/{id}/return', [BookBorrowDetailController::class, 'returnBook'])->name('book-borrow-detail.return');
+
+// Download Report PDF
 Route::get('book-borrow-download', [BorrowingBookController::class, 'download']);
+Route::get('book-borrow-detail-download', [BookBorrowDetailController::class, 'download']);
 
 // borrow book detail
 Route::controller(BookBorrowDetailController::class)->group(function () {
@@ -98,9 +101,9 @@ Route::resource('/extracurricular-student', StudentExtracurricularRelationshipCo
 // Subject
 Route::resource('subject', SubjectController::class);
 
+// Curriculum
 //Route::resource('/teacher', TeacherController::class);
-
-
+  
 Route::resource('curriculum', CurriculumController::class);
 
 Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
