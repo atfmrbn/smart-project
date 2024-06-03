@@ -18,8 +18,13 @@ use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
-use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\TeacherHomeroomRelationshipController;
+
+use App\Http\Controllers\TeacherSubjectRelationshipController;
+use App\Http\Controllers\TeacherClassroomRelationshipController;
+
+use App\Http\Controllers\StudentExtracurricularRelationshipController;
+use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 
 Route::get('/', function () {
     return view('dashboard.admin');
@@ -79,6 +84,8 @@ Route::controller(BookReturnController::class)->group(function () {
 // Student
 Route::resource('/student/student-list', StudentController::class);
 
+Route::resource('/student/student-teacher-classroom', StudentTeacherClassroomRelationshipController::class);
+
 // Classroom Type
 Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
 
@@ -95,6 +102,8 @@ Route::resource('/extracurricular-student', StudentExtracurricularRelationshipCo
 Route::resource('subject', SubjectController::class);
 
 // Curriculum
+//Route::resource('/teacher', TeacherController::class);
+  
 Route::resource('curriculum', CurriculumController::class);
 
 Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
@@ -130,3 +139,5 @@ Route::controller(TeacherHomeroomRelationshipController::class)->group(function 
     Route::delete('/teacher/teacher-homeroom/{id}', 'destroy')->name('teacher-homeroom.destroy');
 });
 
+Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
+Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);

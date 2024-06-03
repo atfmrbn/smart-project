@@ -17,6 +17,7 @@
           <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/student/student-list') }}">Student List</a></li>
+            <li><a href="{{ URL::to('/student/student-teacher-classroom') }}">Student Teacher Classroom</a></li>
             <li><a href="{{ URL::to('/extracurricular') }}">Extracurricular Activities</a></li>
             <li><a href="{{ URL::to('/extracurricular-student') }}">Extracurricular Participants</a></li>
             {{-- <li><a href="add-student.html">Student Add</a></li>
@@ -28,8 +29,8 @@
           <ul>
             <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="">Teacher List</a></li>
             <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}">Teacher Homeroom</a></li>
-            <li><a href="add-teacher.html">Subjects</a></li>
-            <li><a href="edit-teacher.html">Attendances</a></li>
+            <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="">Teacher Classroom</a></li>
+            <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="">Teacher Subject</a></li>
           </ul>
         </li>
         <li class="submenu">
