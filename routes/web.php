@@ -19,6 +19,10 @@ use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\TeacherHomeroomRelationshipController;
+
+use App\Http\Controllers\TeacherSubjectRelationshipController;
+use App\Http\Controllers\TeacherClassroomRelationshipController;
+
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 
@@ -96,16 +100,6 @@ Route::resource('subject', SubjectController::class);
 
 //Route::resource('/teacher', TeacherController::class);
 
-// Route::controller(CurriculumController::class)->group(function () {
-//     Route::get('/curriculum', 'index')->name('curriculum.index');
-//     Route::get('curriculum/add', 'create')->name('curriculum.create');
-//     Route::post('/curriculum', 'store')->name('curriculum.store');
-//     Route::get('curriculum/{id}/edit', 'edit')->name('curriculum.edit');
-//     Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
-//     Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
-// });
-//  Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
-
 
 Route::resource('curriculum', CurriculumController::class);
 
@@ -142,3 +136,5 @@ Route::controller(TeacherHomeroomRelationshipController::class)->group(function 
     Route::delete('/teacher/teacher-homeroom/{id}', 'destroy')->name('teacher-homeroom.destroy');
 });
 
+Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
+Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
