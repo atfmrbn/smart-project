@@ -14,15 +14,13 @@ class TeacherClassroomRelationship extends Model
         'classroom_id',
         'curriculum_id',
         'subject_id',
+        'teacher_subject_relationship_id',
+        'schedule_time_start',
+        'schedule_time_end'
     ];
 
-    protected $table = 'teacher_classroom_relationships';
     protected $guarded = [];
 
-    public function teacher()
-    {
-        return $this->belongsTo(User::class, 'teacher_id');
-    }
     public function curriculum()
     {
         return $this->belongsTo(Curriculum::class, 'curriculum_id');
@@ -34,6 +32,11 @@ class TeacherClassroomRelationship extends Model
     }
     public function teacherSubjectRelationship()
     {
-        return $this->belongsTo(TeacherSubjectRelationship::class, 'subject_id');
+        return $this->belongsTo(TeacherSubjectRelationship::class);
+    }
+
+    public function teacherSubject()
+    {
+        return $this->TeacherSubjectRelationship->teacher->name . ' - ' . $this->TeacherSubjectRelationship->subject->name;
     }
 }
