@@ -100,5 +100,29 @@ class BookBorrowDetailController extends Controller
         // Redirect back to the borrowing book details page
         return redirect()->back()->with('success', 'Book returned successfully with a penalty of ');
     }
+
+    public function download()
+    {
+        $borrow = BorrowingBook::select('borrowing_books.*', 'users.name', 'classrooms.name as classroom_name')
+        ->join('users', 'users.id', '=', 'borrowing_books.student_id')
+        ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
+        ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
+        ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
+        ->where('teacher_homeroom_relationships.curriculum_id', 2)
+        ->get();
+
+        $borrowDetails = BorrowingBookDetail::getActiveBorrowingBookDetail($this->defaultCurriculum->id);
+        $borrow = BorrowingBook::all();
+        $data = [
+            'title' => 'Borrowed Books List',
+            'borrowDetails' => $borrowDetails,
+            'borrow' => $borrow,
+
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.borrow.report-borrow-detail', $data);
+
+	    return $pdf->download('laporan-perpustakaan-pdf');
+    }
     
 }

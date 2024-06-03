@@ -55,7 +55,10 @@ Route::controller(BookController::class)->group(function () {
 // Route::put('book-borrow/{id}/return', [BorrowingBookDetail::class, 'returnBook'])->name('book-borrow.return');
 Route::resource('book-borrow', BorrowingBookController::class);
 Route::put('book-borrow-detail/{id}/return', [BookBorrowDetailController::class, 'returnBook'])->name('book-borrow-detail.return');
+
+// Download Report PDF
 Route::get('book-borrow-download', [BorrowingBookController::class, 'download']);
+Route::get('book-borrow-detail-download', [BookBorrowDetailController::class, 'download']);
 
 // borrow book detail
 Route::controller(BookBorrowDetailController::class)->group(function () {
@@ -91,19 +94,7 @@ Route::resource('/extracurricular-student', StudentExtracurricularRelationshipCo
 // Subject
 Route::resource('subject', SubjectController::class);
 
-//Route::resource('/teacher', TeacherController::class);
-
-// Route::controller(CurriculumController::class)->group(function () {
-//     Route::get('/curriculum', 'index')->name('curriculum.index');
-//     Route::get('curriculum/add', 'create')->name('curriculum.create');
-//     Route::post('/curriculum', 'store')->name('curriculum.store');
-//     Route::get('curriculum/{id}/edit', 'edit')->name('curriculum.edit');
-//     Route::put('curriculum/{id}/update', 'update')->name('curriculum.update');
-//     Route::delete('curriculum/{id}/delete', 'destroy')->name('curriculum.destroy');
-// });
-//  Route::put('/curriculum-default/{id}', [CurriculumController::class, "setDefault"]);
-
-
+// Curriculum
 Route::resource('curriculum', CurriculumController::class);
 
 Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
