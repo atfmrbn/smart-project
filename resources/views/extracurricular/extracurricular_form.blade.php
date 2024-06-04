@@ -10,21 +10,21 @@
     @csrf
     <div class="row">
         <div class="col-6">
-            <div class="form-group">
-                <label for="name">Name</label>
+            <div class="form-group local-forms">
+                <label for="name">Name <span class="login-danger">*</label>
                 <input type="text" id="name" name="name" class="form-control @error('name')is-invalid @enderror"
-                    value="{{ isset($extracurricular) ? $extracurricular->name : old('name') }}" required>
+                    value="{{ isset($extracurricular) ? $extracurricular->name : old('name') }}" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
                 @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="description">Description</label>
+            <div class="form-group local-forms">
+                <label for="description">Description <span class="login-danger">*</label>
                 <input type="text" id="description" name="description"
                     class="form-control @error('description')is-invalid @enderror"
-                    value="{{ isset($extracurricular) ? $extracurricular->description : old('description') }}">
+                    value="{{ isset($extracurricular) ? $extracurricular->description : old('description') }}" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
                 @error('description')
                     <div class="invalid-feedback">
                         {{ $message }}

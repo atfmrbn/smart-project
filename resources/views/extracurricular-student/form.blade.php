@@ -10,9 +10,9 @@
     @csrf
     <div class="row">
         <div class="col-6">
-            <div class="form-group">
-                <label for="student_id">Student Name</label>
-                <select class="form-control" name="student_id" id="student_id" required>
+            <div class="form-group local-forms">
+                <label for="student_id">Student Name <span class="login-danger">*</label>
+                <select class="form-control data-select-2" name="student_id" id="student_id" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
                     <option value="">Select Student</option>
                     @foreach ($students as $student)
                         <option value="{{ $student->id }}"
@@ -26,9 +26,9 @@
                     </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="extracurricular_id">Extracurricular Name</label>
-                <select class="form-control" name="extracurricular_id" id="extracurricular_id" required>
+            <div class="form-group local-forms">
+                <label for="extracurricular_id">Extracurricular Name <span class="login-danger">*</label>
+                <select class="form-control data-select-2" name="extracurricular_id" id="extracurricular_id" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
                     <option value="">Select Extracurricular</option>
                     @foreach ($extracurriculars as $extracurricular)
                         <option value="{{ $extracurricular->id }}"
@@ -42,9 +42,9 @@
                     </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="admin_id">Admin Name</label>
-                <select class="form-control" name="admin_id" id="admin_id" required>
+            <div class="form-group local-forms">
+                <label for="admin_id">Admin Name <span class="login-danger">*</label>
+                <select class="form-control data-select-2" name="admin_id" id="admin_id" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
                     <option value="">Select Admin</option>
                     @foreach ($admins as $admin)
                         <option value="{{ $admin->id }}"
@@ -58,11 +58,11 @@
                     </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="description">Description</label>
+            <div class="form-group local-forms">
+                <label for="description">Description <span class="login-danger">*</label>
                 <input type="text" id="description" name="description"
                     class="form-control @error('description')is-invalid @enderror"
-                    value="{{ isset($extracurricular_student) ? $extracurricular_student->description : old('description') }}">
+                    value="{{ isset($extracurricular_student) ? $extracurricular_student->description : old('description') }}" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
                 @error('description')
                     <div class="invalid-feedback">
                         {{ $message }}
