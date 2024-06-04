@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Models\TeacherHomeroomRelationship;
 use App\Models\TeacherClassroomRelationship;
+use App\Models\TeacherSubjectRelationship;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,11 +18,11 @@ class TeacherClassroomRelationshipController extends Controller
     public function index()
     {
         $teacher_classrooms = TeacherClassroomRelationship::
-        with('teacher', 'curriculum', 'classroom')
+        with('curriculum', 'classroom', 'teacherSubjectRelationship')
         ->where('curriculum_id', $this->defaultCurriculum->id)
         ->orderBy('classroom_id')
         ->get();
-        // dd($teacher_classrooms[2]->classroom);
+        // dd($teacher_classrooms[0]->teacherSubjectRelationship);
         $data = [
             'title' => 'Teacher Classrooms',
             'teacher_classrooms' => $teacher_classrooms->isEmpty() ? [] : $teacher_classrooms,
@@ -37,11 +38,13 @@ class TeacherClassroomRelationshipController extends Controller
     {
         $teachers = User::where('role', 'Teacher')->get();
         $classrooms = Classroom::with('classroomType')->get();
+        $teacherSubjectRelationships = TeacherSubjectRelationship::with('teacher','subject')->get();
 
         return view('teacher.teacher-classroom.form',  [
             'title' => 'Add Teacher Classroom',
             'teachers' => $teachers,
             'classrooms' => $classrooms,
+            'teacherSubjectRelationships' => $teacherSubjectRelationships,
         ]);
     }
 
@@ -51,14 +54,25 @@ class TeacherClassroomRelationshipController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'teacher_id' => 'required',
             'classroom_id' => 'required',
+            'teacher_subject_relationship_id' => 'required',
+            'schedule_day' => 'required',
+            'schedule_time_start' => 'required',
+            'schedule_time_end' => 'required',
         ]);
         $data['curriculum_id'] = $this->defaultCurriculum->id;
+        // dd($data);
+        try
+        {
+            TeacherClassroomRelationship::create($data);
 
-        TeacherClassroomRelationship::create($data);
+            return redirect()->route('teacher-classroom.index')->with('successMessage', 'Data successfully added');
+        }
+        catch (Exception $ex)
+        {
+            return redirect()->route('teacher-classroom.index')->with('errorMessage', $ex->getMessage());
+        }
 
-        return redirect()->route('teacher-classroom.index')->with('successMessage', 'Data successfully added');
     }
 
     /**
@@ -82,12 +96,14 @@ class TeacherClassroomRelationshipController extends Controller
         $teacher_classroom = TeacherClassroomRelationship::findOrFail($id);
         $teachers = User::where('role', 'Teacher')->get();
         $classrooms = Classroom::with('classroomType')->get();
+        $teacherSubjectRelationships = TeacherSubjectRelationship::with('teacher', 'subject')->get();
 
         return view('teacher.teacher-classroom.form', [
-            'title' => 'Edit Teacher Homeroom',
+            'title' => 'Edit Teacher Classroom',
             'teacher_classroom' => $teacher_classroom,
             'teachers' => $teachers,
             'classrooms' => $classrooms,
+            'teacherSubjectRelationships' => $teacherSubjectRelationships,
         ]);
     }
 
@@ -97,19 +113,15 @@ class TeacherClassroomRelationshipController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
-            'teacher_id' => 'required',
             'classroom_id' => 'required',
+            'teacher_subject_relationship_id' => 'required',
+            'schedule_day' => 'required',
+            'schedule_time_start' => 'required',
+            'schedule_time_end' => 'required',
         ]);
 
         try {
             $teacher_classroom = TeacherClassroomRelationship::findOrFail($id);
-
-            if ($request->filled('password')) {
-                $data['password'] = Hash::make($data['password']);
-            } else {
-                unset($data['password']);
-            }
-
             $teacher_classroom->update($data);
 
             return redirect()->route('teacher-classroom.index')->with('successMessage', 'Data successfully updated');
