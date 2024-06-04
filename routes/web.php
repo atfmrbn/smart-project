@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Models\BorrowingBookDetail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
@@ -30,14 +31,29 @@ Route::get('/', function () {
     return view('dashboard.admin');
 });
 
+// Route::get('/', [DashboardController::class, 'admin'])
+// ->middleware('auth')->name('admin.dashboard');
+
+// Route::get('/teacher', [DashboardController::class, 'teacher'])
+//     ->middleware('auth')
+//     ->name('teacher.dashboard');
+
+// Route::get('/auth', [AuthController::class, 'index'])
+// ->name('login');
+
+// Route::post('/login', [AuthController::class, 'login']);
+
+// Route::get('/logout', [AuthController::class, 'logout'])
+// ->name('logout');
+
 Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::get('/home', function() {
-    return 'Welcome, you are logged in!';
-})->middleware('auth');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+// Route::post('/login', [LoginController::class, 'login']);
+// Route::get('/home', function() {
+//     return 'Welcome, you are logged in!';
+// })->middleware('auth');
+// Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::controller(BookCategoryController::class)->group(function () {
     Route::get('book-category/', 'index')->name('book-category.index');

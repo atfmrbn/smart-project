@@ -17,7 +17,7 @@
                     @foreach ($students as $student)
                         <option value="{{ $student->id }}"
                             {{ isset($extracurricular_student) ? ($extracurricular_student->student_id === $student->id ? ' selected' : '') : (old('student_id') == $student->id ? ' selected' : '') }}>
-                            {{ $student->name }}</option>
+                            {{ $student->classroom_name }} - {{ $student->identity_number }}  - {{ $student->name }}</option>
                     @endforeach
                 </select>
                 @error('student_id')
@@ -42,15 +42,18 @@
                     </div>
                 @enderror
             </div>
-            <div class="form-group local-forms">
+            <div class="form-group local-forms"  style="display: none;">
                 <label for="admin_id">Admin Name <span class="login-danger">*</label>
-                <select class="form-control data-select-2" name="admin_id" id="admin_id" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
+                {{-- <select class="form-control data-select-2" name="admin_id" id="admin_id" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
                     <option value="">Select Admin</option>
                     @foreach ($admins as $admin)
                         <option value="{{ $admin->id }}"
                             {{ isset($extracurricular_student) ? ($extracurricular_student->admin_id === $admin->id ? ' selected' : '') : (old('admin_id') == $admin->id ? ' selected' : '') }}>
                             {{ $admin->name }}</option>
                     @endforeach
+                </select> --}}
+                <select class="form-control data-select-2" name="admin_id" id="admin_id" {{ isset($extracurricular_student) ? 'disabled' : '' }}>
+                    <option value="{{ $admin->id }}" selected>{{ $admin->name }}</option>
                 </select>
                 @error('admin_id')
                     <div class="invalid-feedback">

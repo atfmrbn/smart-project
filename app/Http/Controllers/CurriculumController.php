@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Curriculum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CurriculumController extends Controller
 {
@@ -150,7 +151,7 @@ class CurriculumController extends Controller
             return redirect()->route('curriculum.index')->with("successMessage", $message);
         } catch (\Throwable $th) {
             DB::rollback();
-            \Log::error($th->getMessage());
+            Log::error($th->getMessage());
             return redirect()->route('curriculum.index')->with("errorMessage", $th->getMessage());
         }
     }

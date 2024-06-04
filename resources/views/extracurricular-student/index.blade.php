@@ -29,8 +29,8 @@
                 @foreach ($extracurricular_students as $index => $extracurricular_student)
                     <tr>
                         <td class="align-middle">{{ $index + 1 }}</td>
-                        <td class="align-middle">{{ $extracurricular_student->student->name ?? 'N/A' }}</td>
-                        <td class="align-middle">{{ $extracurricular_student->extracurricular->name ?? 'N/A' }}</td>
+                        <td class="align-middle">{{ $extracurricular_student->student->classroom_name }} - {{ $extracurricular_student->student->identity_number }}  - {{ $extracurricular_student->student->name }}</td>
+                        <td class="align-middle">{{ $extracurricular_student->extracurricular->name }}</td>
                         <td class="align-middle">{{ $extracurricular_student->description }}</td>
                         <td>
                             <div class="d-flex">
