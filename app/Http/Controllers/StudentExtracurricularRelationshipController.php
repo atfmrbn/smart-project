@@ -31,14 +31,19 @@ class StudentExtracurricularRelationshipController extends Controller
      */
     public function create()
     {
-        $students = User::where('role', 'Student')->orderBy('name')->get();
+        $students = User::select('users.*', 'teacher_homeroom_relationships.classroom_id', 'users.identity_number')
+                    ->where('role', 'Student')
+                    ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
+                    ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
+                    // ->orderBy('users.name')
+                    ->get();
         $extracurriculars = Extracurricular::orderBy('name')->get();
-        $admins = User::where('role', 'Admin')->orderBy('name')->get();
+        $admin = User::find(11);
         $data = [
             "title" => "Add Extracurricular Student",
             "students" => $students,
             "extracurriculars" => $extracurriculars,
-            "admins" => $admins,
+            "admin" => $admin,
         ];
         
         return view('extracurricular-student.form', $data);
@@ -88,7 +93,14 @@ class StudentExtracurricularRelationshipController extends Controller
     public function edit($id)
     {
         $extracurricular_student = StudentExtracurricularRelationship::findOrFail($id);
-        $students = User::where('role', 'Student')->orderBy('name')->get();
+        $students = User::select('users.*', 'teacher_homeroom_relationships.classroom_id', 'users.identity_number')
+                    ->where('role', 'Student')
+                    ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
+                    ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
+                    ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
+                    ->where('teacher_homeroom_relationships.curriculum_id', 2)
+                    ->orderBy('users.name')
+                    ->get();
         $extracurriculars = Extracurricular::orderBy('name')->get();
         $admins = User::where('role', 'Admin')->orderBy('name')->get();
 
