@@ -26,18 +26,13 @@ use App\Http\Controllers\TeacherClassroomRelationshipController;
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 
-Route::get('/', function () {
-    return view('dashboard.admin');
-});
+
+    Route::get('/', function () {
+     return view('dashboard.admin');
+    });
 
 Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::get('/home', function() {
-    return 'Welcome, you are logged in!';
-})->middleware('auth');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::controller(BookCategoryController::class)->group(function () {
     Route::get('book-category/', 'index')->name('book-category.index');
@@ -103,7 +98,7 @@ Route::resource('subject', SubjectController::class);
 
 // Curriculum
 //Route::resource('/teacher', TeacherController::class);
-  
+
 Route::resource('curriculum', CurriculumController::class);
 
 Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
