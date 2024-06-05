@@ -19,12 +19,13 @@ use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
-use App\Http\Controllers\TeacherHomeroomRelationshipController;
-
 use App\Http\Controllers\TeacherSubjectRelationshipController;
+
+use App\Http\Controllers\TeacherHomeroomRelationshipController;
 use App\Http\Controllers\TeacherClassroomRelationshipController;
 
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
+
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\UserController;
 
