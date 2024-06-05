@@ -18,13 +18,13 @@ use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
-use App\Http\Controllers\TeacherHomeroomRelationshipController;
-
 use App\Http\Controllers\TeacherSubjectRelationshipController;
+
+use App\Http\Controllers\TeacherHomeroomRelationshipController;
 use App\Http\Controllers\TeacherClassroomRelationshipController;
 
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
-use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
+use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 
 Route::get('/', function () {
     return view('dashboard.admin');
@@ -84,7 +84,7 @@ Route::controller(BookReturnController::class)->group(function () {
 // Student
 Route::resource('/student/student-list', StudentController::class);
 
-Route::resource('/student/student-teacher-classroom', StudentTeacherClassroomRelationshipController::class);
+Route::resource('/student/student-teacher-homeroom', StudentTeacherHomeroomRelationshipController::class);
 
 // Classroom Type
 Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
