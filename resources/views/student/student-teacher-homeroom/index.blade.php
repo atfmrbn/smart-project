@@ -24,19 +24,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($student_teacher_homerooms as $index => $student_teacher_homeroom)
+            @foreach ($studentTeacherHomeroomRelationships as $index => $studentTeacherHomeroomRelationship)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $student_teacher_homeroom->student->name }}</td>
-                <td>{{ $student_teacher_homeroom->teacherHomeroomRelationship->teacher->name }} - {{ $student_teacher_homeroom->teacherHomeroomRelationship->classroom->name }}</td>
+                <td>{{ $studentTeacherHomeroomRelationship->student->name }}</td>
+                <td>{{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}</td>
                 <td class="align-middle">
                     <div class="d-flex justify-content ">
-                        <a title="Lihat" href="{{ URL::to('student/student-teacher-homeroom/' . $student_teacher_homeroom->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                            <a title="Edit" href="{{ URL::to('student/student-teacher-homeroom/' . $student_teacher_homeroom->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
-                            <form action="{{ URL::to('student/student-teacher-homeroom/' . $student_teacher_homeroom->id) }}" method="post">
+                        <a title="Lihat" href="{{ URL::to('student/student-teacher-homeroom/' . $studentTeacherHomeroomRelationship->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                            <a title="Edit" href="{{ URL::to('student/student-teacher-homeroom/' . $studentTeacherHomeroomRelationship->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
+                            <form action="{{ URL::to('student/student-teacher-homeroom/' . $studentTeacherHomeroomRelationship->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" title="Hapus" class="btn btn-sm btn-outline-danger me-2" onclick="return confirm('Anda yakin mau menghapus data ini {{ $student_teacher_homeroom->student->name }}?')">
+                                <button type="submit" title="Hapus" class="btn btn-sm btn-outline-danger me-2" onclick="return confirm('Anda yakin mau menghapus data ini {{ $studentTeacherHomeroomRelationship->student->name }}?')">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

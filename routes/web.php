@@ -2,6 +2,7 @@
 
 use App\Models\BorrowingBookDetail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StudentController;
@@ -105,6 +106,8 @@ Route::resource('subject', SubjectController::class);
 //Route::resource('/teacher', TeacherController::class);
   
 Route::resource('curriculum', CurriculumController::class);
+
+Route::resource('attendance', AttendanceController::class);
 
 Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
 
