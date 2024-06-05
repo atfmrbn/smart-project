@@ -17,7 +17,7 @@
           <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span class="menu-arrow"></span></a>
           <ul>
             <li><a href="{{ URL::to('/student/student-list') }}">Student List</a></li>
-            <li><a href="{{ URL::to('/student/student-teacher-classroom') }}">Student Teacher Classroom</a></li>
+            <li><a href="{{ URL::to('/student/student-teacher-homeroom') }}">Student Teacher Homeroom</a></li>
             <li><a href="{{ URL::to('/extracurricular') }}">Extracurricular Activities</a></li>
             <li><a href="{{ URL::to('/extracurricular-student') }}">Extracurricular Participants</a></li>
             {{-- <li><a href="add-student.html">Student Add</a></li>

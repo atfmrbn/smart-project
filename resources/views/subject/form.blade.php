@@ -21,7 +21,7 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="classroom_type_id">Classroom Type <span class="login-danger">*</span></label>
-                <select name="classroom_type_id" id="classroom_type_id" class="form-control">
+                <select name="classroom_type_id" id="classroom_type_id" class="form-control data-select-2">
                     <option value="" disabled selected>Pilih kelas</option>
                     @foreach ($classroom_types as $classroom_type) 
                         <option value="{{ $classroom_type->id }}" {{ isset($subject) ? ($subject->classroom_type_id === $classroom_type->id ? 'selected' : '') : "" }}>{{ $classroom_type->name }}</option>
