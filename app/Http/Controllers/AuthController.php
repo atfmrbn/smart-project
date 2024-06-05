@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -24,6 +25,8 @@ class AuthController extends Controller
                 'username' => 'required',
                 'password' => 'required'
         ]);
+
+        // $data['password'] = Hash::make($request->password);
 
         if(Auth::attempt($data))
         {
