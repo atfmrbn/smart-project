@@ -136,7 +136,7 @@
                             <form method="POST" action="{{ route('book-borrow-detail.return', $borrowDetail->id) }}">
                                 @csrf
                                 @method('put')
-                                <button type="submit" class="btn btn-sm btn-outline-success ms-2" title="Return  Book" onclick="return confirm('Anda yakin mau mengembalikan buku ini?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
+                                <button type="submit" class="btn btn-sm btn-outline-success ms-2" title="Return  Book" onclick="return confirm('Anda yakin mau mengembalikan buku ini {{ $borrowDetail->book->title }}?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
                                     <i class="fas fa-undo"></i>
                                 </button>
                             </form>
