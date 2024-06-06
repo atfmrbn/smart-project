@@ -81,7 +81,8 @@
             </ul>
           </li>
           {{-- @endif --}}
-          <li><a href="{{ route('logout') }}">Logout</a></li>
+            <li><a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
       </ul>
     </div>
   </div>
