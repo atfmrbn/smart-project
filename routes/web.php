@@ -31,6 +31,8 @@ use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\UserController;
 
+
+
 Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
 
 Route::get('/auth', [AuthController::class, 'index'])->name('login')->middleware('guest');
@@ -130,4 +132,5 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
 
     Route::resource('/user', UserController::class);
+
 });

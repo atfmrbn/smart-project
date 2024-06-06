@@ -15,17 +15,32 @@ class TeacherClassroomRelationshipController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $teacher_classrooms = TeacherClassroomRelationship::
-        with('curriculum', 'classroom', 'teacherSubjectRelationship')
-        ->where('curriculum_id', $this->defaultCurriculum->id)
-        ->orderBy('classroom_id')
-        ->get();
-        // dd($teacher_classrooms[0]->teacherSubjectRelationship);
+        $schedule_day = $request->input('schedule_day');
+        $classroom_id = $request->input('classroom');
+
+        $query = TeacherClassroomRelationship::with('curriculum', 'classroom', 'teacherSubjectRelationship')
+            ->where('curriculum_id', $this->defaultCurriculum->id);
+
+        if ($schedule_day) {
+            $query->where('schedule_day', $schedule_day);
+        }
+
+        if ($classroom_id) {
+            $query->where('classroom_id', $classroom_id);
+        }
+
+        $teacher_classrooms = $query->orderBy('classroom_id')->get();
+
+        $scheduleDays = TeacherClassroomRelationship::distinct()->pluck('schedule_day');
+        $classrooms = Classroom::with('classroomType')->get();
+
         $data = [
             'title' => 'Teacher Classrooms',
             'teacher_classrooms' => $teacher_classrooms->isEmpty() ? [] : $teacher_classrooms,
+            'scheduleDays' => $scheduleDays,
+            'classrooms' => $classrooms,
         ];
 
         return view('teacher.teacher-classroom.index', $data);
@@ -34,6 +49,8 @@ class TeacherClassroomRelationshipController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+
     public function create()
     {
         $teachers = User::where('role', 'Teacher')->get();
