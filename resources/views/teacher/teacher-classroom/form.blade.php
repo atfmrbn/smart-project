@@ -46,7 +46,7 @@
                     <option value="">Select Teacher Subject</option>
                     @foreach ($teacherSubjectRelationships as $teacherSubjectRelationship)
                         <option value="{{ $teacherSubjectRelationship->id }}" {{ (isset($teacher_classroom) && $teacher_classroom->teacher_subject_relationship_id == $teacherSubjectRelationship->id) ? 'selected' : '' }}>
-                            {{ $teacherSubjectRelationship->teacher->name }} - {{ $teacherSubjectRelationship->subject->name }}
+                            {{ $teacherSubjectRelationship->teacher->identity_number }} - {{ $teacherSubjectRelationship->teacher->name }} - {{ $teacherSubjectRelationship->subject->name }}
                         </option>
                     @endforeach
                 </select>
