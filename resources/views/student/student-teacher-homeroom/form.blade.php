@@ -27,7 +27,7 @@
                     <option value="">Select Student</option>  
                         @foreach ($students as $student)
                             <option value="{{ $student->id }}" {{ (isset($studentTeacherHomeroomRelationship) && $studentTeacherHomeroomRelationship->student_id == $student->id) ? 'selected' : '' }}>
-                                {{ $student->name }}
+                                {{ $student->identity_number }} - {{ $student->name }}
                             </option>
                         @endforeach
                 </select>
@@ -41,7 +41,7 @@
                     <option value="">Select Teacher Homeroom</option>
                     @foreach ($teacherHomeroomRelationships as $teacherHomeroomRelationship)
                         <option value="{{ $teacherHomeroomRelationship->id }}" {{ (isset($studentTeacherHomeroomRelationship) && $studentTeacherHomeroomRelationship->teacher_homeroom_relationship_id == $teacherHomeroomRelationship->id) ? 'selected' : '' }}>
-                            {{ $teacherHomeroomRelationship->classroom->name }} - {{ $teacherHomeroomRelationship->teacher->name }}
+                            {{ $teacherHomeroomRelationship->classroom->name }} - {{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->identity_number }} - {{ $teacherHomeroomRelationship->teacher->name }}
                         </option>
                     @endforeach
                 </select>

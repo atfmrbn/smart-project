@@ -14,8 +14,20 @@ class Attendance extends Model
         'student_teacher_homeroom_id',
         'attendance_date',
         'note',
-        'status'
+        'status',
+        'teacher_id'
     ];
+
+    public function student()
+    {
+      return $this->belongsTo(User::class, 'student_id');
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+
 
     public function studentTeacherHomeroomRelationship()
     {

@@ -15,10 +15,19 @@ class StudentTeacherHomeroomRelationshipController extends Controller
      */
     public function index()
     {
-        $studentTeacherHomeroomRelationships = StudentTeacherHomeroomRelationship::
-        with('student', 'teacherHomeroomRelationship')
-        ->orderBy('teacher_homeroom_relationship_id', 'asc') // Menambahkan orderBy untuk pengurutan
+        $studentTeacherHomeroomRelationships =
+        StudentTeacherHomeroomRelationship::join('users as students', 'student_teacher_homeroom_relationships.student_id', '=', 'students.id')
+        ->select([
+            'students.identity_number',
+            'student_teacher_homeroom_relationships.*', // Anda bisa tambahkan kolom-kolom lain yang ingin Anda ambil dari tabel ini
+        ])
         ->get();
+
+        
+        
+        // with('student', 'teacherHomeroomRelationship')
+        // ->orderBy('teacher_homeroom_relationship_id', 'asc') // Menambahkan orderBy untuk pengurutan
+        // ->get();
 
         $data = [
             'title' => 'Student Teacher Homeroom',

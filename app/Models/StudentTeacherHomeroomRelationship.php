@@ -13,13 +13,19 @@ class StudentTeacherHomeroomRelationship extends Model
 
   protected $fillable = [
       'student_id',
-      'teacher_homeroom_relationship_id'
+      'teacher_homeroom_relationship_id',
+      'teacher_id'
   ];
     protected $guarded = [];
 
     public function student()
     {
       return $this->belongsTo(User::class, 'student_id');
+    }
+
+    public function teacher()
+    {
+      return $this->belongsTo(User::class, 'teacher_id');
     }
 
     public function teacherHomeroomRelationship()

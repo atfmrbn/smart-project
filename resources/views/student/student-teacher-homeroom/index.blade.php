@@ -27,8 +27,8 @@
             @foreach ($studentTeacherHomeroomRelationships as $index => $studentTeacherHomeroomRelationship)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $studentTeacherHomeroomRelationship->student->name }}</td>
-                <td>{{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}</td>
+                <td>{{ $studentTeacherHomeroomRelationship->identity_number }} - {{ $studentTeacherHomeroomRelationship->student->name }}</td>
+                <td>{{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->identity_number }} -{{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}</td>
                 <td class="align-middle">
                     <div class="d-flex justify-content ">
                         <a title="Lihat" href="{{ URL::to('student/student-teacher-homeroom/' . $studentTeacherHomeroomRelationship->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>

@@ -41,7 +41,7 @@
             @foreach ($attendances as $index => $attendance)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $attendance->studentTeacherHomeroomRelationship->student->name }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }} </td>
+                    <td>{{ $attendance->studentTeacherHomeroomRelationship->student->identity_number }} - {{ $attendance->studentTeacherHomeroomRelationship->student->name }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ optional($attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher)->identity_number }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}</td>
                     <td>{{ date('d-m-Y', strtotime($attendance->attendance_date)) }}</td>
                     <td>{{ $attendance->note }}</td>
                     <td>{{ $attendance->status }}</td>
