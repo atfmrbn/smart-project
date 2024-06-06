@@ -21,16 +21,12 @@ use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\TeacherSubjectRelationshipController;
-
 use App\Http\Controllers\TeacherHomeroomRelationshipController;
 use App\Http\Controllers\TeacherClassroomRelationshipController;
-
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
-
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\UserController;
-
 
 
 Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
@@ -67,7 +63,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::put('book-borrow-detail/{id}/return', [BookBorrowDetailController::class, 'returnBook'])->name('book-borrow-detail.return');
 
     Route::get('book-borrow-download', [BorrowingBookController::class, 'download']);
-    Route::get('book-borrow-detail-download', [BookBorrowDetailController::class, 'download']);
+    Route::get('book-borrow-detail-download/{id}', [BookBorrowDetailController::class, 'download']);
 
     Route::controller(BookBorrowDetailController::class)->group(function () {
         Route::get('book-borrow-detail/', 'index')->name('book-borrow-detail.index');
@@ -78,8 +74,12 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::delete('book-borrow-detail/{id}', 'destroy')->name('book-borrow-detail.destroy');
     });
 
+    // Route untuk filterByDate
+    Route::get('book-return', [BorrowingBookController::class, 'reportByDate']);
+
     Route::controller(BookReturnController::class)->group(function () {
-        Route::get('book-return/', 'index');
+        Route::get('book-return/', 'index')->name('book-return.index');
+        Route::get('book-return', 'filterByDate')->name('bookReturn.filterByDate');
         Route::get('book-return/add', 'create');
     });
 
@@ -133,6 +133,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
 
-    Route::resource('/user', UserController::class);
+    Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
+    Route::resource('attendance', AttendanceController::class);
 
 });

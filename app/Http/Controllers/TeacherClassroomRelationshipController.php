@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
-use App\Models\TeacherHomeroomRelationship;
 use App\Models\TeacherClassroomRelationship;
 use App\Models\TeacherSubjectRelationship;
 use App\Models\User;
@@ -20,8 +19,12 @@ class TeacherClassroomRelationshipController extends Controller
         $schedule_day = $request->input('schedule_day');
         $classroom_id = $request->input('classroom');
 
-        $query = TeacherClassroomRelationship::with('curriculum', 'classroom', 'teacherSubjectRelationship')
-            ->where('curriculum_id', $this->defaultCurriculum->id);
+        // Modifikasi query untuk join dengan users
+        $query = TeacherClassroomRelationship::with(['curriculum', 'classroom', 'teacherSubjectRelationship.teacher'])
+            ->where('curriculum_id', $this->defaultCurriculum->id)
+            ->join('teacher_subject_relationships', 'teacher_classroom_relationships.teacher_subject_relationship_id', '=', 'teacher_subject_relationships.id')
+            ->join('users', 'teacher_subject_relationships.teacher_id', '=', 'users.id')
+            ->select('teacher_classroom_relationships.*', 'users.identity_number');
 
         if ($schedule_day) {
             $query->where('schedule_day', $schedule_day);
@@ -31,7 +34,7 @@ class TeacherClassroomRelationshipController extends Controller
             $query->where('classroom_id', $classroom_id);
         }
 
-        $teacher_classrooms = $query->orderBy('classroom_id')->get();
+        $teacher_classrooms = $query->orderBy('schedule_day', 'asc')->get();
 
         $scheduleDays = TeacherClassroomRelationship::distinct()->pluck('schedule_day');
         $classrooms = Classroom::with('classroomType')->get();
@@ -49,13 +52,11 @@ class TeacherClassroomRelationshipController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-
-
     public function create()
     {
         $teachers = User::where('role', 'Teacher')->get();
         $classrooms = Classroom::with('classroomType')->get();
-        $teacherSubjectRelationships = TeacherSubjectRelationship::with('teacher','subject')->get();
+        $teacherSubjectRelationships = TeacherSubjectRelationship::with('teacher', 'subject')->get();
 
         return view('teacher.teacher-classroom.form',  [
             'title' => 'Add Teacher Classroom',
@@ -85,7 +86,7 @@ class TeacherClassroomRelationshipController extends Controller
 
             return redirect()->route('teacher-classroom.index')->with('successMessage', 'Data successfully added');
         }
-        catch (Exception $ex)
+        catch (\Exception $ex)
         {
             return redirect()->route('teacher-classroom.index')->with('errorMessage', $ex->getMessage());
         }

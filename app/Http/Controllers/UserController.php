@@ -101,28 +101,30 @@ class UserController extends Controller
             'username' => 'required|alpha_num|unique:users,username,' . $id,
             'email' => 'required|unique:users,email,' . $id,
             'gender' => 'required',
-            'born_date'=> 'required',
-            'phone'=> 'required',
-            'nik'=> 'required|unique:users,nik,' . $id,
-            'address'=> 'required',
+            'born_date' => 'required',
+            'phone' => 'required',
+            'nik' => 'required|unique:users,nik,' . $id,
+            'address' => 'required',
             'role' => 'required',
         ]);
-    try {
-            $user = User::find($id);
-
-            if($request->password){
-                $data['password'] = Hash::make($data["password"]);
-            }else {
-                $data['password'] = $user->password;
+    
+        try {
+            $user = User::findOrFail($id); // Gunakan findOrFail untuk memastikan bahwa pengguna ditemukan atau exception
+    
+            if ($request->filled('password')) {
+                $data['password'] = Hash::make($request->password); // Gunakan request->password langsung
+            } else {
+                unset($data['password']); // Jangan sertakan password jika tidak diisi
             }
-
+    
             $user->update($data);
-
+    
             return redirect('user')->with("successMessage", "Edit data sukses");
-    } catch (\Throwable $th) {
-        return redirect('user')->with("errorMessage", $th->getMessage());
+        } catch (\Throwable $th) {
+            return redirect('user')->with("errorMessage", $th->getMessage());
+        }
     }
-    }
+    
 
     /**
      * Remove the specified resource from storage.

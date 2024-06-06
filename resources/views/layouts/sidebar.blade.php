@@ -71,7 +71,7 @@
         </li>
 
         <li class="menu-title"><span>Pages</span></li>
-        {{-- @if (auth()->user()->role == 'Super Admin') --}}
+        @if (auth()->user()->role == 'Super Admin')
         <li class="submenu">
             <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
             <ul>
@@ -80,7 +80,7 @@
               <li><a href="error-404.html">Error Page</a></li>
             </ul>
           </li>
-          {{-- @endif --}}
+          @endif
           <li><a href="{{ route('logout') }}">Logout</a></li>
       </ul>
     </div>

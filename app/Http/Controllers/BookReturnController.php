@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BookReturnController extends Controller
@@ -11,19 +12,43 @@ class BookReturnController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $data = [
-        //     'title' => 'Returned Books List'
-        // ];
+        $startDate = $request->input("startDate");
+        $endDate = $request->input("endDate");
 
-        // return view("library.return.index", $data);
-        $returns = BorrowingBook::getinactiveBorrowingBook($this->defaultCurriculum->id);
-        // $returns = BorrowingBookDetail::getActiveBorrowingBookDetail($this->defaultCurriculum->id);
+        $now = Carbon::now();
+
+        $startDate = $startDate ? $startDate : $now->format('Y-m-d');
+        $endDate = $endDate ? $endDate : $now->format('Y-m-d');
+
+        $filterByDate = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id, $startDate , $endDate);
+        
+        // Check if all borrowing books are returned
+        $allBooksReturned = true;
+        foreach ($filterByDate as $book) {
+            if ($book->status !== 'returned') {
+                $allBooksReturned = false;
+                break;
+            }
+        }
+
+        // If all books are returned, update their status
+        if ($allBooksReturned) {
+            foreach ($filterByDate as $book) {
+                $borrowingBook = BorrowingBook::find($book->id);
+                $borrowingBook->status = 'returned';
+                $borrowingBook->save();
+            }
+        }
+        
+        // dd($filterByDate);
 
         $data = [
-            'title' => 'Returned Books List',
-            'returns' => $returns 
+            'title' => 'Borrowed Book List',
+            'filterByDate' => $filterByDate,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ];
 
         return view('library.return.index', $data);
@@ -80,4 +105,5 @@ class BookReturnController extends Controller
     {
         //
     }
+
 }
