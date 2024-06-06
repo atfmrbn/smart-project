@@ -43,10 +43,11 @@ class BorrowingBook extends Model
             ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
             ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
             ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
-            ->whereNotNull('borrowing_book_details.returned_date')
+            // ->whereNotNull('borrowing_book_details.returned_date')
             ->where('teacher_homeroom_relationships.curriculum_id', $curriculumId)
             ->whereBetween('checkout_date', [$startDate . " 00:00:00", $endDate . " 23:59:59"])
             ->orderby('checkout_date', 'desc')
+            // ->distinct()
             ->get();
     }
 }
