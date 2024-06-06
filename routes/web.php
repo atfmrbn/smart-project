@@ -82,6 +82,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
 
     Route::resource('/student/student-list', StudentController::class);
     Route::resource('/student/student-teacher-classroom', StudentTeacherClassroomRelationshipController::class);
+    Route::resource('/student/student-teacher-homeroom', StudentTeacherHomeroomRelationshipController::class);
 
     Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
     Route::resource('/classroom', ClassroomController::class);
