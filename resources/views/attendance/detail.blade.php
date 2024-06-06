@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="student_teacher_homeroom_id">student Teacher Homeroom</label>
-                        <input type="text" id="student_teacher_homeroom_id" name="student_teacher_homeroom_id" class="form-control" value="{{ $attendance->studentTeacherHomeroomRelationship->student->name }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}" readonly>
+                        <input type="text" id="student_teacher_homeroom_id" name="student_teacher_homeroom_id" class="form-control" value="{{ $attendance->studentTeacherHomeroomRelationship->student->identity_number }} - {{ $attendance->studentTeacherHomeroomRelationship->student->name }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ optional($attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher)->identity_number }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="attendance_date">Attendance Date</label>
