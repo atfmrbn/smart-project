@@ -7,11 +7,11 @@
         </div>
     @endif
 
-    @if (isset($student_teacher_homeroom))
-        <form method="POST" action="{{ URL::to('student/student-teacher-homeroom/', $student_teacher_homeroom->id) }}" autocomplete="off">
-            @method('put')
+    @if (isset($studentTeacherHomeroomRelationship))
+        <form method="POST" action="{{ route('student-teacher-homeroom.update', $studentTeacherHomeroomRelationship->id) }}" autocomplete="off">
+            @method('PUT')
     @else
-        <form method="POST" action="{{ URL::to('student/student-teacher-homeroom') }}" autocomplete="off">
+        <form method="POST" action="{{ route('student-teacher-homeroom.store') }}" autocomplete="off">
     @endif
     @csrf
 
@@ -26,7 +26,7 @@
                 <select name="student_id" id="student_id" class="form-control data-select-2">
                     <option value="">Select Student</option>  
                         @foreach ($students as $student)
-                            <option value="{{ $student->id }}" {{ (isset($student_teacher_homeroom) && $student_teacher_homeroom->student_id == $student->id) ? 'selected' : '' }}>
+                            <option value="{{ $student->id }}" {{ (isset($studentTeacherHomeroomRelationship) && $studentTeacherHomeroomRelationship->student_id == $student->id) ? 'selected' : '' }}>
                                 {{ $student->name }}
                             </option>
                         @endforeach
@@ -40,8 +40,8 @@
                 <select name="teacher_homeroom_relationship_id" id="teacher_homeroom_relationship_id" class="form-control data-select-2 @error('teacher_homeroom_relationship_id') is-invalid @enderror">
                     <option value="">Select Teacher Homeroom</option>
                     @foreach ($teacherHomeroomRelationships as $teacherHomeroomRelationship)
-                        <option value="{{ $teacherHomeroomRelationship->id }}" {{ (isset($student_teacher_homeroom) && $student_teacher_homeroom->teacher_homeroom_relationship_id == $teacherHomeroomRelationship->id) ? 'selected' : '' }}>
-                            {{ $teacherHomeroomRelationship->teacher->name }} - {{ $teacherHomeroomRelationship->classroom->name }}
+                        <option value="{{ $teacherHomeroomRelationship->id }}" {{ (isset($studentTeacherHomeroomRelationship) && $studentTeacherHomeroomRelationship->teacher_homeroom_relationship_id == $teacherHomeroomRelationship->id) ? 'selected' : '' }}>
+                            {{ $teacherHomeroomRelationship->classroom->name }} - {{ $teacherHomeroomRelationship->teacher->name }}
                         </option>
                     @endforeach
                 </select>
@@ -53,11 +53,10 @@
             </div>
         </div>
 
-
         <div class="col-12">
-            <div class="student_teacher_homeroom-submit">
+            <div class="studentTeacherHomeroomRelationship-submit">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ URL::to('student/student-teacher-homeroom/') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ route('student-teacher-homeroom.index') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>

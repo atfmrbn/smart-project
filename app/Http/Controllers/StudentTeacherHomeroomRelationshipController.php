@@ -15,12 +15,14 @@ class StudentTeacherHomeroomRelationshipController extends Controller
      */
     public function index()
     {
-        $student_teacher_homerooms = StudentTeacherHomeroomRelationship::
-        with('student', 'teacherHomeroomRelationship')->get();
+        $studentTeacherHomeroomRelationships = StudentTeacherHomeroomRelationship::
+        with('student', 'teacherHomeroomRelationship')
+        ->orderBy('teacher_homeroom_relationship_id', 'asc') // Menambahkan orderBy untuk pengurutan
+        ->get();
 
         $data = [
             'title' => 'Student Teacher Homeroom',
-            'student_teacher_homerooms' => $student_teacher_homerooms->isEmpty() ? [] : $student_teacher_homerooms,
+            'studentTeacherHomeroomRelationships' => $studentTeacherHomeroomRelationships->isEmpty() ? [] : $studentTeacherHomeroomRelationships,
         ];
 
         return view('student.student-teacher-homeroom.index', $data);
@@ -54,8 +56,7 @@ class StudentTeacherHomeroomRelationshipController extends Controller
 
         StudentTeacherHomeroomRelationship::create($data);
 
-        return redirect()->route('student/student-teacher-homeroom.index')->with('success', 'Add data successfully.');
-
+        return redirect()->route('student-teacher-homeroom.index')->with('success', 'Add data successfully.');
     }
 
     /**
@@ -63,11 +64,11 @@ class StudentTeacherHomeroomRelationshipController extends Controller
      */
     public function show(string $id)
     {
-        $student_teacher_homeroom = StudentTeacherHomeroomRelationship::findOrFail($id);
+        $studentTeacherHomeroomRelationship = StudentTeacherHomeroomRelationship::findOrFail($id);
 
         return view('student.student-teacher-homeroom.detail', [
             'title' => 'Student Teacher Homeroom Detail',
-            'student_teacher_homeroom' => $student_teacher_homeroom,
+            'studentTeacherHomeroomRelationship' => $studentTeacherHomeroomRelationship,
         ]);
     }
 
@@ -76,13 +77,13 @@ class StudentTeacherHomeroomRelationshipController extends Controller
      */
     public function edit(string $id)
     {
-        $student_teacher_homeroom = StudentTeacherHomeroomRelationship::findOrFail($id);
+        $studentTeacherHomeroomRelationship = StudentTeacherHomeroomRelationship::findOrFail($id);
         $students = User::where('role', 'Student')->get();
         $teacherHomeroomRelationships = TeacherHomeroomRelationship::all();
 
         return view('student.student-teacher-homeroom.form', [
             'title' => 'Edit Student Teacher Homeroom',
-            'student_teacher_homeroom' => $student_teacher_homeroom,
+            'studentTeacherHomeroomRelationship' => $studentTeacherHomeroomRelationship,
             'students' => $students,
             'teacherHomeroomRelationships' => $teacherHomeroomRelationships,
         ]);
@@ -99,7 +100,7 @@ class StudentTeacherHomeroomRelationshipController extends Controller
         ]);
 
         try {
-            $student_teacher_homeroom = StudentTeacherHomeroomRelationship::findOrFail($id);
+            $studentTeacherHomeroomRelationship = StudentTeacherHomeroomRelationship::findOrFail($id);
 
             if ($request->filled('password')) {
                 $data['password'] = Hash::make($data['password']);
@@ -107,11 +108,11 @@ class StudentTeacherHomeroomRelationshipController extends Controller
                 unset($data['password']);
             }
 
-            $student_teacher_homeroom->update($data);
+            $studentTeacherHomeroomRelationship->update($data);
 
-            return redirect()->route('student.student-teacher-homeroom.index')->with('successMessage', 'Data successfully updated');
+            return redirect()->route('student-teacher-homeroom.index')->with('success', 'Data successfully updated');
         } catch (\Throwable $th) {
-            return redirect()->route('student.student-teacher-homeroom.edit')->with('errorMessage', $th->getMessage());
+            return redirect()->route('student-teacher-homeroom.edit', $id)->with('error', $th->getMessage());
         }
     }
 
@@ -121,12 +122,12 @@ class StudentTeacherHomeroomRelationshipController extends Controller
     public function destroy(string $id)
     {
         try {
-            $student_teacher_homeroom = StudentTeacherHomeroomRelationship::findOrFail($id);
-            $student_teacher_homeroom->delete();
+            $studentTeacherHomeroomRelationship = StudentTeacherHomeroomRelationship::findOrFail($id);
+            $studentTeacherHomeroomRelationship->delete();
 
-            return redirect()->route('student.student-teacher-homeroom.index')->with('successMessage', 'Data successfully deleted');
+            return redirect()->route('student-teacher-homeroom.index')->with('success', 'Data successfully deleted');
         } catch (\Throwable $th) {
-            return redirect()->route('student.student-teacher-homeroom.index')->with('errorMessage', $th->getMessage());
+            return redirect()->route('student-teacher-homeroom.index')->with('error', $th->getMessage());
         }
     }
 }
