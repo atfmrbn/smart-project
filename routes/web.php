@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Models\BorrowingBookDetail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StudentController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\TeacherHomeroomRelationshipController;
 use App\Http\Controllers\TeacherClassroomRelationshipController;
 
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
+use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\UserController;
