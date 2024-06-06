@@ -50,10 +50,16 @@
                 @foreach ($filterByDate as $index => $filter)
                     <tr class="align-middle">
                         <td class="text-center">{{ $index + 1 }}</td>
-                        <td>{{ $filter->name }} - ({{ $filter->identity_number }}) - {{ $filter->classroom_name }}</td>
+                        <td>{{ $filter->classroom_name }} - ({{ $filter->identity_number }}) - {{ $filter->name }}</td>
                         <td>{{ $filter->checkout_date }}</td>
                         <td>{{ $filter->due_date }}</td>
-                        <td>{{ $filter->status }}</td>
+                        <td class="text-center">
+                            @if($filter->status == 'borrowing')
+                                <span class="badge bg-warning">{{ $filter->status }}</span>
+                            @elseif($filter->status == 'returned')
+                                <span class="badge bg-success">{{ $filter->status }}</span>
+                            @endif
+                        </td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 <form method="POST" action="{{ URL::to('book-return/' . $filter->id) }}">
@@ -69,7 +75,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="5" class="text-center">No data available</td>
+                    <td colspan="6" class="text-center">No data available</td>
                 </tr>
             @endif
         </tbody>

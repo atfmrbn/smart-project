@@ -91,20 +91,20 @@
     {{-- <div class="col-md-5 border">
         <div class="row"> --}}
             @if($canBorrow)
-        <form action="{{ route('book-borrow-detail.store') }}" method="POST" autocomplete="off" class="mt-4">
-            @csrf
-            <input type="hidden" name="borrowing_book_id" value="{{ $borrow->id }}">
-            <select name="book_id" id="book_id" class="form-control data-select-2">
-                <option value="">ISBN - Cateogry - Title</option>
-                @foreach ($books as $book)
-                    <option value="{{ $book->id }}">
-                        {{ $book->isbn }} - {{ $book->category->name }}  - {{ $book->title }}
-                    </option>
-                @endforeach
-            </select>
-            <button type="submit" class="btn btn-primary btn-block">Select</button>
-        </form>
-        @endif
+            <form action="{{ route('book-borrow-detail.store') }}" method="POST" autocomplete="off" class="mt-4">
+                @csrf
+                <input type="hidden" name="borrowing_book_id" value="{{ $borrow->id }}">
+                <select name="book_id" id="book_id" class="form-control data-select-2">
+                    <option value="">ISBN - Cateogry - Title</option>
+                    @foreach ($books as $book)
+                        <option value="{{ $book->id }}">
+                            {{ $book->isbn }} - {{ $book->category->name }}  - {{ $book->title }}
+                        </option>
+                    @endforeach
+                </select>
+                <button type="submit" class="btn btn-primary btn-block">Select</button>
+            </form>
+            @endif
         {{-- </div> --}}
     {{-- </div> --}}
 
@@ -145,7 +145,6 @@
                                 @method('put')
 
                                 <button type="submit" class="btn btn-sm btn-outline-success ms-2" title="Return Book" onclick="return confirm('Anda yakin mau mengembalikan buku ini {{ $borrowDetail->book->title }}?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
-
                                     <i class="fas fa-undo"></i>
                                 </button>
                             </form>

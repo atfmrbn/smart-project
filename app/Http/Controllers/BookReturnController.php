@@ -14,22 +14,7 @@ class BookReturnController extends Controller
      */
     public function index(Request $request)
     {
-        // $data = [
-        //     'title' => 'Returned Books List'
-        // ];
-
-        // return view("library.return.index", $data);
-        // $returns = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id);
-
-        // $data = [
-        //     'title' => 'Returned Books List',
-        //     'returns' => $returns 
-        // ];
-
-        // return view('library.return.index', $data);
-
-
-                $startDate = $request->input("startDate");
+        $startDate = $request->input("startDate");
         $endDate = $request->input("endDate");
 
         $now = Carbon::now();
@@ -38,9 +23,26 @@ class BookReturnController extends Controller
         $endDate = $endDate ? $endDate : $now->format('Y-m-d');
 
         $filterByDate = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id, $startDate , $endDate);
+        
+        // Check if all borrowing books are returned
+        $allBooksReturned = true;
+        foreach ($filterByDate as $book) {
+            if ($book->status !== 'returned') {
+                $allBooksReturned = false;
+                break;
+            }
+        }
 
-        // $filterByDate = $filterByDateQuery->get();
-
+        // If all books are returned, update their status
+        if ($allBooksReturned) {
+            foreach ($filterByDate as $book) {
+                $borrowingBook = BorrowingBook::find($book->id);
+                $borrowingBook->status = 'returned';
+                $borrowingBook->save();
+            }
+        }
+        
+        // dd($filterByDate);
 
         $data = [
             'title' => 'Borrowed Book List',
