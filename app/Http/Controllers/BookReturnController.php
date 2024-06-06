@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BookReturnController extends Controller
@@ -11,19 +12,41 @@ class BookReturnController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // $data = [
         //     'title' => 'Returned Books List'
         // ];
 
         // return view("library.return.index", $data);
-        $returns = BorrowingBook::getinactiveBorrowingBook($this->defaultCurriculum->id);
-        // $returns = BorrowingBookDetail::getActiveBorrowingBookDetail($this->defaultCurriculum->id);
+        // $returns = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id);
+
+        // $data = [
+        //     'title' => 'Returned Books List',
+        //     'returns' => $returns 
+        // ];
+
+        // return view('library.return.index', $data);
+
+
+                $startDate = $request->input("startDate");
+        $endDate = $request->input("endDate");
+
+        $now = Carbon::now();
+
+        $startDate = $startDate ? $startDate : $now->format('Y-m-d');
+        $endDate = $endDate ? $endDate : $now->format('Y-m-d');
+
+        $filterByDate = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id, $startDate , $endDate);
+
+        // $filterByDate = $filterByDateQuery->get();
+
 
         $data = [
-            'title' => 'Returned Books List',
-            'returns' => $returns 
+            'title' => 'Borrowed Book List',
+            'filterByDate' => $filterByDate,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ];
 
         return view('library.return.index', $data);
@@ -80,4 +103,5 @@ class BookReturnController extends Controller
     {
         //
     }
+
 }

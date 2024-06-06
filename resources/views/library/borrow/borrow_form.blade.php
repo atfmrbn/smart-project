@@ -2,7 +2,17 @@
 @section('container')
 
 
-<h5>{{ isset($borrow) ? 'Edit' : 'Add' }} Borrowing Book</h5>
+
+<div class="row align-items-center">
+    <div class="col">
+        <h5>{{ isset($borrow) ? 'Edit' : 'Add' }} Borrowing Book</h5>
+    </div>
+    @if(isset($borrow))
+    <div class="col-auto text-end float-end ms-auto download-grp">
+        <a href="{{ URL::to('book-borrow-detail-download/' . $borrow->id) }}" class="btn btn-primary mb-3"><i class="fas fa-download"></i> Download</a>
+    </div>
+    @endif
+</div>
 <br>
 @if(isset($borrow))
 <form method="POST" action="{{ route('book-borrow.update', $borrow->id) }}" autocomplete="off" enctype="multipart/form-data">
@@ -67,9 +77,6 @@
 <div class="row align-items-center mt-5">
     <div class="col">
         <h5>Book Borrowing Details</h5>
-    </div>
-    <div class="col-auto text-end float-end ms-auto download-grp">
-        <a href="{{ URL::to('book-borrow-detail-download') }}" class="btn btn-primary me-2 mb-3"><i class="fas fa-download"></i> Download</a>
     </div>
 </div>
 
@@ -136,7 +143,9 @@
                             <form method="POST" action="{{ route('book-borrow-detail.return', $borrowDetail->id) }}">
                                 @csrf
                                 @method('put')
-                                <button type="submit" class="btn btn-sm btn-outline-success ms-2" title="Return  Book" onclick="return confirm('Anda yakin mau mengembalikan buku ini?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
+
+                                <button type="submit" class="btn btn-sm btn-outline-success ms-2" title="Return Book" onclick="return confirm('Anda yakin mau mengembalikan buku ini {{ $borrowDetail->book->title }}?')" {{ $borrowDetail->returned_date ? 'disabled' : '' }}>
+
                                     <i class="fas fa-undo"></i>
                                 </button>
                             </form>
