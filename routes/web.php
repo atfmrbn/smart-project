@@ -131,7 +131,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
 
-    Route::resource('/user', UserController::class);
+    Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);
 
 });
