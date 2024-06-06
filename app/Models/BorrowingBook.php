@@ -34,7 +34,8 @@ class BorrowingBook extends Model
             ->distinct()
             ->get();
     }
-    public static function getInactiveBorrowingBook($curriculumId)
+
+    public static function getInactiveBorrowingBook($curriculumId, $startDate, $endDate)
     {
         return self::select('borrowing_books.*', 'users.name', 'users.identity_number', 'classrooms.name as classroom_name')
             ->leftJoin('borrowing_book_details', 'borrowing_books.id', '=', 'borrowing_book_details.borrowing_book_id')
@@ -44,7 +45,8 @@ class BorrowingBook extends Model
             ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
             ->whereNotNull('borrowing_book_details.returned_date')
             ->where('teacher_homeroom_relationships.curriculum_id', $curriculumId)
-            ->distinct()
+            ->whereBetween('checkout_date', [$startDate . " 00:00:00", $endDate . " 23:59:59"])
+            ->orderby('checkout_date', 'desc')
             ->get();
     }
 }

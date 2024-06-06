@@ -21,15 +21,14 @@ use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\TeacherSubjectRelationshipController;
-
 use App\Http\Controllers\TeacherHomeroomRelationshipController;
 use App\Http\Controllers\TeacherClassroomRelationshipController;
-
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
-
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\UserController;
+
+Route::resource('attendance', AttendanceController::class);
 
 
 
@@ -78,14 +77,18 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::delete('book-borrow-detail/{id}', 'destroy')->name('book-borrow-detail.destroy');
     });
 
+    // Route untuk filterByDate
+    Route::get('book-return', [BorrowingBookController::class, 'reportByDate']);
+
     Route::controller(BookReturnController::class)->group(function () {
-        Route::get('book-return/', 'index');
+        Route::get('book-return/', 'index')->name('book-return.index');
+        Route::get('book-return', 'filterByDate')->name('bookReturn.filterByDate');
         Route::get('book-return/add', 'create');
     });
 
     Route::resource('/student/student-list', StudentController::class);
     Route::resource('/student/student-teacher-classroom', StudentTeacherClassroomRelationshipController::class);
-
+    Route::resource('/student/student-teacher-homeroom', StudentTeacherHomeroomRelationshipController::class);
     Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
     Route::resource('/classroom', ClassroomController::class);
 
