@@ -15,6 +15,7 @@ class TeacherClassroomRelationship extends Model
         'curriculum_id',
         'subject_id',
         'teacher_subject_relationship_id',
+        'schedule_day',
         'schedule_time_start',
         'schedule_time_end'
     ];
