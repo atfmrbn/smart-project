@@ -6,11 +6,11 @@
         </div>
     @endif
     @if (isset($user))
-        <form method="POST" action="{{ URL::to('user/' . $user->id) }}" autocomplete="off" enctype="multipart/form-data">
-            @method('PUT')
-        @else
-            <form method="POST" action="{{ URL::to('user') }}" autocomplete="off" enctype="multipart/form-data">
-    @endif
+    <form method="POST" action="{{ URL::to('user/' . $user->id) }}" autocomplete="off" enctype="multipart/form-data">
+        @method('PUT')
+@else
+    <form method="POST" action="{{ URL::to('user') }}" autocomplete="off" enctype="multipart/form-data">
+@endif
     @csrf
     <div class="row">
         <div class="col-12">
