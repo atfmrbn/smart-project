@@ -85,7 +85,7 @@ class TeacherClassroomRelationshipController extends Controller
 
             return redirect()->route('teacher-classroom.index')->with('successMessage', 'Data successfully added');
         }
-        catch (Exception $ex)
+        catch (\Exception $ex)
         {
             return redirect()->route('teacher-classroom.index')->with('errorMessage', $ex->getMessage());
         }

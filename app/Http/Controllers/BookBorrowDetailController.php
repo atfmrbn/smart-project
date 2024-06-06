@@ -73,15 +73,6 @@ class BookBorrowDetailController extends Controller
         return redirect()->back();
     }
 
-    // public function returnBook(Request $request, string $id)
-    // {
-    //     $borrowDetail = BorrowingBookDetail::findOrFail($id);
-    //     $borrowDetail->returned_date = now(); // Atur tanggal pengembalian ke tanggal saat ini
-    //     $borrowDetail->save();
-
-    //     return redirect()->back()->with('success', 'Book returned successfully');
-    // }
-
     public function returnBook(Request $request, string $id)
     {
         $configuration = Configuration::first();
