@@ -9,15 +9,15 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="student_name">Student Name</label>
-                        <input type="text" id="student_name" name="student_name" class="form-control" value="{{ $extracurricular_student->student->name }}" readonly>
+                        <input type="text" id="student_name" name="student_name" class="form-control" value="{{ $extracurricular_student->class_name }} - {{ $extracurricular_student->identity_number }} - {{ $extracurricular_student->student_name }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="extracurricular_name">Extracurricular Name</label>
-                        <input type="text" id="extracurricular_name" name="extracurricular_name" class="form-control" value="{{ $extracurricular_student->extracurricular->name }}" readonly>
+                        <input type="text" id="extracurricular_name" name="extracurricular_name" class="form-control" value="{{ $extracurricular_student->extracurricular_name }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input type="text" id="description" name="description" class="form-control" value="{{ $extracurricular_student->description }}" readonly>
+                        <input type="text" id="description" name="description" class="form-control" value="{{ $extracurricular_student->extracurricular_description }}" readonly>
                     </div>
                     <div class="form-group">
                         <a href="{{ URL::to('extracurricular-student/') }}" class="btn btn-secondary">Back</a>

@@ -113,10 +113,10 @@ class TeacherController extends Controller
         try {
             $teacher = User::findOrFail($id);
 
-            if ($request->filled('password')) {
-                $data['password'] = Hash::make($data['password']);
-            } else {
-                unset($data['password']);
+            if($request->password){
+                $data['password'] = Hash::make($data["password"]);
+            }else {
+                $data['password'] = $teacher->password;
             }
 
             $teacher->update($data);

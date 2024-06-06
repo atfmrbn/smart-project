@@ -3,6 +3,10 @@
 
 <div class="row">
     <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">subject Detail</h3>
+            </div>
         <div class="form-group">
             <label for="classroom_type_name">Classroom Type</label>
             <input type="text" id="classroom_type_name" name="classroom_type_name" class="form-control" value="{{ $subject->classroomType->name }}" readonly>
@@ -16,6 +20,7 @@
             <input type="text" id="description" name="description" class="form-control" value="{{ $subject->description }}" readonly>
         </div>
         <a href="{{ URL::to('subject/')  }}" class="btn btn-sm btn-secondary">Back</a>
+        </div>
     </div>
 </div>
 

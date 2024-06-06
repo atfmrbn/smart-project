@@ -28,7 +28,7 @@
                     @enderror
                 </div>
             </div>
-
+            
             <div class="col-12 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="password">Password <span class="login-danger">*</span></label>
@@ -155,21 +155,22 @@
                             {{ $message }}
                         </div>
                     @enderror
+
+                </div>
+                <div class="col-12 col-sm-4" style="display: none;">
+                    <div class="form-group local-forms">
+                        <label for="role">Role <span class="login-danger">*</span></label>
+                        <input type="text" class="form-control" name="role" id="role" value="Teacher"
+                            required>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="teacher-submit">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="{{ route('teacher.index') }}" class="btn btn-secondary">Back</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-4" style="display: none;">
-                <div class="form-group local-forms">
-                    <label for="role">Role <span class="login-danger">*</span></label>
-                    <input type="text" class="form-control" name="role" id="role" value="Teacher" required>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="teacher-submit">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{ route('teacher.index') }}" class="btn btn-secondary">Back</a>
-                </div>
-            </div>
-        </div>
     </form>
     <script>
         document.getElementById('phone').addEventListener('input', function(e) {
