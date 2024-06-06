@@ -67,7 +67,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::put('book-borrow-detail/{id}/return', [BookBorrowDetailController::class, 'returnBook'])->name('book-borrow-detail.return');
 
     Route::get('book-borrow-download', [BorrowingBookController::class, 'download']);
-    Route::get('book-borrow-detail-download', [BookBorrowDetailController::class, 'download']);
+    Route::get('book-borrow-detail-download/{id}', [BookBorrowDetailController::class, 'download']);
 
     Route::controller(BookBorrowDetailController::class)->group(function () {
         Route::get('book-borrow-detail/', 'index')->name('book-borrow-detail.index');
