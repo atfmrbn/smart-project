@@ -1,5 +1,16 @@
 @extends('layouts.main')
 @section('container')
+    @if (session('successMessage'))
+        <div class="alert alert-success">
+            {{ session('successMessage') }}
+        </div>
+    @endif
+    @if (session('errorMessage'))
+        <div class="alert alert-danger">
+            {{ session('errorMessage') }}
+        </div>
+    @endif
+
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
@@ -46,8 +57,8 @@
                         <td>{{ $user->role }}</td>
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="{{ URL::to('user/' . $user->id) }}"
-                                    class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i>
+                                <a href="{{ URL::to('user/' . $user->id) }}" class="btn btn-sm btn-outline-info me-2"><i
+                                        class="fas fa-eye"></i>
                                 </a>
                                 <a href="{{ URL::to('user/' . $user->id) . '/edit' }}"
                                     class="btn btn-sm btn-outline-primary me-2">
