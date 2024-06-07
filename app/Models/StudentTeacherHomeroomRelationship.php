@@ -14,7 +14,8 @@ class StudentTeacherHomeroomRelationship extends Model
   protected $fillable = [
       'student_id',
       'teacher_homeroom_relationship_id',
-      'teacher_id'
+      'teacher_id',
+      'classroom_id'
   ];
     protected $guarded = [];
 
@@ -26,6 +27,11 @@ class StudentTeacherHomeroomRelationship extends Model
     public function teacher()
     {
       return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class, 'classroom_id');
     }
 
     public function teacherHomeroomRelationship()
