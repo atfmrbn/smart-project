@@ -1,89 +1,89 @@
+@php
+    $currentRoute = Route::currentRouteName();
+    $currentUrl = URL::current();
+@endphp
+
 <div class="sidebar" id="sidebar">
-  <div class="sidebar-inner slimscroll">
-    <div id="sidebar-menu" class="sidebar-menu">
-      <ul>
-        <li class="menu-title">
-          <span>Main Menu</span>
-        </li>
-        <li class="submenu">
-          <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
-          <ul>
-            <li><a href="{{ URL::to('/') }}" class="">Admin Dashboard</a></li>
-            <li><a href="{{ route('teacher.dashboard') }}" class="">Teacher Dashboard</a></li>
-            <li><a href="student-dashboard.html">Student Dashboard</a></li>
-          </ul>
-        </li>
-        <li class="submenu">
-          <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span class="menu-arrow"></span></a>
-          <ul>
-            <li><a href="{{ URL::to('/student/student-list') }}">Student List</a></li>
-            <li><a href="{{ URL::to('/student/student-teacher-homeroom') }}">Student Teacher Homeroom</a></li>
-            <li><a href="{{ URL::to('/extracurricular') }}">Extracurricular Activities</a></li>
-            <li><a href="{{ URL::to('/extracurricular-student') }}">Extracurricular Participants</a></li>
-            {{-- <li><a href="add-student.html">Student Add</a></li>
-            <li><a href="edit-student.html">Student Edit</a></li> --}}
-          </ul>
-        </li>
-        <li class="submenu">
-          <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
-          <ul>
-            <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="">Teacher List</a></li>
-            <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}">Teacher Homeroom</a></li>
-            <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="">Teacher Classroom</a></li>
-            <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="">Teacher Subject</a></li>
-          </ul>
-        </li>
-        <li class="submenu">
-            <a href="#"><i class="fas fa-book-reader"></i> <span> Librarians</span> <span class="menu-arrow"></span></a>
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
             <ul>
-                <li><a href="{{ route('librarian.index') }}">Librarian List</a></li>
-                <li><a href="{{ route('librarian.create') }}">Librarian Add</a></li>
-            </ul>
-        </li>
-
-        <li class="submenu">
-          <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Classrooms</span> <span class="menu-arrow"></span></a>
-          <ul>
-            <li><a href="{{ URL::to('classroom/') }}">Classroom List</a></li>
-            <li><a href="{{ URL::to('classroom/classroom-type/') }}" class="">Classroom Type</a></li>
-            <li><a href="{{ URL::to('/subject') }}">Subject</a></li>
-            <li><a href="{{ URL::to('attendance') }}">Attendances</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-            <a href="{{ URL::to('/curriculum') }}"><i class="fas fa-school"></i> <span> Curriculums</span></a>
-        </li>
-
-        <li class="nav-item">
-          <a href="{{ URL :: to ('/task-type') }}"><i class="fas fa-tags"></i> <span> Task Type</span></a>
-      </li>
-
-        <li class="submenu">
-          <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
-          <ul>
-            <li><a href="{{ URL::to('/book') }}" class="">Books</a></li>
-            <li><a href="{{ URL::to('/book-category') }}" class="">Book Category</a></li>
-            <li><a href="{{ URL::to('/book-borrow') }}">Book Borrowing</a></li>
-            <li><a href="{{ URL::to('/book-return') }}">Book Returns</a></li>
-            <li><a href="edit-teacher.html">Reports</a></li>
-          </ul>
-        </li>
-
-        <li class="menu-title"><span>Pages</span></li>
-        {{-- @if (auth()->user()->role == 'Super Admin') --}}
-        <li class="submenu">
-            <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
-            <ul>
-              <li><a href="{{ URL::to('/user') }}">Users</a></li>
-              <li><a href="forgot-password.html">Forgot Password</a></li>
-              <li><a href="error-404.html">Error Page</a></li>
+                <li class="menu-title">
+                    <span>Main Menu</span>
+                </li>
+                <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student-dashboard') ? 'active' : '' }}">
+                    <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{{ URL::to('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Admin Dashboard</a></li>
+                        <li><a href="{{ route('teacher.dashboard') }}" class="{{ request()->is('teacher/dashboard') ? 'active' : '' }}">Teacher Dashboard</a></li>
+                        <li><a href="student-dashboard.html" class="{{ request()->is('student-dashboard') ? 'active' : '' }}">Student Dashboard</a></li>
+                    </ul>
+                </li>
+                <li class="submenu {{ request()->is('student/*') || request()->is('extracurricular*') ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{{ URL::to('/student/student-list') }}" class="{{ request()->is('student/student-list') ? 'active' : '' }}">Student List</a></li>
+                        <li><a href="{{ URL::to('/student/student-teacher-homeroom') }}" class="{{ request()->is('student/student-teacher-homeroom') ? 'active' : '' }}">Student Teacher Homeroom</a></li>
+                        <li><a href="{{ URL::to('/extracurricular') }}" class="{{ request()->is('extracurricular') ? 'active' : '' }}">Extracurricular Activities</a></li>
+                        <li><a href="{{ URL::to('/extracurricular-student') }}" class="{{ request()->is('extracurricular-student') ? 'active' : '' }}">Extracurricular Participants</a></li>
+                    </ul>
+                </li>
+                <li class="submenu {{ request()->is('teacher/*') ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="{{ request()->is('teacher/teacher-list') ? 'active' : '' }}">Teacher List</a></li>
+                        <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}" class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }}">Teacher Homeroom</a></li>
+                        <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="{{ request()->is('teacher/teacher-classroom') ? 'active' : '' }}">Teacher Classroom</a></li>
+                        <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="{{ request()->is('teacher/teacher-subject') ? 'active' : '' }}">Teacher Subject</a></li>
+                    </ul>
+                </li>
+                <li class="submenu {{ request()->is('librarian*') ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-book-reader"></i> <span> Librarians</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{{ route('librarian.index') }}" class="{{ request()->is('librarian') ? 'active' : '' }}">Librarian List</a></li>
+                        <li><a href="{{ route('librarian.create') }}" class="{{ request()->is('librarian/create') ? 'active' : '' }}">Librarian Add</a></li>
+                    </ul>
+                </li>
+                <li class="submenu {{ request()->is('classroom*') || request()->is('subject') || request()->is('attendance') ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Classrooms</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{{ URL::to('classroom/') }}" class="{{ request()->is('classroom') ? 'active' : '' }}">Classroom List</a></li>
+                        <li><a href="{{ URL::to('classroom/classroom-type/') }}" class="{{ request()->is('classroom/classroom-type') ? 'active' : '' }}">Classroom Type</a></li>
+                        <li><a href="{{ URL::to('/subject') }}" class="{{ request()->is('subject') ? 'active' : '' }}">Subject</a></li>
+                        <li><a href="{{ URL::to('attendance') }}" class="{{ request()->is('attendance') ? 'active' : '' }}">Attendances</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item {{ request()->is('curriculum') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/curriculum') }}"><i class="fas fa-school"></i> <span> Curriculums</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('task-type') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/task-type') }}"><i class="fas fa-tags"></i> <span> Task Type</span></a>
+                </li>
+                <li class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{{ URL::to('/book') }}" class="{{ request()->is('book') ? 'active' : '' }}">Books</a></li>
+                        <li><a href="{{ URL::to('/book-category') }}" class="{{ request()->is('book-category') ? 'active' : '' }}">Book Category</a></li>
+                        <li><a href="{{ URL::to('/book-borrow') }}" class="{{ request()->is('book-borrow') ? 'active' : '' }}">Book Borrowing</a></li>
+                        <li><a href="{{ URL::to('/book-return') }}" class="{{ request()->is('book-return') ? 'active' : '' }}">Book Returns</a></li>
+                        <li><a href="edit-teacher.html">Reports</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title"><span>Pages</span></li>
+                @if (auth()->user()->role == 'Super Admin')
+                <li class="submenu {{ request()->is('user') || request()->is('forgot-password') || request()->is('error-404') ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{{ URL::to('/user') }}" class="{{ request()->is('user') ? 'active' : '' }}">Users</a></li>
+                        <li><a href="forgot-password.html" class="{{ request()->is('forgot-password') ? 'active' : '' }}">Forgot Password</a></li>
+                        <li><a href="error-404.html" class="{{ request()->is('error-404') ? 'active' : '' }}">Error Page</a></li>
+                    </ul>
+                </li>
+                @endif
+                <li><a href="{{ route('logout') }}">Logout</a></li>
             </ul>
           </li>
           {{-- @endif --}}
             <li><a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-
       </ul>
     </div>
-  </div>
 </div>

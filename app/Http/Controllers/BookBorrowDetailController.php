@@ -73,15 +73,6 @@ class BookBorrowDetailController extends Controller
         return redirect()->back();
     }
 
-    // public function returnBook(Request $request, string $id)
-    // {
-    //     $borrowDetail = BorrowingBookDetail::findOrFail($id);
-    //     $borrowDetail->returned_date = now(); // Atur tanggal pengembalian ke tanggal saat ini
-    //     $borrowDetail->save();
-
-    //     return redirect()->back()->with('success', 'Book returned successfully');
-    // }
-
     public function returnBook(Request $request, string $id)
     {
         $configuration = Configuration::first();
@@ -101,24 +92,21 @@ class BookBorrowDetailController extends Controller
         return redirect()->back()->with('success', 'Book returned successfully with a penalty of ');
     }
 
-    public function download()
+    public function download($id)
     {
-        $borrow = BorrowingBook::select('borrowing_books.*', 'users.name', 'classrooms.name as classroom_name')
-        ->join('users', 'users.id', '=', 'borrowing_books.student_id')
-        ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
-        ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
-        ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
-        ->where('teacher_homeroom_relationships.curriculum_id', 2)
-        ->get();
+        $borrowDetails = BorrowingBookDetail::with('book')
+                       ->where('borrowing_book_id', $id)
+                       ->get();
 
-        $borrowDetails = BorrowingBookDetail::getActiveBorrowingBookDetail($this->defaultCurriculum->id);
-        $borrow = BorrowingBook::all();
+        $borrowingBook = BorrowingBook::find($id);
+
         $data = [
             'title' => 'Borrowed Books List',
             'borrowDetails' => $borrowDetails,
-            'borrow' => $borrow,
-
+            'borrowingBook' => $borrowingBook
         ];
+
+        // dd($data);
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.borrow.report-borrow-detail', $data);
 

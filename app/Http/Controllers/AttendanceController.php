@@ -14,8 +14,9 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::with('studentTeacherHomeroomRelationship')
-            ->get(); 
+        $attendances = Attendance::with('studentTeacherHomeroomRelationship.teacherHomeroomRelationship.teacher')
+        ->get();
+
 
         $data = [
             'title' => 'Attendance',

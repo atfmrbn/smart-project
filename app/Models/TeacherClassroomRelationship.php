@@ -17,7 +17,8 @@ class TeacherClassroomRelationship extends Model
         'teacher_subject_relationship_id',
         'schedule_day',
         'schedule_time_start',
-        'schedule_time_end'
+        'schedule_time_end', 
+        'schedule_day'
     ];
 
     protected $guarded = [];
