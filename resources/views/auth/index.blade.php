@@ -65,7 +65,7 @@
         .form-group.position-relative .profile-views,
         .form-group.position-relative .toggle-password {
             position: absolute;
-            top: 50%;
+            top: 70%;
             transform: translateY(-50%);
             right: 10px;
             cursor: pointer;
@@ -166,7 +166,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <a href="{{ URL::to('forgot-password') }}">Forgot Password?</a>
+                            <a href="#">Forgot Password?</a>
                         </div>
                         <div class="form-group mt-4">
                             <button class="btn btn-primary btn-block" type="submit">Login</button>
@@ -179,11 +179,12 @@
                     </div>
 
                     <div class="social-login">
-                        <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://accounts.google.com/ServiceLogin?service=mail"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="https://www.facebook.com/login"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/login"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/login"><i class="fab fa-linkedin-in"></i></a>
                     </div>
+
 
                 </div>
             </div>
