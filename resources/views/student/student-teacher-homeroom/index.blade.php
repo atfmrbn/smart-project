@@ -13,6 +13,22 @@
     </div>
 </div>
 
+<form id="filterForm" method="GET" action="{{ route('student-teacher-homeroom.index') }}" class="mb-4">
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label for="classroom" class="form-label">Classroom</label>
+            <select name="classroom" id="classroom" class="form-select data-select-2" onchange="this.form.submit()">
+                <option value="">Select Classroom</option>
+                @foreach ($classrooms as $classroom)
+                    <option value="{{ $classroom->id }}" {{ request('classroom') == $classroom->id ? 'selected' : '' }}>
+                        {{ $classroom->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</form>
+
 <div class="table-responsive">
     <table id="example" class="table table-bordered table-striped">
         <thead>

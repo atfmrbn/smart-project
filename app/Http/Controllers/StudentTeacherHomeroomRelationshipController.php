@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\TeacherHomeroomRelationship;
@@ -13,29 +14,36 @@ class StudentTeacherHomeroomRelationshipController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $studentTeacherHomeroomRelationships =
-        StudentTeacherHomeroomRelationship::join('users as students', 'student_teacher_homeroom_relationships.student_id', '=', 'students.id')
-        ->select([
-            'students.identity_number',
-            'student_teacher_homeroom_relationships.*', // Anda bisa tambahkan kolom-kolom lain yang ingin Anda ambil dari tabel ini
-        ])
-        ->get();
+        $classroom_id = $request->input('classroom');
 
-        
-        
-        // with('student', 'teacherHomeroomRelationship')
-        // ->orderBy('teacher_homeroom_relationship_id', 'asc') // Menambahkan orderBy untuk pengurutan
-        // ->get();
+        $query = StudentTeacherHomeroomRelationship::join('users as students', 'student_teacher_homeroom_relationships.student_id', '=', 'students.id')
+            ->join('teacher_homeroom_relationships as thr', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id', '=', 'thr.id')
+            ->join('classrooms', 'thr.classroom_id', '=', 'classrooms.id')
+            ->select([
+                'students.identity_number',
+                'student_teacher_homeroom_relationships.*',
+                'classrooms.name as classroom_name',
+            ]);
+
+        // Filter berdasarkan classroom
+        if ($classroom_id) {
+            $query->where('classrooms.id', $classroom_id);
+        }
+
+        $studentTeacherHomeroomRelationships = $query->get();
+        $classrooms = Classroom::all();
 
         $data = [
             'title' => 'Student Teacher Homeroom',
-            'studentTeacherHomeroomRelationships' => $studentTeacherHomeroomRelationships->isEmpty() ? [] : $studentTeacherHomeroomRelationships,
+            'studentTeacherHomeroomRelationships' => $studentTeacherHomeroomRelationships,
+            'classrooms' => $classrooms,
         ];
 
         return view('student.student-teacher-homeroom.index', $data);
     }
+
 
     /**
      * Show the form for creating a new resource.
