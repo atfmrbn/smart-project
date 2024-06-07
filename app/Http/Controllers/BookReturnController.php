@@ -14,44 +14,41 @@ class BookReturnController extends Controller
      */
     public function index(Request $request)
     {
-        $startDate = $request->input("startDate");
-        $endDate = $request->input("endDate");
+        $now = Carbon::now()->toDateString();
 
-        $now = Carbon::now();
+    $startDate = $request->input("startDate", $now);
+    $endDate = $request->input("endDate", $now);
 
-        $startDate = $startDate ? $startDate : $now->format('Y-m-d');
-        $endDate = $endDate ? $endDate : $now->format('Y-m-d');
+    $filterByDate = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id, $startDate , $endDate);
+    
+    // Check if all borrowing books are returned
+    $allBooksReturned = true;
+    foreach ($filterByDate as $book) {
+        if ($book->status !== 'returned') {
+            $allBooksReturned = false;
+            break;
+        }
+    }
 
-        $filterByDate = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id, $startDate , $endDate);
-        
-        // Check if all borrowing books are returned
-        $allBooksReturned = true;
+    // If all books are returned, update their status
+    if ($allBooksReturned) {
         foreach ($filterByDate as $book) {
-            if ($book->status !== 'returned') {
-                $allBooksReturned = false;
-                break;
-            }
+            $borrowingBook = BorrowingBook::find($book->id);
+            $borrowingBook->status = 'returned';
+            $borrowingBook->save();
         }
+    }
 
-        // If all books are returned, update their status
-        if ($allBooksReturned) {
-            foreach ($filterByDate as $book) {
-                $borrowingBook = BorrowingBook::find($book->id);
-                $borrowingBook->status = 'returned';
-                $borrowingBook->save();
-            }
-        }
-        
-        // dd($filterByDate);
+    // dd($filterByDate);
 
-        $data = [
-            'title' => 'Borrowed Book List',
-            'filterByDate' => $filterByDate,
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-        ];
+    $data = [
+        'title' => 'Borrowed Book List',
+        'filterByDate' => $filterByDate,
+        'startDate' => $startDate,
+        'endDate' => $endDate,
+    ];
 
-        return view('library.return.index', $data);
+    return view('library.return.index', $data);
     }
 
     /**

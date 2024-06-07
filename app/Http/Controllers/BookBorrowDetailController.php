@@ -88,7 +88,21 @@ class BookBorrowDetailController extends Controller
 
         $borrowDetail->save();
 
+        //cek jika buku sudah kembali semua
+        $borrowingDetails = BorrowingBookDetail::where('borrowing_book_id', $borrowDetail->borrowing_book_id)->get();
+        $returnedDetails = BorrowingBookDetail::where([['borrowing_book_id', $borrowDetail->borrowing_book_id], ['penalty', '0']])
+        ->whereNotNull('returned_date')->get();
+        
+        //->get();
+        //dd($borrowDetails);
+        if($borrowingDetails->count() == $returnedDetails->count())
+        {
+            $borrowingBook = BorrowingBook::find($borrowingDetails[0]->borrowing_book_id);
+            $borrowingBook->update(['status' => 'returned']);
+        }
+
         // Redirect back to the borrowing book details page
+        //TODO buat penalty muncul 
         return redirect()->back()->with('success', 'Book returned successfully with a penalty of ');
     }
 
