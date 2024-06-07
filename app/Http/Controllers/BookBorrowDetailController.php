@@ -96,13 +96,13 @@ class BookBorrowDetailController extends Controller
         //->get();
         //dd($borrowDetails);
         if($borrowingDetails->count() == $returnedDetails->count())
-        {
+        { 
             $borrowingBook = BorrowingBook::find($borrowingDetails[0]->borrowing_book_id);
             $borrowingBook->update(['status' => 'returned']);
         }
 
         // Redirect back to the borrowing book details page
-        //TODO buat penalty muncul 
+        //TODO buat penalty muncul
         return redirect()->back()->with('success', 'Book returned successfully with a penalty of ');
     }
 
@@ -126,5 +126,5 @@ class BookBorrowDetailController extends Controller
 
 	    return $pdf->download('laporan-perpustakaan-pdf');
     }
-    
+
 }

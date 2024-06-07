@@ -47,7 +47,7 @@ class BorrowingBook extends Model
             ->where('teacher_homeroom_relationships.curriculum_id', $curriculumId)
             ->whereBetween('checkout_date', [$startDate . " 00:00:00", $endDate . " 23:59:59"])
             ->orderby('checkout_date', 'desc')
-            // ->distinct()
+            ->distinct()
             ->get();
     }
 }

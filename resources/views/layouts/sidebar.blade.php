@@ -30,8 +30,8 @@
                 <li class="submenu {{ request()->is('teacher/*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Teachers</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="{{ request()->is('teacher/teacher-list') ? 'active' : '' }}">Teacher List</a></li>
-                        <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}" class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }}">Teacher Homeroom</a></li>
+                        <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="{{ request()->is('teacher/teacher-list') ? 'active' : '' }} || {{ request()->is('teacher/teacher-list/add') ? 'active' : '' }}">Teacher List</a></li>
+                        <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}" class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/add') ? 'active' : '' }}">Teacher Homeroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="{{ request()->is('teacher/teacher-classroom') ? 'active' : '' }}">Teacher Classroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="{{ request()->is('teacher/teacher-subject') ? 'active' : '' }}">Teacher Subject</a></li>
                     </ul>
@@ -39,8 +39,8 @@
                 <li class="submenu {{ request()->is('librarian*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-book-reader"></i> <span> Librarians</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ route('librarian.index') }}" class="{{ request()->is('librarian') ? 'active' : '' }}">Librarian List</a></li>
-                        <li><a href="{{ route('librarian.create') }}" class="{{ request()->is('librarian/create') ? 'active' : '' }}">Librarian Add</a></li>
+                        <li><a href="{{ URL::to('librarian/librarian-list') }}" class="{{ request()->is('librarian/librarian-list') ? 'active' : '' }}">Librarian List</a></li>
+                        <li><a href="{{ URL::to('librarian/librarian-list/add') }}" class="{{ request()->is('librarian/librarian-list/add') ? 'active' : '' }}">Librarian Add</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ request()->is('classroom*') || request()->is('subject') || request()->is('attendance') ? 'active' : '' }}">
@@ -61,9 +61,9 @@
                 <li class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ URL::to('/book') }}" class="{{ request()->is('book') ? 'active' : '' }}">Books</a></li>
-                        <li><a href="{{ URL::to('/book-category') }}" class="{{ request()->is('book-category') ? 'active' : '' }}">Book Category</a></li>
-                        <li><a href="{{ URL::to('/book-borrow') }}" class="{{ request()->is('book-borrow') ? 'active' : '' }}">Book Borrowing</a></li>
+                        <li><a href="{{ URL::to('/book') }}" class="{{ request()->is('book') ? 'active' : '' }} || {{ request()->is('book/add') ? 'active' : '' }}">Books</a></li>
+                        <li><a href="{{ URL::to('/book-category') }}" class="{{ request()->is('book-category') ? 'active' : '' }} || {{ request()->is('book-category/add') ? 'active' : '' }}">Book Category</a></li>
+                        <li><a href="{{ URL::to('/book-borrow') }}" class="{{ request()->is('book-borrow') ? 'active' : '' }} || {{ request()->is('book-borrow/create') ? 'active' : '' }}">Book Borrowing</a></li>
                         <li><a href="{{ URL::to('/book-return') }}" class="{{ request()->is('book-return') ? 'active' : '' }}">Book Returns</a></li>
                         <li><a href="edit-teacher.html">Reports</a></li>
                     </ul>

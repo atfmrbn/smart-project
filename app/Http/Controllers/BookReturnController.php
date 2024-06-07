@@ -42,7 +42,7 @@ class BookReturnController extends Controller
     // dd($filterByDate);
 
     $data = [
-        'title' => 'Borrowed Book List',
+        'title' => 'Returned Book List',
         'filterByDate' => $filterByDate,
         'startDate' => $startDate,
         'endDate' => $endDate,
