@@ -44,7 +44,7 @@ class BookCategoryController extends Controller
         ], $messages);
 
         BookCategory::create($data);          
-        return redirect()->route('book-category.index')->with('success', 'Category created successfully');
+        return redirect()->route('book-category.index')->with('successMessage', 'Kategori berhasil ditambahkan');
     }
 
     /**
@@ -79,7 +79,7 @@ class BookCategoryController extends Controller
 
             // return redirect('category');
         // } catch (\Throwable $th) {
-            return redirect()->route('book-category.index')->with('success', 'Category updated successfully');
+            return redirect()->route('book-category.index')->with('successMessage', 'Kategori buku '. $category->name .' berhasil diedit');
         // }
     }
 
@@ -91,6 +91,6 @@ class BookCategoryController extends Controller
         $category = BookCategory::find($id);
         $category->delete();
 
-        return redirect()->route('book-category.index')->with('success', 'Category deleted successfully');
+        return redirect()->route('book-category.index')->with('successMessage', 'Kategori buku '. $category->name .' berhasil dihapus');
     }
 }

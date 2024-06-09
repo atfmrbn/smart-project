@@ -59,16 +59,9 @@ class BookController extends Controller
             $data['image'] = null;
         }
 
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $filename = time() . '_' . $file->getClientOriginalName();
-        //     $file->move(public_path('images'), $filename);
-        //     $data['image'] = $filename;
-        // }
-
         Book::create($data);
 
-        return redirect()->route('book.index')->with('success', 'Book added successfully');
+        return redirect()->route('book.index')->with('successMessage', 'Buku berhasil ditambahkan');
     }
 
 
@@ -124,7 +117,7 @@ class BookController extends Controller
 
         $book->update($data);
 
-        return redirect()->route('book.index')->with('success', 'Book updated successfully');
+        return redirect()->route('book.index')->with('successMessage', 'Buku '. $book->title .' berhasil diedit');
     }
 
 
@@ -142,7 +135,7 @@ class BookController extends Controller
 
         $book->delete();
         // Alert::success("Sukses", "Delete data success");
-        return redirect('book');
+        return redirect('book')->with('successMessage', 'Buku '. $book->title .' berhasil dihapus');
 
     // } catch(\Throwable $th){
         // Alert::error("Error", $th->getMessage());
