@@ -81,6 +81,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::get('book-return/', 'index')->name('book-return.index');
         Route::get('book-return', 'filterByDate')->name('bookReturn.filterByDate');
         Route::get('book-return/add', 'create');
+        Route::get('book-return/download', 'downloadPdf')->name('book-return.download');
     });
 
     Route::resource('/student/student-list', StudentController::class);
@@ -102,6 +103,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('task-type', TaskTypeController::class);
 
     Route::resource('book-return', BookReturnController::class);
+    
 
     Route::controller(TeacherController::class)->group(function () {
         Route::get('/teacher/teacher-list', 'index')->name('teacher.index');

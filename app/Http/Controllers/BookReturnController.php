@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -100,7 +101,55 @@ class BookReturnController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $message = '';
+        $messageType = '';
+
+        try {
+            $filter = BorrowingBook::find($id);
+
+            if ($filter) {
+                $filter->delete();
+                $message = "Book ". $filter->status . " record deleted successfully.";
+                $messageType = "successMessage";
+            } else {
+                $message = "Book ". $filter->status ." borrowing record not found.";
+                $messageType = "errorMessage";
+            }
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            $messageType = "errorMessage";
+        } finally {
+            return redirect()->route('book-return.index')->with($messageType, $message);
+        }
+    }
+
+   
+    public function downloadPdf(Request $request)
+    {
+        $curriculumId = $this->defaultCurriculum->id;
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $status = $request->input('status', 'borrowing');
+        $query = BorrowingBook::query();
+
+        if ($request->startDate) {
+            $query->where('checkout_date', '>=', $request->startDate);
+        }
+
+        if ($request->endDate) {
+            $query->where('checkout_date', '<=', $request->endDate);
+        }
+
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
+
+        // $filterByDate = BorrowingBook::with(['user', 'borrowDetail'])->get(); // Adjust the query as needed
+        $filterByDate = BorrowingBook::getInactiveBorrowingBook($curriculumId, $startDate, $endDate);
+        // dd($filterByDate);
+        // $pdf = PDF::loadView('book_return.pdf', compact('filterByDate'));
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report',  compact('filterByDate', 'startDate', 'endDate'));
+        return $pdf->download('book-return-report.pdf');
     }
 
 }

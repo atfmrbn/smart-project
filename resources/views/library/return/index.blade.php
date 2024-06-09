@@ -1,6 +1,17 @@
 @extends("layouts.main")
 @section("container")
 
+@if(session()->has("successMessage"))
+    <div class="alert alert-success">
+        {{ session("successMessage") }}
+    </div>
+@endif
+
+@if(session()->has("errorMessage"))
+    <div class="alert alert-danger">
+        {{ session("errorMessage") }}
+    </div>
+@endif
 
 <div class="page-header">
     <div class="row align-items-center">
@@ -9,7 +20,7 @@
         </div>
 
         <div class="col-auto text-end float-end ms-auto download-grp">
-            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+            <a href="{{ route('book-return.download', request()->query()) }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
         </div>
 
         <form id="filterForm" action="{{ URL::to('book-return') }}" method="GET">
