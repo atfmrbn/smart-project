@@ -29,18 +29,20 @@ class DashboardController extends Controller
     public function student()
     {
         $student_id = Auth::id(); // Get the logged-in student's ID
-
+        
         $extracurriculars = StudentExtracurricularRelationship::join('extracurriculars as extra', 'student_extracurricular_relationships.extracurricular_id', '=', 'extra.id')
-            ->select([
-                'extra.name as extracurricular_name',
-                'extra.description as extracurricular_description',
-                'student_extracurricular_relationships.id'
-            ])
-            ->where('student_extracurricular_relationships.student_id', $student_id)
-            ->get();
-
+        ->select([
+            'extra.name as extracurricular_name',
+            'extra.description as extracurricular_description',
+            'student_extracurricular_relationships.id'
+        ])
+        ->where('student_extracurricular_relationships.student_id', $student_id)
+        ->get();
+        
+            
         $data = [
             "title" => "Student Dashboard",
+            "extracurricularCount" => $extracurriculars->count(),
             "extracurriculars" => $extracurriculars,
         ];
 
