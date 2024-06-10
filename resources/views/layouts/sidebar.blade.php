@@ -10,12 +10,12 @@
                 <li class="menu-title">
                     <span>Main Menu</span>
                 </li>
-                <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student-dashboard') ? 'active' : '' }}">
+                <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student/dashboard') ? 'active' : '' }}">
                     <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{{ URL::to('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Admin Dashboard</a></li>
                         <li><a href="{{ route('teacher.dashboard') }}" class="{{ request()->is('teacher/dashboard') ? 'active' : '' }}">Teacher Dashboard</a></li>
-                        <li><a href="student-dashboard.html" class="{{ request()->is('student-dashboard') ? 'active' : '' }}">Student Dashboard</a></li>
+                        <li><a href="{{ route('student.dashboard') }}" class="{{ request()->is('student/dashboard') ? 'active' : '' }}">Student Dashboard</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ request()->is('student/*') || request()->is('extracurricular*') ? 'active' : '' }}">
