@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Models\BorrowingBookDetail;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
@@ -13,11 +14,13 @@ use App\Http\Controllers\TaskTypeController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LibrarianController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BookReturnController;
 use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomTypeController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\TeacherSubjectRelationshipController;
@@ -26,9 +29,6 @@ use App\Http\Controllers\TeacherClassroomRelationshipController;
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\GradeController;
-
 
 Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
 
@@ -103,6 +103,8 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::put('curriculum/{id}/setDefault', [CurriculumController::class, 'setDefault'])->name('curriculum.setDefault');
 
     Route::resource('task-type', TaskTypeController::class);
+
+    Route::resource('configuration', ConfigurationController::class);
 
     Route::resource('book-return', BookReturnController::class);
     

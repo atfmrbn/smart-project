@@ -59,6 +59,9 @@
                 <li class="nav-item {{ request()->is('task-type') ? 'active' : '' }}">
                     <a href="{{ URL::to('/task-type') }}"><i class="fas fa-tags"></i> <span> Task Type</span></a>
                 </li>
+                <li class="nav-item {{ request()->is('configuration') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/configuration') }}"><i class="fas fa-cog"></i> <span> Configuration</span></a>
+                </li>
                 <li class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
                     <ul>
