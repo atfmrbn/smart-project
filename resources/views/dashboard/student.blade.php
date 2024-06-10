@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('container')
-    <div class="container mt-5">
+    {{-- <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="card shadow-sm">
@@ -56,6 +56,64 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3 class="mb-0">Welcome to your Student Dashboard, {{ Auth::user()->name }}!</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ $student->name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ $student->email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Class</th>
+                                <td>
+                                    @if ($student->studentTeacherHomeroomRelationship && $student->studentTeacherHomeroomRelationship->teacherHomeroom && $student->studentTeacherHomeroomRelationship->teacherHomeroom->classroom)
+                                        {{ $student->studentTeacherHomeroomRelationship->teacherHomeroom->classroom->name }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Roll Number</th>
+                                <td>{{ $student->identity_number }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>{{ $student->phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th>
+                                <td>{{ $student->gender }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th>
+                                <td>{{ $student->born_date }}</td>
+                            </tr>
+                            <tr>
+                                <th>Current Address</th>
+                                <td>{{ $student->address }}</td>
+                            </tr>
+                            <tr>
+                                <th>Student's Parent</th>
+                                <td><!-- Add parent's name here if needed --></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
