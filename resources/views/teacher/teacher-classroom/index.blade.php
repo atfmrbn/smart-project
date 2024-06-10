@@ -22,7 +22,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <select name="classroom" id="classroom" class="form-select">
                 @foreach ($classrooms as $classroom)
                     <option value="{{ $classroom->id }}" {{ request('classroom') == $classroom->id ? 'selected' : '' }}>
@@ -51,7 +51,7 @@
             <td class="text-center">{{ $index + 1 }}</td>
             <td class="text-center">{{ $teacher_classroom->classroom->classroomType->name }} - {{ $teacher_classroom->identity_number }} - {{ $teacher_classroom->classroom->name }}</td>
             <td class="text-center">{{ $teacher_classroom->curriculum->year }}</td>
-            <td class="text-center">{{ $teacher_classroom->teacherSubjectRelationship->subject->name }}</td>
+            <td class="text-center">{{ $teacher_classroom->teacherSubjectRelationship->subject->name }} - {{ $teacher_classroom->TeacherSubjectRelationship->teacher->name }}</td>
             <td class="text-center">{{ $teacher_classroom->schedule_day }} - {{ $teacher_classroom->schedule_time_start }} - {{ $teacher_classroom->schedule_time_end }}</td>
             <td class="align-middle text-center">
                 <div class="d-flex justify-content-center align-items-center">

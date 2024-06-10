@@ -27,6 +27,7 @@ use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GradeController;
 
 
 Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
@@ -134,6 +135,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
 
     Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
+    Route::resource('/teacher-grade', GradeController::class);
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);
