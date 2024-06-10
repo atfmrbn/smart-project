@@ -42,36 +42,71 @@ class BookBorrowDetailController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'borrowing_book_id' => 'required',
-            'book_id' => [
-                'required', 'exists:books,id', function ($attribute, $value, $fail) use ($request) {
-                $borrowDetailExists = BorrowingBookDetail::where('borrowing_book_id', $request->borrowing_book_id)
-                    ->where('book_id', $value)
-                    ->exists();
+        $message = '';
+        $messageType = '';
 
-                if ($borrowDetailExists) {
-                    $fail('Buku ini sudah dipilih.');
-                }
-            }],
-        ]);
+        try {
+            $data = $request->validate([
+                'borrowing_book_id' => 'required',
+                'book_id' => [
+                    'required', 'exists:books,id', function ($attribute, $value, $fail) use ($request) {
+                    $borrowDetailExists = BorrowingBookDetail::where('borrowing_book_id', $request->borrowing_book_id)
+                        ->where('book_id', $value)
+                        ->exists();
 
-        // $book = Book::findOrFail($data['book_id']);
-        BorrowingBookDetail::create($data);
+                    if ($borrowDetailExists) {
+                        $fail('Buku ini sudah dipilih.');
+                    }
+                }],
+            ]);
 
-        return redirect('book-borrow/'.$data['borrowing_book_id'].'/edit')->with('error', 'Buku ini sudah dipilih sebelumnya.');
+            BorrowingBookDetail::create($data);
+            $message = 'Buku berhasil ditambahkan ke peminjaman.';
+            $messageType = 'success';
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $message = $e->getMessage();
+            $messageType = 'error';
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            $messageType = 'error';
+        } finally {
+            if ($messageType === 'success') {
+                return redirect('book-borrow/'.$data['borrowing_book_id'].'/edit')->with($messageType, $message);
+            } else {
+                return redirect()->back()->with($messageType, $message)->withInput();
+            }
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $borrowDetail = BorrowingBookDetail::find($id);
-        $borrowDetail->delete();
+        $message = '';
+        $messageType = '';
 
-        return redirect()->back();
+        try {
+            $borrowDetail = BorrowingBookDetail::find($id);
+
+            if ($borrowDetail) {
+                $borrowDetail->delete();
+                $message = "Borrowing book ". $borrowDetail->book->title ." deleted successfully.";
+                $messageType = "successMessage";
+            } else {
+                $message = "Borrowing book ". $borrowDetail->book->title ." detail not found.";
+                $messageType = "errorMessage";
+            }
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            $messageType = "errorMessage";
+        } finally {
+            return redirect()->back()->with($messageType, $message);
+        }
     }
+
 
     public function returnBook(Request $request, string $id)
     {
@@ -88,7 +123,21 @@ class BookBorrowDetailController extends Controller
 
         $borrowDetail->save();
 
+        //cek jika buku sudah kembali semua
+        $borrowingDetails = BorrowingBookDetail::where('borrowing_book_id', $borrowDetail->borrowing_book_id)->get();
+        $returnedDetails = BorrowingBookDetail::where([['borrowing_book_id', $borrowDetail->borrowing_book_id], ['penalty', '0']])
+        ->whereNotNull('returned_date')->get();
+        
+        //->get();
+        //dd($borrowDetails);
+        if($borrowingDetails->count() == $returnedDetails->count())
+        { 
+            $borrowingBook = BorrowingBook::find($borrowingDetails[0]->borrowing_book_id);
+            $borrowingBook->update(['status' => 'returned']);
+        }
+
         // Redirect back to the borrowing book details page
+        //TODO buat penalty muncul
         return redirect()->back()->with('success', 'Book returned successfully with a penalty of ');
     }
 
@@ -112,5 +161,5 @@ class BookBorrowDetailController extends Controller
 
 	    return $pdf->download('laporan-perpustakaan-pdf');
     }
-    
+
 }
