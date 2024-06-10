@@ -20,7 +20,7 @@
         </div>
 
         <div class="col-auto text-end float-end ms-auto download-grp">
-            <a href="{{ route('book-return.download', request()->query()) }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+            <a href="{{ URL::to('book-return/download?startDate=' . $startDate . '&endDate=' . $endDate . '&status=' . $status) }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
         </div>
 
         <form id="filterForm" action="{{ URL::to('book-return') }}" method="GET">
@@ -28,22 +28,22 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label for="startDate">From:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-control" value="{{ request('startDate') }}">                            
-                        <button type="submit" class="btn btn-primary mt-2">Filter</button>
+                        <input type="date" id="startDate" name="startDate" class="form-control" value="{{ request('startDate') }}" onchange="this.form.submit()">                            
+                     
                     </div>
                 </div>
 
                 <div class="col-3">
                     <div class="form-group">
                         <label for="endDate">To:</label>
-                        <input type="date" id="endDate" name="endDate" class="form-control" value="{{ request('endDate', \Carbon\Carbon::now()->toDateString()) }}">               
+                        <input type="date" id="endDate" name="endDate" class="form-control" value="{{ request('endDate', \Carbon\Carbon::now()->toDateString()) }}" onchange="this.form.submit()">               
                     </div>
                 </div>
 
-                <div class="col-3">
+                <div class="col-2">
                     <div class="form-group">
                         <label for="status">Status:</label>
-                        <select id="status" name="status" class="form-control">
+                        <select id="status" name="status" class="form-control" onchange="this.form.submit()">
                             <option value="">All</option>
                             <option value="returned" {{ request('status') == 'returned' ? 'selected' : '' }}>Returned</option>
                             <option value="borrowing" {{ request('status') == 'borrowing' ? 'selected' : '' }}>Borrowing</option>
@@ -62,15 +62,14 @@
                 <th class="text-center">No</th>
                 <th class="text-center">Patron</th>
                 <th class="text-center">Description</th>
-                <th class="text-center">Checkout Date</th>
-                <th class="text-center">Due Date</th>
+                <th class="text-center">Date</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Penalty</th>
                 <th class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($filterByDate as $index => $filter)
+            @foreach ($filters as $index => $filter)
                 @if(request('status') && $filter->status != request('status'))
                     @continue
                 @endif
@@ -78,8 +77,7 @@
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $filter->classroom_name }} - ({{ $filter->identity_number }}) - {{ $filter->name }}</td>
                     <td>{{ $filter->description }}</td>
-                    <td>{{ $filter->checkout_date }}</td>
-                    <td>{{ $filter->due_date }}</td>
+                    <td>{{ $filter->checkout_date }} s/d <br/> {{ $filter->due_date }}</td> 
                     <td class="text-center">
                         @if($filter->status == 'borrowing')
                             <span class="badge bg-warning">{{ $filter->status }}</span>

@@ -43,20 +43,18 @@
                 <th>No</th>
                 <th>Patron</th>
                 <th>Description</th>
-                <th>Checkout Date</th>
-                <th>Due Date</th>
+                <th>Date</th>
                 <th>Status</th>
                 <th>Penalty</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($filterByDate as $index => $filter)
+            @foreach ($filters as $index => $filter)
                 <tr class="align-middle">
                     <td style="text-align: center">{{ $index + 1 }}</td>
                     <td>{{ $filter->classroom_name }} - ({{ $filter->identity_number }}) - {{ $filter->name }}</td>
                     <td>{{ $filter->description }}</td>
-                    <td>{{ $filter->checkout_date }}</td>
-                    <td>{{ $filter->due_date }}</td>
+                    <td>{{ $filter->checkout_date }} <br> s/d {{ $filter->due_date }}</td>
                     <td>
                         @if($filter->status == 'borrowing')
                             <span class="badge bg-warning">{{ $filter->status }}</span>

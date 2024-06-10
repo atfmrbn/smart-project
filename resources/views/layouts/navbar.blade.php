@@ -1,15 +1,15 @@
 <div class="header">
         <div class="header-left">
           <a href="{{ URL::to('/') }}" class="logo">
-            <img src="{{ URL::to('assets/img/logo.png') }}" alt="Logo" />
+            <img src="{{ URL::to('assets/img/logo.png') }}"  alt="Logo" />
           </a>
         </div>
 
-        {{-- <div class="menu-toggle">
+        <div class="menu-toggle">
           <a href="javascript:void(0);" id="toggle_btn">
             <i class="fas fa-bars"></i>
           </a>
-        </div> --}}
+        </div>
 
         <a class="mobile_btn" id="mobile_btn">
           <i class="fas fa-bars"></i>

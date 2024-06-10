@@ -16,6 +16,7 @@
                         <li><a href="{{ URL::to('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Admin Dashboard</a></li>
                         <li><a href="{{ route('teacher.dashboard') }}" class="{{ request()->is('teacher/dashboard') ? 'active' : '' }}">Teacher Dashboard</a></li>
                         <li><a href="student-dashboard.html" class="{{ request()->is('student-dashboard') ? 'active' : '' }}">Student Dashboard</a></li>
+                        <li><a href="{{ route('librarian.dashboard') }}" class="{{ request()->is('student-dashboard') ? 'active' : '' }}">Librarian Dashboard</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ request()->is('student/*') || request()->is('extracurricular*') ? 'active' : '' }}">
@@ -66,7 +67,7 @@
                         <li><a href="{{ URL::to('/book-category') }}" class="{{ request()->is('book-category') ? 'active' : '' }} || {{ request()->is('book-category/add') ? 'active' : '' }}">Book Category</a></li>
                         <li><a href="{{ URL::to('/book-borrow') }}" class="{{ request()->is('book-borrow') ? 'active' : '' }} || {{ request()->is('book-borrow/create') ? 'active' : '' }} || {{ request()->is('book-borrow/*/edit') ? 'active' : '' }}">Book Borrowing</a></li>
                         <li><a href="{{ URL::to('/book-return') }}" class="{{ request()->is('book-return') ? 'active' : '' }}">Book Returns</a></li>
-                        <li><a href="edit-teacher.html">Reports</a></li>
+                        {{-- <li><a href="edit-teacher.html">Reports</a></li> --}}
                     </ul>
                 </li>
                 <li class="menu-title"><span>Pages</span></li>

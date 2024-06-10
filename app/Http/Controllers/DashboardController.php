@@ -15,6 +15,7 @@ class DashboardController extends Controller
 
         return view("dashboard.admin", $data);
     }
+
     public function teacher()
     {
         $data = [
@@ -22,6 +23,15 @@ class DashboardController extends Controller
         ];
 
         return view("dashboard.teacher", $data);
+    }
+    
+    public function librarian()
+    {
+        $data = [
+            "title" => "Dashboard",
+        ];
+
+        return view("dashboard.librarian", $data);
     }
 }
 
