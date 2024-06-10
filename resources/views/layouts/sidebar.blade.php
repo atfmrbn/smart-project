@@ -10,12 +10,12 @@
                 <li class="menu-title">
                     <span>Main Menu</span>
                 </li>
-                <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student-dashboard') ? 'active' : '' }}">
+                <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student/dashboard') ? 'active' : '' }}">
                     <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{{ URL::to('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Admin Dashboard</a></li>
                         <li><a href="{{ route('teacher.dashboard') }}" class="{{ request()->is('teacher/dashboard') ? 'active' : '' }}">Teacher Dashboard</a></li>
-                        <li><a href="student-dashboard.html" class="{{ request()->is('student-dashboard') ? 'active' : '' }}">Student Dashboard</a></li>
+                        <li><a href="{{ route('student.dashboard') }}" class="{{ request()->is('student/dashboard') ? 'active' : '' }}">Student Dashboard</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ request()->is('student/*') || request()->is('extracurricular*') ? 'active' : '' }}">
@@ -34,6 +34,7 @@
                         <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}" class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/add') ? 'active' : '' }}">Teacher Homeroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="{{ request()->is('teacher/teacher-classroom') ? 'active' : '' }}">Teacher Classroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="{{ request()->is('teacher/teacher-subject') ? 'active' : '' }}">Teacher Subject</a></li>
+                        <li><a href="{{ URL::to('/teacher-grade') }}" class="">Grade</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ request()->is('librarian*') ? 'active' : '' }}">

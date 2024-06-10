@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
@@ -29,7 +30,6 @@ use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 
-
 Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
 
 Route::get('/auth', [AuthController::class, 'index'])->name('login')->middleware('guest');
@@ -41,6 +41,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('/teacher', [DashboardController::class, 'teacher']);
     Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
+    Route::get('/dashboard/student', [DashboardController::class, 'student'])->name('student.dashboard');
 
     Route::controller(BookCategoryController::class)->group(function () {
         Route::get('book-category/', 'index')->name('book-category.index');
@@ -137,6 +138,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
 
     Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
+    Route::resource('/teacher-grade', GradeController::class);
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);
