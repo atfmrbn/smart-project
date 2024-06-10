@@ -16,40 +16,25 @@ class BookReturnController extends Controller
     public function index(Request $request)
     {
         $now = Carbon::now()->toDateString();
+        $startDate = $request->input("startDate", $now);
+        $endDate = $request->input("endDate", $now);
+        $status = $request->input('status', 'borrowing');
 
-    $startDate = $request->input("startDate", $now);
-    $endDate = $request->input("endDate", $now);
+        $filters = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id, $startDate , $endDate);
+        
+        
 
-    $filterByDate = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id, $startDate , $endDate);
-    
-    // Check if all borrowing books are returned
-    $allBooksReturned = true;
-    foreach ($filterByDate as $book) {
-        if ($book->status !== 'returned') {
-            $allBooksReturned = false;
-            break;
-        }
-    }
+        // dd($filterByDate);
 
-    // If all books are returned, update their status
-    if ($allBooksReturned) {
-        foreach ($filterByDate as $book) {
-            $borrowingBook = BorrowingBook::find($book->id);
-            $borrowingBook->status = 'returned';
-            $borrowingBook->save();
-        }
-    }
+        $data = [
+            'title' => 'Returned Book List',
+            'filters' => $filters,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'status' => $status,
+        ];
 
-    // dd($filterByDate);
-
-    $data = [
-        'title' => 'Returned Book List',
-        'filterByDate' => $filterByDate,
-        'startDate' => $startDate,
-        'endDate' => $endDate,
-    ];
-
-    return view('library.return.index', $data);
+        return view('library.return.index', $data);
     }
 
     /**
@@ -129,15 +114,15 @@ class BookReturnController extends Controller
         $curriculumId = $this->defaultCurriculum->id;
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
-        $status = $request->input('status', 'borrowing'); 
+        $status = $request->input('status', ''); 
 
-        $filterByDate = BorrowingBook::getInactiveBorrowingBook($curriculumId, $startDate, $endDate);
+        $filters = BorrowingBook::getInactiveBorrowingBook($curriculumId, $startDate, $endDate);
         
         if ($status) {
-            $filterByDate->where('status', $status);
+            $filters->where('status', $status);
         }
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report', compact('filterByDate', 'startDate', 'endDate', 'status'));
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report', compact('filters', 'startDate', 'endDate', 'status'));
 
         return $pdf->download('book-return-report.pdf');
     }

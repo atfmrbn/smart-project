@@ -41,7 +41,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('/teacher', [DashboardController::class, 'teacher']);
     Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
+    Route::get('/dashboard/librarian', [DashboardController::class, 'librarian'])->name('librarian.dashboard');
     Route::get('/dashboard/student', [DashboardController::class, 'student'])->name('student.dashboard');
+
 
     Route::controller(BookCategoryController::class)->group(function () {
         Route::get('book-category/', 'index')->name('book-category.index');
@@ -81,8 +83,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
 
     Route::controller(BookReturnController::class)->group(function () {
         Route::get('book-return/', 'index')->name('book-return.index');
-        Route::get('book-return', 'filterByDate')->name('bookReturn.filterByDate');
-        Route::get('book-return/add', 'create');
+        Route::get('book-return', 'filter')->name('bookReturn.filterByDate');
         Route::get('book-return/download', 'downloadPdf')->name('book-return.download');
     });
 
