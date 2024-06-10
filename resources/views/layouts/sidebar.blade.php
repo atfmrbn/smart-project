@@ -31,6 +31,7 @@
             <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}">Teacher Homeroom</a></li>
             <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="">Teacher Classroom</a></li>
             <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="">Teacher Subject</a></li>
+            <li><a href="{{ URL::to('/teacher-grade') }}" class="">Grade</a></li>
           </ul>
         </li>
         <li class="submenu">
