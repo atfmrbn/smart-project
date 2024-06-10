@@ -17,6 +17,7 @@
             <thead class="librarian-thread">
                 <tr class="text-center">
                     <th>#</th>
+                    <th>Identity Number</th>
                     <th>Name</th>
                     <th>Username</th>
                     <th>Email</th>
@@ -32,6 +33,7 @@
                 @foreach ($librarians as $index => $librarian)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
+                        <td>{{ $librarian->identity_number }}</td>
                         <td>{{ $librarian->name }}</td>
                         <td>{{ $librarian->username }}</td>
                         <td>{{ $librarian->email }}</td>
