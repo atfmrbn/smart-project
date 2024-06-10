@@ -104,7 +104,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('task-type', TaskTypeController::class);
 
     Route::resource('book-return', BookReturnController::class);
-    
+
 
     Route::controller(TeacherController::class)->group(function () {
         Route::get('/teacher/teacher-list', 'index')->name('teacher.index');
@@ -135,7 +135,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
 
     Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
-    Route::resource('/teacher-grade', GradeController::class);
+    Route::resource('teacher/grade', GradeController::class);
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);

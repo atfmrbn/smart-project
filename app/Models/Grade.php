@@ -20,12 +20,6 @@ class Grade extends Model
      * Define relationships
      */
 
-    // Relasi dengan model User sebagai siswa
-    public function student()
-    {
-        return $this->belongsTo(User::class, 'student_id');
-    }
-
     public function taskType()
     {
         return $this->belongsTo(TaskType::class, 'task_type_id');
@@ -33,7 +27,6 @@ class Grade extends Model
 
     public function studentTeacherHomeroomRelationship()
     {
-    return $this->belongsTo(StudentTeacherHomeroomRelationship::class);
+        return $this->belongsTo(StudentTeacherHomeroomRelationship::class, 'student_teacher_homeroom_relationship_id');
     }
-
 }
