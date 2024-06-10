@@ -129,27 +129,18 @@ class BookReturnController extends Controller
         $curriculumId = $this->defaultCurriculum->id;
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
-        $status = $request->input('status', 'borrowing');
-        $query = BorrowingBook::query();
+        $status = $request->input('status', 'borrowing'); 
 
-        if ($request->startDate) {
-            $query->where('checkout_date', '>=', $request->startDate);
-        }
-
-        if ($request->endDate) {
-            $query->where('checkout_date', '<=', $request->endDate);
-        }
-
-        if ($request->status) {
-            $query->where('status', $request->status);
-        }
-
-        // $filterByDate = BorrowingBook::with(['user', 'borrowDetail'])->get(); // Adjust the query as needed
         $filterByDate = BorrowingBook::getInactiveBorrowingBook($curriculumId, $startDate, $endDate);
-        // dd($filterByDate);
-        // $pdf = PDF::loadView('book_return.pdf', compact('filterByDate'));
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report',  compact('filterByDate', 'startDate', 'endDate'));
+        
+        if ($status) {
+            $filterByDate->where('status', $status);
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report', compact('filterByDate', 'startDate', 'endDate', 'status'));
+
         return $pdf->download('book-return-report.pdf');
     }
+
 
 }
