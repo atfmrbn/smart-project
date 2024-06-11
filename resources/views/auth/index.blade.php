@@ -124,7 +124,7 @@
             </div>
             <div class="login-right">
                 <div class="login-right-wrap">
-                    <h1>Selamat Datang di SMARTS</h1>
+                    <h1>Welcome to SMARTS</h1>
                     <h2>{{ $title }}</h2>
 
                     @if (session()->has('errorMessage'))
@@ -184,7 +184,6 @@
                         <a href="https://twitter.com/login"><i class="fab fa-twitter"></i></a>
                         <a href="https://www.linkedin.com/login"><i class="fab fa-linkedin-in"></i></a>
                     </div>
-
 
                 </div>
             </div>
