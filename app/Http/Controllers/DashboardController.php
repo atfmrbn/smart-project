@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\BookCategory;
+use App\Models\BorrowingBook;
+use App\Models\BorrowingBookDetail;
 use App\Models\StudentExtracurricularRelationship;
 use App\Models\StudentTeacherHomeroom;
 use Illuminate\Http\Request;
@@ -30,8 +34,22 @@ class DashboardController extends Controller
 
     public function librarian()
     {
+        $bookCount = Book::count();
+        $categoryCount = BookCategory::count();
+        $bookBorrowedCount = BorrowingBookDetail::count();
+        $bookReturnCount = BorrowingBookDetail::whereNotNull('returned_date')->count();
+        $studenBorrowCount = BorrowingBook::where('status', 'borrowing')->count();
+        $studentReturnedCount = BorrowingBook::where('status', 'returned')->count();
+
+        // Susun data untuk dikirim ke view
         $data = [
-            "title" => "Dashboard",
+            "title" => "Librarian Dashboard",
+            "bookCount" => $bookCount,
+            "categoryCount" => $categoryCount,
+            "studenBorrowCount" => $studenBorrowCount,
+            "studentReturnedCount" => $studentReturnedCount,
+            "bookBorrowedCount" => $bookBorrowedCount,
+            "bookReturnCount" => $bookReturnCount,
         ];
 
         return view("dashboard.librarian", $data);
