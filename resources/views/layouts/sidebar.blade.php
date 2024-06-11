@@ -10,15 +10,23 @@
                 <li class="menu-title">
                     <span>Main Menu</span>
                 </li>
-                <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student/dashboard') ? 'active' : '' }}">
+                {{-- <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student/dashboard') ? 'active' : '' }}">
                     <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="{{ URL::to('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Admin Dashboard</a></li>
-                        <li><a href="{{ route('teacher.dashboard') }}" class="{{ request()->is('dashboard/teacher') ? 'active' : '' }}">Teacher Dashboard</a></li>
-                        <li><a href="{{ route('student.dashboard') }}" class="{{ request()->is('dashboard/student') ? 'active' : '' }}">Student Dashboard</a></li>
-                        <li><a href="{{ route('librarian.dashboard') }}" class="{{ request()->is('dashboard/librarian') ? 'active' : '' }}">Librarian Dashboard</a></li>
-                    </ul>
+                    <ul> --}}
+                <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/') }}" class=""><i class="feather-grid"></i><span> Admin Dashboard</span></a>
                 </li>
+                <li class="nav-item {{ request()->is('dashboard/teacher') ? 'active' : '' }}">
+                    <a href="{{ route('teacher.dashboard') }}" class=""><i class="feather-grid"></i><span> Teacher Dashboard</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('dashboard/student') ? 'active' : '' }}">
+                    <a href="{{ route('student.dashboard') }}" class=""><i class="feather-grid"></i><span> Student Dashboard</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('dashboard/librarian') ? 'active' : '' }}">
+                    <a href="{{ route('librarian.dashboard') }}" class=""><i class="feather-grid"></i><span> Librarian Dashboard</span></a>
+                </li>
+                    {{-- </ul>
+                </li> --}}
                 <li class="submenu {{ request()->is('student/*') || request()->is('extracurricular*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                     <ul>
@@ -55,6 +63,18 @@
                         <li><a href="{{ URL::to('librarian/librarian-list/add') }}" class="{{ request()->is('librarian/librarian-list/add') ? 'active' : '' }}">Librarian Add</a></li>
                     </ul>
                 </li>
+                <li class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="{{ URL::to('/book') }}" class="{{ request()->is('book') ? 'active' : '' }} || {{ request()->is('book/add') ? 'active' : '' }}">Books</a></li>
+                        <li><a href="{{ URL::to('/book-category') }}" class="{{ request()->is('book-category') ? 'active' : '' }} || {{ request()->is('book-category/add') ? 'active' : '' }}">Book Category</a></li>
+                        <li><a href="{{ URL::to('/book-borrow') }}" class="{{ request()->is('book-borrow') ? 'active' : '' }} || {{ request()->is('book-borrow/create') ? 'active' : '' }} || {{ request()->is('book-borrow/*/edit') ? 'active' : '' }}">Book Borrowing</a></li>
+                        <li><a href="{{ URL::to('/book-return') }}" class="{{ request()->is('book-return') ? 'active' : '' }}">Book Returns</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title">
+                    <span>Management</span>
+                </li>
                 <li class="submenu {{ request()->is('classroom*') || request()->is('subject') || request()->is('attendance') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Classrooms</span> <span class="menu-arrow"></span></a>
                     <ul>
@@ -73,28 +93,22 @@
                 <li class="nav-item {{ request()->is('configuration') ? 'active' : '' }}">
                     <a href="{{ URL::to('/configuration') }}"><i class="fas fa-cog"></i> <span> Configuration</span></a>
                 </li>
-                <li class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
-                    <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="{{ URL::to('/book') }}" class="{{ request()->is('book') ? 'active' : '' }} || {{ request()->is('book/add') ? 'active' : '' }}">Books</a></li>
-                        <li><a href="{{ URL::to('/book-category') }}" class="{{ request()->is('book-category') ? 'active' : '' }} || {{ request()->is('book-category/add') ? 'active' : '' }}">Book Category</a></li>
-                        <li><a href="{{ URL::to('/book-borrow') }}" class="{{ request()->is('book-borrow') ? 'active' : '' }} || {{ request()->is('book-borrow/create') ? 'active' : '' }} || {{ request()->is('book-borrow/*/edit') ? 'active' : '' }}">Book Borrowing</a></li>
-                        <li><a href="{{ URL::to('/book-return') }}" class="{{ request()->is('book-return') ? 'active' : '' }}">Book Returns</a></li>
-                        {{-- <li><a href="edit-teacher.html">Reports</a></li> --}}
-                    </ul>
-                </li>
-                <li class="menu-title"><span>Pages</span></li>
                 @if (auth()->user()->role == 'Super Admin')
-                <li class="submenu {{ request()->is('user') || request()->is('forgot-password') || request()->is('error-404') ? 'active' : '' }}">
+                <li class="menu-title"><span>Others</span></li>
+                {{-- <li class="submenu {{ request()->is('user') || request()->is('forgot-password') || request()->is('error-404') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="{{ URL::to('/user') }}" class="{{ request()->is('user') ? 'active' : '' }}">Users</a></li>
-                        <li><a href="forgot-password.html" class="{{ request()->is('forgot-password') ? 'active' : '' }}">Forgot Password</a></li>
+                    <ul> --}}
+                        <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
+                            <a href="{{ URL::to('/user') }}" ><i class="fas fa-users"></i> <span> Users</span></a>
+                        </li>
+                        {{-- <li><a href="forgot-password.html" class="{{ request()->is('forgot-password') ? 'active' : '' }}">Forgot Password</a></li>
                         <li><a href="error-404.html" class="{{ request()->is('error-404') ? 'active' : '' }}">Error Page</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 @endif
-                <li><a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i><span> Logout</span></a>
+                </li>
             </ul>
         </div>
     </div>
