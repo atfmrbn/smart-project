@@ -56,13 +56,7 @@ class ConfigurationController extends Controller
      */
     public function show(string $id)
     {
-        $configuration = Configuration::findOrFail($id);
-        $data = [
-            "title" => "Configuration Detail",
-            "configuration" => $configuration
-    ];
-
-    return view('configuration.detail', $data);
+        //
     }
 
     /**

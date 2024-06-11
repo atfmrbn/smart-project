@@ -25,7 +25,42 @@
     </div>
 </div>
 
-<div class="table-responsive">
+<div class="row">
+    @foreach ($configurations as $index => $configuration)
+        <div class="col-12 col-sm-4">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ $configuration->name }}" readonly>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" class="form-control" value="{{ $configuration->address }}" readonly>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" class="form-control" value="{{ $configuration->phone }}" readonly>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" class="form-control" value="{{ $configuration->email }}" readonly>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="form-group">
+                <label for="book_penalty">Penalty</label>
+                <input type="text" id="book_penalty" name="book_penalty" class="form-control" value="{{ $configuration->book_penalty }}" readonly>
+            </div>
+        </div>
+    @endforeach
+</div>
+
+{{-- <div class="table-responsive">
     <table class="table border-0 star-configuration table-hover table-center mb-0 datatable table-striped">
         <thead class="configuration-thread">
             <tr>
@@ -50,7 +85,7 @@
                 <td class="align-middle text-center">
                     <div class="d-flex justify-content-center align-items-center">
                         {{-- <a title="Lihat" href="{{ URL::to('configuration/' . $configuration->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a> --}}
-                        <a title="Edit" href="{{ URL::to('configuration/' . $configuration->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
+                        {{-- <a title="Edit" href="{{ URL::to('configuration/' . $configuration->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
                         <form action="{{ URL::to('configuration/' . $configuration->id) }}" method="post">
                             @csrf
                             @method('delete')
@@ -64,6 +99,6 @@
             @endforeach
         </tbody>
     </table>
-</div>
+</div> --}}
 
 @endsection

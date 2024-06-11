@@ -62,7 +62,6 @@ class User extends Authenticatable
     {
       return self::select('users.id', 'users.identity_number', 'users.name', 'classrooms.name as classroom_name')
             ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
-            // ->join('parent_list', 'parent_homeroom_relationships.id', '=', 'parent_student_relationships.student_teacher_relationships_id')
             ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
             ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')
             ->where('teacher_homeroom_relationships.curriculum_id', $defaultCurriculumId)
