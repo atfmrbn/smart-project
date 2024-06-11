@@ -61,4 +61,31 @@ class User extends Authenticatable
             ->where('teacher_homeroom_relationships.curriculum_id', $defaultCurriculumId)
             ->get();
     }
+
+    public function studentTeacherHomeroom()
+    {
+        return $this->hasOne(StudentTeacherHomeroomRelationship::class, 'student_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    public function attendances()
+    {
+        return $this->hasManyThrough(
+            Attendance::class,
+            StudentTeacherHomeroomRelationship::class,
+            'student_id', // Foreign key on StudentTeacherHomeroom table
+            'student_teacher_homeroom_id', // Foreign key on Attendance table
+            'id', // Local key on User table
+            'id' // Local key on StudentTeacherHomeroom table
+        );
+    }
+
+    public function extracurriculars()
+    {
+        return $this->hasMany(StudentExtracurricularRelationship::class, 'student_id');
+    }
 }
