@@ -8,6 +8,7 @@ use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
 use App\Models\StudentExtracurricularRelationship;
 use App\Models\StudentTeacherHomeroom;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -69,9 +70,11 @@ class DashboardController extends Controller
 
     public function student()
     {
-        $user_id = Auth::id(); // Get the logged-in user's ID
+        $studentBorrowCount = BorrowingBook::where('status', 'borrowing')->count();
+        $studentReturnedCount = BorrowingBook::where('status', 'returned')->count();
+        $userId = Auth::id();
         $student = User::with(['studentTeacherHomeroom.teacherHomeroomRelationship.classroom', 'attendances'])
-            ->where('id', $user_id)
+            ->where('id', $userId)    
             ->where('role', 'Student')
             ->firstOrFail();
 
@@ -83,12 +86,19 @@ class DashboardController extends Controller
             ])
             ->where('student_extracurricular_relationships.student_id', $student->id)
             ->get();
+        
+        $subjectCount = Subject::count();
+        $totalStudents = User::where('role', 'Student')->count();
 
         $data = [
             "title" => "Student Dashboard",
             "extracurricularCount" => $extracurriculars->count(),
             "extracurriculars" => $extracurriculars,
             "student" => $student,
+            "studentCount" => $totalStudents,
+            "studentBorrowCount" => $studentBorrowCount,
+            "studentReturnedCount" => $studentReturnedCount,
+            "subjectCount" => $subjectCount,
         ];
 
         return view("dashboard.student", $data);
