@@ -14,9 +14,9 @@
                     <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                     <ul>
                         <li><a href="{{ URL::to('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Admin Dashboard</a></li>
-                        <li><a href="{{ route('teacher.dashboard') }}" class="{{ request()->is('teacher/dashboard') ? 'active' : '' }}">Teacher Dashboard</a></li>
-                        <li><a href="{{ route('student.dashboard') }}" class="{{ request()->is('student/dashboard') ? 'active' : '' }}">Student Dashboard</a></li>
-                        <li><a href="{{ route('librarian.dashboard') }}" class="{{ request()->is('student-dashboard') ? 'active' : '' }}">Librarian Dashboard</a></li>
+                        <li><a href="{{ route('teacher.dashboard') }}" class="{{ request()->is('dashboard/teacher') ? 'active' : '' }}">Teacher Dashboard</a></li>
+                        <li><a href="{{ route('student.dashboard') }}" class="{{ request()->is('dashboard/student') ? 'active' : '' }}">Student Dashboard</a></li>
+                        <li><a href="{{ route('librarian.dashboard') }}" class="{{ request()->is('dashboard/librarian') ? 'active' : '' }}">Librarian Dashboard</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ request()->is('student/*') || request()->is('extracurricular*') ? 'active' : '' }}">
