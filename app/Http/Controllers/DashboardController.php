@@ -35,7 +35,8 @@ class DashboardController extends Controller
 
         return view("dashboard.librarian", $data);
 
-
+    }
+    
     public function student()
     {
         $student_id = Auth::id(); // Get the logged-in student's ID
