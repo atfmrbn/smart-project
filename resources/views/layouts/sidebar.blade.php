@@ -45,7 +45,7 @@
                         <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}" class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/add') ? 'active' : '' }}">Teacher Homeroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="{{ request()->is('teacher/teacher-classroom') ? 'active' : '' }}">Teacher Classroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="{{ request()->is('teacher/teacher-subject') ? 'active' : '' }}">Teacher Subject</a></li>
-                        <li><a href="{{ URL::to('/teacher-grade') }}" class="">Grade</a></li>
+                        <li><a href="{{ URL::to('/teacher/grade') }}" class="{{ request()->is('teacher/grade') ? 'active' : '' }}">Grade</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ request()->is('librarian*') ? 'active' : '' }}">

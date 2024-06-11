@@ -28,7 +28,7 @@
                 <div class="col-3">
                     <div class="form-group">
                         <label for="startDate">From:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-control" value="{{ request('startDate') }}" onchange="this.form.submit()">                            
+                        <input type="date" id="startDate" name="startDate" class="form-control" value="{{ request('startDate', \Carbon\Carbon::now()->startOfMonth()->toDateString()) }}" onchange="this.form.submit()">                            
                      
                     </div>
                 </div>
