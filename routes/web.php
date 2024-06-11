@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ParentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TaskTypeController;
@@ -31,6 +32,8 @@ use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 
 Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
+
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('/auth', [AuthController::class, 'index'])->name('login')->middleware('guest');
 
@@ -144,4 +147,8 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);
 
-});
+    Route::get('parents/create', [ParentController::class, 'create'])->name('parents.create');
+    Route::post('parents', [ParentController::class, 'store'])->name('parents.store');
+    Route::get('dashboard', [DashboardController::class, 'parent'])->name('dashboard')->middleware('auth');
+
+    });

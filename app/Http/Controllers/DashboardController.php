@@ -28,6 +28,18 @@ class DashboardController extends Controller
         return view("dashboard.teacher", $data);
     }
 
+    public function parent()
+    {
+        $data = [
+            "title" => "Dashboard",
+        ];
+        // $user = Auth::user();
+        // $parents = $user->parents; // Mendapatkan informasi orang tua dari user
+
+        return view("dashboard.parent", $data);
+        // compact('user', 'parents')
+    }
+
     public function librarian()
     {
         $data = [
