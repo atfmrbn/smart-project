@@ -113,9 +113,9 @@ class TeacherController extends Controller
         try {
             $teacher = User::findOrFail($id);
 
-            if($request->password){
+            if ($request->password) {
                 $data['password'] = Hash::make($data["password"]);
-            }else {
+            } else {
                 $data['password'] = $teacher->password;
             }
 
@@ -140,4 +140,19 @@ class TeacherController extends Controller
             return redirect()->route('teacher.index')->with('errorMessage', $th->getMessage());
         }
     }
+
+    public function download()
+{
+    $teachers = User::where('role', 'Teacher')->get();
+
+    $data = [
+        'title' => 'Teachers List',
+        'teachers' => $teachers
+    ];
+
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('teacher.teacher-list.report', $data);
+    $pdf->setPaper('a4', 'landscape');
+
+    return $pdf->download('List-Teacher.pdf');
+}
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -20,19 +22,26 @@ class UserController extends Controller
         ];
 
         return view('user.index', $data);
+        // $data = [
+        //     'subject' => 'Tagihan SPP',
+        //     'view' => 'email',
+        //     'description' => 'ini adalah tagihan pembayaran spp'
+        // ];
+
+        // Mail::to('saputlingga@gmail.com')->send(new SendEmail($data));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        $data = [
-            "title" => "Add User",
-        ];
+{
+    $data = [
+        "title" => "Add User",
+    ];
 
-        return view('user.form', $data);
-    }
+    return view('user.form', $data);
+}
 
     /**
      * Store a newly created resource in storage.

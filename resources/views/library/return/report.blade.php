@@ -54,7 +54,7 @@
                     <td style="text-align: center">{{ $index + 1 }}</td>
                     <td>{{ $filter->classroom_name }} - ({{ $filter->identity_number }}) - {{ $filter->name }}</td>
                     <td>{{ $filter->description }}</td>
-                    <td>{{ $filter->checkout_date }} <br> s/d {{ $filter->due_date }}</td>
+                    <td>{{ DateFormat($filter->checkout_date, "DD MMMM Y") }} <br> s/d {{ DateFormat($filter->due_date, "DD MMMM Y") }}</td>
                     <td>
                         @if($filter->status == 'borrowing')
                             <span class="badge bg-warning">{{ $filter->status }}</span>

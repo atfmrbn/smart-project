@@ -1,4 +1,5 @@
 @extends("layouts.main")
+@section('title', $title)
 @section("container")
 
 @if(session()->has("successMessage"))
@@ -15,7 +16,7 @@
 
 <div class="page-header">
     <div class="row align-items-center">
-        <div class="col mb-3">
+        <div class="col mb-5">
             <h3 class="page-title">{{ $title }}</h3>
         </div>
 
@@ -77,7 +78,7 @@
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $filter->classroom_name }} - ({{ $filter->identity_number }}) - {{ $filter->name }}</td>
                     <td>{{ $filter->description }}</td>
-                    <td>{{ $filter->checkout_date }} s/d <br/> {{ $filter->due_date }}</td> 
+                    <td>{{ DateFormat($filter->checkout_date, "DD MMMM Y") }} s/d <br/> {{ DateFormat($filter->due_date, "DD MMMM Y") }}</td> 
                     <td class="text-center">
                         @if($filter->status == 'borrowing')
                             <span class="badge bg-warning">{{ $filter->status }}</span>
@@ -120,6 +121,28 @@
     </table>
 </div>
 
+<script>
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const startDate = urlParams.get('startDate');
+        const endDate = urlParams.get('endDate');
+        const status = urlParams.get('status');
 
+        // Check if all required parameters are present
+        if (!startDate || !endDate || status === null) {
+            const form = document.getElementById('filterForm');
+            if (!startDate) {
+                form.startDate.value = '{{ \Carbon\Carbon::now()->startOfMonth()->toDateString() }}';
+            }
+            if (!endDate) {
+                form.endDate.value = '{{ \Carbon\Carbon::now()->toDateString() }}';
+            }
+            if (status === null) {
+                form.status.value = '';
+            }
+            form.submit();
+        }
+    }
+</script>
 
 @endsection

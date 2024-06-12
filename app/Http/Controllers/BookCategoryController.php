@@ -14,10 +14,11 @@ class BookCategoryController extends Controller
         $categories = BookCategory::all();
 
         $data = [
-            'title' => 'Book Categories'
+            'title' => 'Book Categories',
+            'categories' => $categories
         ];
 
-        return view('library.book-category.index', compact('categories'), $data);
+        return view('library.book-category.index', $data);
     }
 
     /**
@@ -25,7 +26,11 @@ class BookCategoryController extends Controller
      */
     public function create()
     {
-        return view('library.book-category.category_form');
+        $data = [
+            'title' => 'Add Category'
+        ];
+
+        return view('library.book-category.category_form', $data);
     }
 
     /**
@@ -54,7 +59,12 @@ class BookCategoryController extends Controller
     {
         $category = BookCategory::findOrFail($id);
 
-        return view('library.book-category.category_form', compact('category'));
+        $data = [
+            'title' => 'Edit Category',
+            'category' => $category
+        ];
+
+        return view('library.book-category.category_form', $data);
     }
 
     /**
