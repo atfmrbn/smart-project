@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Book;
+use App\Models\User;
+use App\Models\Subject;
+use App\Models\Classroom;
+use App\Models\Attendance;
 use App\Models\BookCategory;
+use Illuminate\Http\Request;
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
-use App\Models\StudentExtracurricularRelationship;
-use App\Models\StudentTeacherHomeroom;
-use App\Models\Subject;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Carbon\Carbon;
+use App\Models\StudentTeacherHomeroom;
+use App\Models\TeacherSubjectRelationship;
+use App\Models\TeacherClassroomRelationship;
+use App\Models\StudentExtracurricularRelationship;
+use App\Models\StudentTeacherHomeroomRelationship;
 
 class DashboardController extends Controller
 {
@@ -27,8 +32,30 @@ class DashboardController extends Controller
 
     public function teacher()
     {
+        $teacherId = Auth::id();
+        $teacher = User::with(['teacherHomeroomRelationships.classroom', 'attendances'])
+            ->where('id', $teacherId)
+            ->where('role', 'Teacher')
+            ->firstOrFail();
+
+        $studentCount = StudentTeacherHomeroomRelationship::whereHas('teacherHomeroomRelationship', function ($query) use ($teacherId) {
+            $query->where('teacher_id', $teacherId);       
+        })->distinct('student_id')->count('student_id');        
+        $teacherClassroomCount = TeacherClassroomRelationship::whereHas('teacherSubjectRelationship', function ($query) use ($teacherId) {
+            $query->where('teacher_id', $teacherId);})->count();        
+        $teacherSubjectCount = TeacherSubjectRelationship::where('teacher_id', $teacherId)->count();
+        $attendanceCount = Attendance::whereHas('studentTeacherHomeroomRelationship', function ($query) use ($teacherId) {
+            $query->whereHas('teacherHomeroomRelationship', function ($subQuery) use ($teacherId) {
+                $subQuery->where('teacher_id', $teacherId);
+            });})->count();
+
         $data = [
-            "title" => "Dashboard",
+            "title" => "Teacher Dashboard",
+            "studentCount" => $studentCount,
+            "teacherClassroomCount" => $teacherClassroomCount,
+            "teacherSubjectCount" => $teacherSubjectCount,
+            "attendanceCount" => $attendanceCount,
+            "teacher" => $teacher,
         ];
 
         return view("dashboard.teacher", $data);

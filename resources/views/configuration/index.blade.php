@@ -57,6 +57,20 @@
                 <input type="text" id="book_penalty" name="book_penalty" class="form-control" value="{{ $configuration->book_penalty }}" readonly>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 col-sm-4">
+                <div class="d-flex justify-content-start align-items-center">
+                    <a href="{{ URL::to('configuration/' . $configuration->id. '/edit') }}" class="btn btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</a>
+                    <form action="{{ URL::to('configuration/' . $configuration->id) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-outline-danger me-2" onclick="return confirm('Anda yakin mau menghapus data ini {{ $configuration->name }}?')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     @endforeach
 </div>
 
