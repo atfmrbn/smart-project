@@ -121,6 +121,28 @@
     </table>
 </div>
 
+<script>
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const startDate = urlParams.get('startDate');
+        const endDate = urlParams.get('endDate');
+        const status = urlParams.get('status');
 
+        // Check if all required parameters are present
+        if (!startDate || !endDate || status === null) {
+            const form = document.getElementById('filterForm');
+            if (!startDate) {
+                form.startDate.value = '{{ \Carbon\Carbon::now()->startOfMonth()->toDateString() }}';
+            }
+            if (!endDate) {
+                form.endDate.value = '{{ \Carbon\Carbon::now()->toDateString() }}';
+            }
+            if (status === null) {
+                form.status.value = '';
+            }
+            form.submit();
+        }
+    }
+</script>
 
 @endsection
