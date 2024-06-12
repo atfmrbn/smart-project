@@ -94,4 +94,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(StudentExtracurricularRelationship::class, 'student_id');
     }
+
+    public function teacherHomeroomRelationships()
+    {
+        return $this->hasMany(TeacherHomeroomRelationship::class, 'teacher_id');
+    }
 }
