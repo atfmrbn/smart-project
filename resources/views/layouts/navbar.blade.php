@@ -23,29 +23,30 @@
           </li>
 
           <li class="nav-item dropdown has-arrow new-user-menus">
-            <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-              <span class="user-img">
-                <img class="rounded-circle" src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" width="31" alt="Soeng Souy" />
-                <div class="user-text">
-                  <h6>Soeng Souy</h6>
-                  <p class="text-muted mb-0">Administrator</p>
-                </div>
-              </span>
+            <a href="#" class=" nav-link">
+                <span class="user-img">
+                    <img class="rounded-circle" src="{{ Auth::user()->profile_image_url }}" width="31" />
+                    <div class="user-text">
+                        <h6>{{ Auth::user()->name }}</h6>
+                        <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
+                    </div>
+                </span>
             </a>
-            <div class="dropdown-menu">
-              <div class="user-header">
-                <div class="avatar avatar-sm">
-                  <img src="{{ URL::to('assets/img/profiles/avatar-01.jpg') }}" alt="User Image" class="avatar-img rounded-circle" />
+            {{-- <div class="dropdown-menu">
+                <div class="user-header">
+                    <div class="avatar avatar-sm">
+                        <img src="{{ Auth::user()->profile_image_url }}" alt="User Image" class="avatar-img rounded-circle" />
+                    </div>
+                    <div class="user-text">
+                        <h6>{{ Auth::user()->name }}</h6>
+                        <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
+                    </div>
                 </div>
-                <div class="user-text">
-                  <h6>Soeng Souy</h6>
-                  <p class="text-muted mb-0">Administrator</p>
-                </div>
-              </div>
-              <a class="dropdown-item" href="profile.html">My Profile</a>
-              <a class="dropdown-item" href="inbox.html">Inbox</a>
-              <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-            </div>
-          </li>
+                <a class="dropdown-item" href="{{ route('profile') }}">My Profile</a>
+                <a class="dropdown-item" href="{{ route('inbox') }}">Inbox</a>
+                <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+            </div> --}}
+        </li>
+
         </ul>
       </div>

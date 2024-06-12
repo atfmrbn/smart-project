@@ -1,5 +1,5 @@
 @extends("layouts.main")
-@section('title', 'Admin Dashboard')
+@section('title', $title)
 @section("container")
 
 <h2>Hello Admin</h2>

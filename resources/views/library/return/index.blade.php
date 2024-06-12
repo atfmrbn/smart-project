@@ -1,4 +1,5 @@
 @extends("layouts.main")
+@section('title', $title)
 @section("container")
 
 @if(session()->has("successMessage"))
@@ -15,7 +16,7 @@
 
 <div class="page-header">
     <div class="row align-items-center">
-        <div class="col mb-3">
+        <div class="col mb-5">
             <h3 class="page-title">{{ $title }}</h3>
         </div>
 
@@ -77,7 +78,7 @@
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $filter->classroom_name }} - ({{ $filter->identity_number }}) - {{ $filter->name }}</td>
                     <td>{{ $filter->description }}</td>
-                    <td>{{ $filter->checkout_date }} s/d <br/> {{ $filter->due_date }}</td> 
+                    <td>{{ DateFormat($filter->checkout_date, "DD MMMM Y") }} s/d <br/> {{ DateFormat($filter->due_date, "DD MMMM Y") }}</td> 
                     <td class="text-center">
                         @if($filter->status == 'borrowing')
                             <span class="badge bg-warning">{{ $filter->status }}</span>

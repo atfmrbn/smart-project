@@ -122,7 +122,7 @@ class BookReturnController extends Controller
             $filters->where('status', $status);
         }
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report', compact('filters', 'startDate', 'endDate', 'status'));
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report', compact('filters', 'startDate', 'endDate', 'status'))->setPaper('a4', 'landscape');
 
         return $pdf->download('book-return-report.pdf');
     }

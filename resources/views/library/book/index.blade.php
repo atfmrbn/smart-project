@@ -1,4 +1,5 @@
 @extends("layouts.main")
+@section('title', $title)
 @section("container")
 
 @if(session()->has("successMessage"))

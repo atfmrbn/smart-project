@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Librarian Dashboard')
+@section('title', $title)
 
 @section('container')
 <div class="container">

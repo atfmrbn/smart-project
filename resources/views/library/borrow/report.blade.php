@@ -30,8 +30,8 @@
                 <td class="text-center">{{ $index + 1 }}</td>
                 <td>{{ $borrow->classroom_name }} - {{ $borrow->identity_number }}  - {{ $borrow->name }}</td>
                 <td>{{ $borrow->description }}</td>
-                <td>{{ $borrow->checkout_date }}</td>
-                <td>{{ $borrow->due_date }}</td>
+                <td>{{ DateFormat($borrow->checkout_date, "DD MMMM Y") }}</td>
+                <td>{{ DateFormat($borrow->due_date, "DD MMMM Y") }}</td>
 
             </tr>
             @endforeach

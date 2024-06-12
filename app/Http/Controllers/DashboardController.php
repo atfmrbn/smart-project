@@ -19,7 +19,7 @@ class DashboardController extends Controller
     public function admin()
     {
         $data = [
-            "title" => "Dashboard",
+            "title" => "Admin Dashboard",
         ];
 
         return view("dashboard.admin", $data);
@@ -28,7 +28,7 @@ class DashboardController extends Controller
     public function teacher()
     {
         $data = [
-            "title" => "Dashboard",
+            "title" => "Teacher Dashboard",
         ];
 
         return view("dashboard.teacher", $data);
@@ -55,13 +55,12 @@ class DashboardController extends Controller
         $studentBorrowCount = BorrowingBook::where('status', 'borrowing')->count();
         $studentReturnedCount = BorrowingBook::where('status', 'returned')->count();
 
-        // Prepare data for overview chart
         $overviewData = [
             'labels' => ['Books', 'Categories', 'Borrowed', 'Returned', 'Patrons Borrowed', 'Patrons Returned'],
             'data' => [$bookCount, $categoryCount, $bookBorrowedCount, $bookReturnCount, $studentBorrowCount, $studentReturnedCount],
         ];
 
-        // Fetch number of borrows per month for the last 6 months
+        // ambil data dari 6 bulan terakhir
         $months = collect([]);
         $borrowsDataArray = collect([]);
         for ($i = 5; $i >= 0; $i--) {
@@ -75,13 +74,12 @@ class DashboardController extends Controller
             $borrowsDataArray->push($borrowCount);
         }
 
-        // Example data for number of borrows over time
+        // tampung data total buku yg dipinjam dalam 6 bulan terakhir
         $borrowsData = [
             'labels' => $months,
             'data' => $borrowsDataArray,
         ];
 
-        // Data to pass to the view
         $data = [
             "title" => "Librarian Dashboard",
             "bookCount" => $bookCount,
