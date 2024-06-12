@@ -36,8 +36,13 @@ Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('/auth', [AuthController::class, 'index'])->name('login')->middleware('guest');
-
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
+
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password')->middleware('guest');
+Route::post('/forgot-password', [AuthController::class, 'sendEmailReset'])->name('email-reset')->middleware('guest');
+
+Route::get('/reset-password/{token}', [AuthController::class, 'emailResetPassword'])->name('email-reset-password')->middleware('guest');
+Route::post('/reset-password', [AuthController::class, 'ResetPassword'])->name('reset-passowrd')->middleware('guest');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -148,8 +153,8 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);
 
-    Route::get('parents/create', [ParentController::class, 'create'])->name('parents.create');
-    Route::post('parents', [ParentController::class, 'store'])->name('parents.store');
+    // Route::get('parents/create', [ParentController::class, 'create'])->name('parents.create');
+    // Route::post('parents', [ParentController::class, 'store'])->name('parents.store');
     Route::get('dashboard', [DashboardController::class, 'parent'])->name('dashboard')->middleware('auth');
 
     });
