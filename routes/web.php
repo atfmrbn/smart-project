@@ -120,6 +120,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::get('/teacher/teacher-list/{id}/edit', 'edit')->name('teacher.edit');
         Route::put('/teacher/teacher-list/{id}', 'update')->name('teacher.update');
         Route::delete('/teacher/teacher-list/{id}', 'destroy')->name('teacher.destroy');
+        Route::get('/teacher-list/download', [TeacherController::class, 'download'])->name('teacher.download');
     });
 
     Route::controller(LibrarianController::class)->group(function () {
