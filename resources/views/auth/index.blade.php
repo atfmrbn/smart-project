@@ -170,6 +170,12 @@
                 <h2>{{ $title }}</h2>
             </div>
 
+            @if (session()->has('successMessage'))
+                <div class="alert alert-success">
+                    {{ session('successMessage') }}
+                </div>
+            @endif
+
             @if (session()->has('errorMessage'))
                 <div class="alert alert-danger">
                     {{ session('errorMessage') }}
@@ -207,7 +213,7 @@
                             <span class="checkmark"></span>
                         </label>
                     </div>
-                    <a href="#">Forgot Password?</a>
+                    <a href="{{ route('forgot-password') }}">Forgot Password?</a>
                 </div>
                 <div class="form-group mt-4">
                     <button class="btn btn-primary btn-block" type="submit">Login</button>
