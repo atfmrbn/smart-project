@@ -8,10 +8,10 @@
 @endif
 
 @if (isset($grade))
-    <form method="POST" action="{{ route('grade.update', $grade->id) }}" autocomplete="off" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('grade.update', $grade->id) }}" autocomplete="off" >
     @method('PUT')
 @else
-    <form method="POST" action="{{ route('grade.store') }}" autocomplete="off" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('grade.store') }}" autocomplete="off">
 @endif
     @csrf
 
@@ -41,16 +41,18 @@
 
         <div class="col-12 col-sm-6">
             <div class="form-group local-forms">
-                <label for="student_teacher_homeroom_relationship_id">Student Teacher Homeroom <span class="login-danger">*</span></label>
-                <select name="student_teacher_homeroom_relationship_id" id="student_teacher_homeroom_relationship_id" class="form-control data-select-2 @error('student_teacher_homeroom_relationship_id') is-invalid @enderror">
-                    <option value="">Pilih Student Teacher Homeroom</option>
-                    @foreach ($studentTeacherHomeroomRelationships as $studentTeacherHomeroomRelationship)
-                        <option value="{{ $studentTeacherHomeroomRelationship->id }}" {{ (isset($grade) && $grade->student_teacher_homeroom_relationship_id == $studentTeacherHomeroomRelationship->id) ? 'selected' : '' }}>
-                            {{ $studentTeacherHomeroomRelationship->student->identity_number }} - {{ $studentTeacherHomeroomRelationship->student->name }} - {{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ optional($studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher)->identity_number }} - {{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}
+                <label for="teacher_classroom_relationship_id">Teacher Classroom <span class="login-danger">*</span></label>
+                <select name="teacher_classroom_relationship_id" id="teacher_classroom_relationship_id" class="form-control data-select-2 @error('teacher_classroom_relationship_id') is-invalid @enderror">
+                    <option value="">Pilih Teacher Classroom</option>
+                    @foreach ($teacherClassroomRelationships as $teacherClassroomRelationship)
+                        <option value="{{ $teacherClassroomRelationship->id }}" {{ (isset($grade) && $grade->teacher_classroom_relationship_id == $teacherClassroomRelationship->id) ? 'selected' : '' }}>
+                            {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }} - 
+                            {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $teacherClassroomRelationship->TeacherSubjectRelationship->teacher->name }}-{{ $teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
                         </option>
                     @endforeach
                 </select>
-                @error('student_teacher_homeroom_relationship_id')
+
+                @error('teacher_classroom_relationship_id')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -60,9 +62,9 @@
 
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
-                <label for="value">Value <span class="login-danger">*</span></label>
-                <input type="text" id="value" name="value" class="form-control @error('value') is-invalid @enderror" value="{{ isset($grade) ? $grade->value : old('value') }}">
-                @error('value')
+                <label for="percentage">Percetage <span class="login-danger">*</span></label>
+                <input type="text" id="percentage" name="percentage" class="form-control @error('percentage') is-invalid @enderror" value="{{ isset($grade) ? $grade->percentage : old('percentage') }}">
+                @error('percentage')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

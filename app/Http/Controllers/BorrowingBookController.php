@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-
 class BorrowingBookController extends Controller
 {
     /**
@@ -23,7 +22,7 @@ class BorrowingBookController extends Controller
 
         $data = [
             'title' => 'Borrowed Books List',
-            'borrows' => $borrows 
+            'borrows' => $borrows
         ];
 
         return view('library.borrow.index', $data);
@@ -33,7 +32,7 @@ class BorrowingBookController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {    
+    {
         $students = User::getActiveStudent($this->defaultCurriculum->id);
 
         $borrows = BorrowingBook::select('borrowing_books.*', 'users.name', 'classrooms.name as classroom_name')
@@ -48,7 +47,7 @@ class BorrowingBookController extends Controller
             'title' => 'Check Out a Book',
             'borrows' => $borrows,
             'students' => $students
-        ]; 
+        ];
 
         return view('library.borrow.borrow_form', $data);
     }
@@ -59,13 +58,13 @@ class BorrowingBookController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $messages = [
             'student_id.required' => 'Tolong isi namenya.',
             'description.required' => 'Isi donk description',
             'checkout_date.required' => 'Isi donk description',
             'due_date.required' => 'Isi donk description',
-        ]; 
+        ];
 
         $data = $request->validate([
             // 'id',
@@ -95,13 +94,14 @@ class BorrowingBookController extends Controller
     public function edit(string $id)
     {
         $borrow = BorrowingBook::findOrFail($id);
-        
+
         $students = User::getActiveStudent($this->defaultCurriculum->id);
 
         $books = Book::with('category')->orderby('title')->get();
         $now = Carbon::now();
-        
+
         $data = [
+            'title' => 'Edit Borrowing Books',
             'borrow' => $borrow,
             'students' => $students,
             'books' => $books,
@@ -136,11 +136,11 @@ class BorrowingBookController extends Controller
 
         $data = [
             'title' => 'Borrowed Books List',
-            'borrows' => $borrows 
+            'borrows' => $borrows
         ];
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.borrow.report', $data);
 
-	    return $pdf->download('laporan-perpustakaan-pdf');
+        return $pdf->download('laporan-perpustakaan-pdf');
     }
 }

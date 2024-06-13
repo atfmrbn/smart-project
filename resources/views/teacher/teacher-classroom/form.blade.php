@@ -22,16 +22,16 @@
 
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
-                <label for="classroom_id">Classroom <span class="login-danger">*</span></label>
-                <select name="classroom_id" id="classroom_id" class="form-control data-select-2 @error('classroom_id') is-invalid @enderror">
+                <label for="teacher_homeroom_relationship_id">Classroom <span class="login-danger">*</span></label>
+                <select name="teacher_homeroom_relationship_id" id="teacher_homeroom_relationship_id" class="form-control data-select-2 @error('teacher_homeroom_relationship_id') is-invalid @enderror">
                     <option value="">Select Classroom</option>
-                    @foreach ($classrooms as $classroom)
-                        <option value="{{ $classroom->id }}" {{ (isset($teacher_classroom) && $teacher_classroom->classroom_id == $classroom->id) ? 'selected' : '' }}>
-                            {{ $classroom->classroomType->name }} - {{ $classroom->name }}
+                    @foreach ($teacherHomeroomRelationships as $teacherHomeroomRelationship)
+                        <option value="{{ $teacherHomeroomRelationship->id }}" {{ (isset($teacher_classroom) && $teacher_classroom->teacher_homeroom_relationship_id == $teacherHomeroomRelationship->id) ? 'selected' : '' }}>
+                            {{ $teacherHomeroomRelationship->classroom->name }} - {{ $teacherHomeroomRelationship->classroom->classroomType->name }}
                         </option>
                     @endforeach
                 </select>
-                @error('classroom_id')
+                @error('teacher_homeroom_relationship_id')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -58,49 +58,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-4">
-            <div class="form-group local-forms">
-                <label for="schedule_day">Teacher Schedule Day <span class="login-danger">*</span></label>
-                <select name="schedule_day" id="schedule_day" class="form-control data-select-2 @error('schedule_day') is-invalid @enderror">
-                    <option value="">Select Schedule Day</option>
-                    <option value="Senin" {{ isset($teacher_classroom) && $teacher_classroom->schedule_day == "Senin" ? 'selected' : '' }}>Senin</option>
-                    <option value="Selasa" {{ isset($teacher_classroom) && $teacher_classroom->schedule_day == "Selasa" ? 'selected' : '' }}>Selasa</option>
-                    <option value="Rabu" {{ isset($teacher_classroom) && $teacher_classroom->schedule_day == "Rabu" ? 'selected' : '' }}>Rabu</option>
-                    <option value="Kamis" {{ isset($teacher_classroom) && $teacher_classroom->schedule_day == "Kamis" ? 'selected' : '' }}>Kamis</option>
-                    <option value="Jumat" {{ isset($teacher_classroom) && $teacher_classroom->schedule_day == "Jumat" ? 'selected' : '' }}>Jumat</option>
-                    <option value="Sabtu" {{ isset($teacher_classroom) && $teacher_classroom->schedule_day == "Sabtu" ? 'selected' : '' }}>Sabtu</option>
-                </select>
-                @error('schedule_day')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-        </div>
 
-        <div class="col-12 col-sm-4">
-            <div class="form-group local-forms">
-                <label for="schedule_time_start">Teacher Schedule Time Start <span class="login-danger">*</span></label>
-                <input class="form-control @error('schedule_time_start') is-invalid @enderror" type="time" name="schedule_time_start" value="{{ isset($teacher_classroom) ? $teacher_classroom->schedule_time_start : '' }}" />
-                @error('schedule_time_start')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-4">
-            <div class="form-group local-forms">
-                <label for="schedule_time_end">Teacher Schedule Time End <span class="login-danger">*</span></label>
-                <input class="form-control @error('schedule_time_end') is-invalid @enderror" type="time" name="schedule_time_end" value="{{ isset($teacher_classroom) ? $teacher_classroom->schedule_time_end : '' }}" />
-                @error('schedule_time_end')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-        </div>
 
         <div class="col-12">
             <div class="teacher_classroom-submit">

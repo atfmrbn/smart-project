@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Grade extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'task_type_id',
-        'student_teacher_homeroom_relationship_id',
-        'value'
+        'teacher_classroom_relationship_id',
+        'percentage'
     ];
 
     /**
@@ -22,11 +23,11 @@ class Grade extends Model
 
     public function taskType()
     {
-        return $this->belongsTo(TaskType::class, 'task_type_id');
+        return $this->belongsTo(TaskType::class);
     }
 
-    public function studentTeacherHomeroomRelationship()
+    public function teacherClassroomRelationship()
     {
-        return $this->belongsTo(StudentTeacherHomeroomRelationship::class, 'student_teacher_homeroom_relationship_id');
+        return $this->belongsTo(TeacherClassroomRelationship::class);
     }
 }
