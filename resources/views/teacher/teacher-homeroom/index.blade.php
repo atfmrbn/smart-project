@@ -14,7 +14,7 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table border-0 star-teacher-homeroom table-hover table-center mb-0 datatable table-striped">
+    <table class="table border-0 star-teacher-homeroom table-hover table-center mb-0  table-striped">
         <thead class="teacher-homeroom-thread">
             <tr class="text-center">
                 <th>Id</th>

@@ -10,27 +10,17 @@ class TeacherClassroomRelationship extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'teacher_id',
-        'classroom_id',
-        'curriculum_id',
-        'subject_id',
+        'teacher_homeroom_relationship_id',
         'teacher_subject_relationship_id',
-        'schedule_day',
-        'schedule_time_start',
-        'schedule_time_end', 
     ];
 
     protected $guarded = [];
 
-    public function curriculum()
+    public function teacherHomeroomRelationship()
     {
-        return $this->belongsTo(Curriculum::class, 'curriculum_id');
+        return $this->belongsTo(TeacherHomeroomRelationship::class, 'teacher_homeroom_relationship_id');
     }
 
-    public function classroom()
-    {
-        return $this->belongsTo(Classroom::class, 'classroom_id');
-    }
     public function teacherSubjectRelationship()
     {
         return $this->belongsTo(TeacherSubjectRelationship::class);

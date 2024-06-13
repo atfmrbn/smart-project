@@ -142,17 +142,17 @@ class TeacherController extends Controller
     }
 
     public function download()
-{
-    $teachers = User::where('role', 'Teacher')->get();
+    {
+        $teachers = User::where('role', 'Teacher')->get();
 
-    $data = [
-        'title' => 'Teachers List',
-        'teachers' => $teachers
-    ];
+        $data = [
+            'title' => 'Teachers List',
+            'teachers' => $teachers
+        ];
 
-    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('teacher.teacher-list.report', $data);
-    $pdf->setPaper('a4', 'landscape');
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('teacher.teacher-list.report', $data);
+        $pdf->setPaper('a4', 'landscape');
 
-    return $pdf->download('List-Teacher.pdf');
-}
+        return $pdf->download('List-Teacher.pdf');
+    }
 }

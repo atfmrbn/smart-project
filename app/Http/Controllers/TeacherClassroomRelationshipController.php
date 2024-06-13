@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\TeacherClassroomRelationship;
+use App\Models\TeacherHomeroomRelationship;
 use App\Models\TeacherSubjectRelationship;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class TeacherClassroomRelationshipController extends Controller
 {
@@ -16,33 +16,26 @@ class TeacherClassroomRelationshipController extends Controller
      */
     public function index(Request $request)
     {
-        $schedule_day = $request->input('schedule_day');
         $classroom_id = $request->input('classroom');
 
         // Modifikasi query untuk join dengan users
-        $query = TeacherClassroomRelationship::with(['curriculum', 'classroom', 'teacherSubjectRelationship.teacher'])
-            ->where('curriculum_id', $this->defaultCurriculum->id)
+        $query = TeacherClassroomRelationship::with(['teacherHomeroomRelationship', 'teacherHomeroomRelationship.classroom.classroomType', 'teacherSubjectRelationship.teacher'])
+            ->where('teacher_homeroom_relationships.curriculum_id', $this->defaultCurriculum->id)
+            ->join('teacher_homeroom_relationships', 'teacher_classroom_relationships.teacher_homeroom_relationship_id', '=', 'teacher_homeroom_relationships.id')
             ->join('teacher_subject_relationships', 'teacher_classroom_relationships.teacher_subject_relationship_id', '=', 'teacher_subject_relationships.id')
             ->join('users', 'teacher_subject_relationships.teacher_id', '=', 'users.id')
             ->select('teacher_classroom_relationships.*', 'users.identity_number');
 
-        if ($schedule_day) {
-            $query->where('schedule_day', $schedule_day);
-        }
-
         if ($classroom_id) {
-            $query->where('classroom_id', $classroom_id);
+            $query->where('teacher_homeroom_relationships.classroom_id', $classroom_id);
         }
 
-        $teacher_classrooms = $query->orderBy('schedule_day', 'asc')->get();
-
-        $scheduleDays = TeacherClassroomRelationship::distinct()->pluck('schedule_day');
+        $teacher_classrooms = $query->get();
         $classrooms = Classroom::with('classroomType')->get();
 
         $data = [
-            'title' => 'Teacher Classrooms',
+            'title' => 'Teacher Classrooms - Curriculum ' . $this->defaultCurriculum->year,
             'teacher_classrooms' => $teacher_classrooms->isEmpty() ? [] : $teacher_classrooms,
-            'scheduleDays' => $scheduleDays,
             'classrooms' => $classrooms,
         ];
 
@@ -55,13 +48,13 @@ class TeacherClassroomRelationshipController extends Controller
     public function create()
     {
         $teachers = User::where('role', 'Teacher')->get();
-        $classrooms = Classroom::with('classroomType')->get();
+        $teacherHomeroomRelationships = TeacherHomeroomRelationship::with('classroom')->get();
         $teacherSubjectRelationships = TeacherSubjectRelationship::with('teacher', 'subject')->get();
 
-        return view('teacher.teacher-classroom.form',  [
+        return view('teacher.teacher-classroom.form', [
             'title' => 'Add Teacher Classroom',
             'teachers' => $teachers,
-            'classrooms' => $classrooms,
+            'teacherHomeroomRelationships' => $teacherHomeroomRelationships,
             'teacherSubjectRelationships' => $teacherSubjectRelationships,
         ]);
     }
@@ -72,22 +65,15 @@ class TeacherClassroomRelationshipController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'classroom_id' => 'required',
+            'teacher_homeroom_relationship_id' => 'required',
             'teacher_subject_relationship_id' => 'required',
-            'schedule_day' => 'required',
-            'schedule_time_start' => 'required',
-            'schedule_time_end' => 'required',
         ]);
-        $data['curriculum_id'] = $this->defaultCurriculum->id;
-        // dd($data);
-        try
-        {
+
+        try {
             TeacherClassroomRelationship::create($data);
 
             return redirect()->route('teacher-classroom.index')->with('successMessage', 'Data successfully added');
-        }
-        catch (\Exception $ex)
-        {
+        } catch (\Exception $ex) {
             return redirect()->route('teacher-classroom.index')->with('errorMessage', $ex->getMessage());
         }
 
@@ -112,16 +98,14 @@ class TeacherClassroomRelationshipController extends Controller
     public function edit(string $id)
     {
         $teacher_classroom = TeacherClassroomRelationship::findOrFail($id);
-        $teachers = User::where('role', 'Teacher')->get();
-        $classrooms = Classroom::with('classroomType')->get();
         $teacherSubjectRelationships = TeacherSubjectRelationship::with('teacher', 'subject')->get();
+        $teacherHomeroomRelationships = TeacherHomeroomRelationship::with('classroom')->get();
 
         return view('teacher.teacher-classroom.form', [
             'title' => 'Edit Teacher Classroom',
             'teacher_classroom' => $teacher_classroom,
-            'teachers' => $teachers,
-            'classrooms' => $classrooms,
             'teacherSubjectRelationships' => $teacherSubjectRelationships,
+            'teacherHomeroomRelationships' => $teacherHomeroomRelationships,
         ]);
     }
 

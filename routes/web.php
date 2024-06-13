@@ -5,10 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\GradeController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParentController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TaskTypeController;
@@ -23,6 +23,7 @@ use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ExtracurricularController;
+use App\Http\Controllers\TeacherScheduleController;
 use App\Http\Controllers\BookBorrowDetailController;
 use App\Http\Controllers\TeacherSubjectRelationshipController;
 use App\Http\Controllers\TeacherHomeroomRelationshipController;
@@ -148,6 +149,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
 
     Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
+    Route::resource('/teacher/teacher-schedule', TeacherScheduleController::class);
     Route::resource('teacher/grade', GradeController::class);
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
@@ -157,4 +159,4 @@ Route::prefix('/')->middleware('auth')->group(function () {
     // Route::post('parents', [ParentController::class, 'store'])->name('parents.store');
     Route::get('dashboard', [DashboardController::class, 'parent'])->name('dashboard')->middleware('auth');
 
-    });
+});
