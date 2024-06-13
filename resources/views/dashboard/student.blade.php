@@ -73,7 +73,49 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Teacher Schedules Section -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card text-white mb-3" style="background-color: #3D5EE1">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-center" style="width: 100%">
+                                        <h5 class="card-title text-white">Schedules</h5>
+                                    </div>
+                                </div>
+                                @if ($teacherSchedules->isEmpty())
+                                    <p>No schedules available for your class.</p>
+                                @else
+                                    @foreach ($teacherSchedules as $day => $schedules)
+                                        <h5 class="text-white">{{ $day }}</h5>
+                                        <table class="table table-bordered text-white">
+                                            <thead>
+                                                <tr>
+                                                    <th>Subject</th>
+                                                    <th>Teacher</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($schedules as $schedule)
+                                                    <tr>
+                                                        <td>{{ $schedule->teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
+                                                        </td>
+                                                        <td>{{ $schedule->teacherClassroomRelationship->teacherSubjectRelationship->teacher->name }}
+                                                        </td>
+                                                        <td>{{ $schedule->schedule_time_start }}</td>
+                                                        <td>{{ $schedule->schedule_time_end }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 @if (Auth::user()->role != 'Admin')
                     <div class="table-responsive">
@@ -164,6 +206,7 @@
                             </div>
                         </div>
                     </div>
+
                 @endif
             </div>
         </div>
