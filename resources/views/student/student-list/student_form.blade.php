@@ -82,7 +82,7 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="gender">Gender <span class="login-danger">*</span></label>
-                <select class="form-control select" name="gender" id="gender" required>
+                <select class="form-control select2" name="gender" id="gender" required>
                     <option selected disabled>Select Gender</option>
                     <option value="Laki-laki"
                         {{ isset($student) ? ($student->gender === 'Laki-laki' ? ' selected' : '') : '' }}>Male</option>

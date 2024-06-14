@@ -24,13 +24,14 @@
 
           <li class="nav-item dropdown has-arrow new-user-menus">
             <a href="#" class=" nav-link">
-                <span class="user-img">
-                    <img class="rounded-circle" src="{{ Auth::user()->profile_image_url }}" width="31" />
-                    <div class="user-text">
-                        <h6>{{ Auth::user()->name }}</h6>
-                        <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
-                    </div>
-                </span>
+              <span class="user-img">
+                {{-- @dd(Auth::user()->image); --}}
+                <img class="rounded-circle" src="{{ Auth::user()->image }}" width="31" />
+                <div class="user-text">
+                    <h6>{{ Auth::user()->name }}</h6>
+                    <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
+                </div>
+              </span>
             </a>
             {{-- <div class="dropdown-menu">
                 <div class="user-header">
