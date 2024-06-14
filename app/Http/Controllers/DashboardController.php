@@ -34,22 +34,43 @@ class DashboardController extends Controller
     public function teacher()
     {
         $teacherId = Auth::id();
+        
+        // Mengambil data guru yang sedang login
         $teacher = User::with(['teacherHomeroomRelationships.classroom', 'attendances'])
             ->where('id', $teacherId)
             ->where('role', 'Teacher')
             ->firstOrFail();
-
+        
+        // Mengambil data jadwal guru
+        $teacherSchedules = TeacherSchedule::with([
+            'teacherClassroomRelationship.teacherHomeroomRelationship.classroom.classroomType',
+            'teacherClassroomRelationship.teacherSubjectRelationship.teacher',
+            'teacherClassroomRelationship.teacherSubjectRelationship.subject'
+        ])
+        ->whereHas('teacherClassroomRelationship.teacherSubjectRelationship', function ($query) use ($teacherId) {
+            $query->where('teacher_id', $teacherId);
+        })
+        ->orderBy('schedule_day')
+        ->orderBy('schedule_time_start')
+        ->get();
+    
+        // Menghitung data yang diperlukan untuk dashboard
         $studentCount = StudentTeacherHomeroomRelationship::whereHas('teacherHomeroomRelationship', function ($query) use ($teacherId) {
-            $query->where('teacher_id', $teacherId);       
-        })->distinct('student_id')->count('student_id');        
+            $query->where('teacher_id', $teacherId);
+        })->distinct('student_id')->count('student_id');
+    
         $teacherClassroomCount = TeacherClassroomRelationship::whereHas('teacherSubjectRelationship', function ($query) use ($teacherId) {
-            $query->where('teacher_id', $teacherId);})->count();        
+            $query->where('teacher_id', $teacherId);
+        })->count();
+    
         $teacherSubjectCount = TeacherSubjectRelationship::where('teacher_id', $teacherId)->count();
+    
         $attendanceCount = Attendance::whereHas('studentTeacherHomeroomRelationship', function ($query) use ($teacherId) {
             $query->whereHas('teacherHomeroomRelationship', function ($subQuery) use ($teacherId) {
                 $subQuery->where('teacher_id', $teacherId);
-            });})->count();
-
+            });
+        })->count();
+    
         $data = [
             "title" => "Teacher Dashboard",
             "studentCount" => $studentCount,
@@ -57,11 +78,12 @@ class DashboardController extends Controller
             "teacherSubjectCount" => $teacherSubjectCount,
             "attendanceCount" => $attendanceCount,
             "teacher" => $teacher,
-
+            "teacherSchedules" => $teacherSchedules,
         ];
-
+    
         return view("dashboard.teacher", $data);
     }
+    
 
     public function parent()
     {
