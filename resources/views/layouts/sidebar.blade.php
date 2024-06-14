@@ -52,9 +52,10 @@
                         <li><a href="{{ URL::to('/teacher/teacher-list') }}" class="{{ request()->is('teacher/teacher-list') ? 'active' : '' }} || {{ request()->is('teacher/teacher-list/add') ? 'active' : '' }}">Teacher List</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}" class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/add') ? 'active' : '' }}">Teacher Homeroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="{{ request()->is('teacher/teacher-classroom') ? 'active' : '' }}">Teacher Classroom</a></li>
-                       <li><a href="{{ URL::to('/teacher/teacher-schedule') }}" class="{{ request()->is('teacher/teacher-schedule') ? 'active' : '' }}">Teacher Schedule</a></li>                        
+                        <li><a href="{{ URL::to('/teacher/teacher-schedule') }}" class="{{ request()->is('teacher/teacher-schedule') ? 'active' : '' }}">Teacher Schedule</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="{{ request()->is('teacher/teacher-subject') ? 'active' : '' }}">Teacher Subject</a></li>
                         <li><a href="{{ URL::to('/teacher/grade') }}" class="{{ request()->is('teacher/grade') ? 'active' : '' }}">Grade</a></li>
+                        <li><a href="{{ URL::to('/teacher/grade-detail') }}" class="{{ request()->is('teacher/grade-detail') ? 'active' : '' }}">Grade Detail</a></li>
                     </ul>
                 </li>
                 <li class="submenu {{ request()->is('librarian*') ? 'active' : '' }}">
