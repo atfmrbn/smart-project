@@ -36,10 +36,10 @@
                         <li><a href="{{ URL::to('/extracurricular-student') }}" class="{{ request()->is('extracurricular-student') ? 'active' : '' }}">Extracurricular Participants</a></li>
                     </ul>
                 </li>
-                <li class="submenu {{ request()->is('parents/*') ? 'active' : '' }}">
-                    <a href="#"><i class="fas fa-chalkboard-parent"></i> <span> Parents</span> <span class="menu-arrow"></span></a>
+                <li class="submenu {{ request()->is('parent/*') ? 'active' : '' }}">
+                    <a href="#"><i class="fas fa-user"></i> <span> Parents</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="{{ URL::to('/parents/parent-list') }}" class="{{ request()->is('parents/parent-list') ? 'active' : '' }} || {{ request()->is('parents/parent-list/add') ? 'active' : '' }}">Parents List</a></li>
+                        <li><a href="{{ URL::to('/parent/parent-list') }}" class="{{ request()->is('parent/parent-list') ? 'active' : '' }} || {{ request()->is('parent/parent-list/create') ? 'active' : '' }} || {{ request()->is('parent/parent-list/*/edit') ? 'active' : '' }} || {{ request()->is('parent/parent-list/*') ? 'active' : '' }}">Parents List</a></li>
                         {{-- <li><a href="{{ URL::to('/teacher/teacher-homeroom') }}" class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/add') ? 'active' : '' }}">Teacher Homeroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-classroom') }}" class="{{ request()->is('teacher/teacher-classroom') ? 'active' : '' }}">Teacher Classroom</a></li>
                         <li><a href="{{ URL::to('/teacher/teacher-subject') }}" class="{{ request()->is('teacher/teacher-subject') ? 'active' : '' }}">Teacher Subject</a></li>

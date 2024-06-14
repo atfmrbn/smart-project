@@ -97,6 +97,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::get('book-return/download', 'downloadPdf')->name('book-return.download');
     });
 
+    Route::resource('/parent/parent-list', ParentController::class);
     Route::resource('/student/student-list', StudentController::class);
     Route::resource('/student/student-teacher-classroom', StudentTeacherClassroomRelationshipController::class);
     Route::resource('/student/student-teacher-homeroom', StudentTeacherHomeroomRelationshipController::class);

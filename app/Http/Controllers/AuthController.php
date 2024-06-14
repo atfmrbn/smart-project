@@ -55,7 +55,7 @@ class AuthController extends Controller
     public function forgotPassword()
     {
         $data = [
-            "title" => "Forgot Password",
+            "title" => "Confirm Email",
         ];
 
         return view('auth.forgot-password', $data);

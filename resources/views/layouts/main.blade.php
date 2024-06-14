@@ -20,6 +20,8 @@
 </head>
 
 <body>
+    <link rel="icon" type="image/x-icon" href="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png">  
+
     {{-- @yield('container')
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
