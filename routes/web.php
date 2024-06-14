@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\GradeDetailController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\StudentController;
@@ -152,6 +153,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
     Route::resource('/teacher/teacher-schedule', TeacherScheduleController::class);
     Route::resource('teacher/grade', GradeController::class);
+    Route::resource('teacher/grade-detail', GradeDetailController::class);
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);
