@@ -72,7 +72,7 @@
         <div class="col-12 col-sm-4">
         <div class="form-group local-forms">
             <label for="status">Status <span class="login-danger">*</span></label>
-            <select name="status" id="status" class="form-control select" required>
+            <select name="status" id="status" class="form-control select2" required>
                 <option value="">Select Status</option>
                 <option value="available" {{ (isset($book) && $book->status == 'available') ? 'selected' : '' }}>Available</option>
                 <option value="unavailable" {{ (isset($book) && $book->status == 'unavailable') ? 'selected' : '' }}>Unavailable</option>

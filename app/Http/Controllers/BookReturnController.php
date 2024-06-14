@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
+use App\Models\Configuration;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,20 +16,20 @@ class BookReturnController extends Controller
      */
     public function index(Request $request)
     {
+        $configuration = Configuration::first();
         $now = Carbon::now()->toDateString();
         $startDate = $request->input("startDate", $now);
         $endDate = $request->input("endDate", $now);
         $status = $request->input('status', 'borrowing');
 
         $filters = BorrowingBook::getInactiveBorrowingBook($this->defaultCurriculum->id, $startDate , $endDate);
-        
-        
 
         // dd($filterByDate);
 
         $data = [
             'title' => 'Returned Book List',
             'filters' => $filters,
+            'configuration' => $configuration,
             'startDate' => $startDate,
             'endDate' => $endDate,
             'status' => $status,

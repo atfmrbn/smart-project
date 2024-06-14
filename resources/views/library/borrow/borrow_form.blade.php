@@ -147,7 +147,7 @@
                         @endif
                     </td>
                     <td class="align-middle" style="text-align: center;">
-                        {{ $borrowDetail->penalty ? 'Rp. ' . number_format($borrowDetail->penalty, 0, ',', '.') : 'No Penalty' }}
+                        {{ $borrowDetail->penalty ? 'Rp. ' . NumberFormat($borrowDetail->penalty, 0, ',', '.') : 'No Penalty' }}
                     </td>
                     <td class="align-middle">
                         <div class="text-center d-flex">
