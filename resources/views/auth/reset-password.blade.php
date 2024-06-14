@@ -167,7 +167,7 @@
             <div class="login-header">
                 <img src="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png" alt="SMARTS Logo">
 
-                <h2>{{ $title }}</h2>
+                <h2 class="mt-5">{{ $title }}</h2>
             </div>
 
             @if (session()->has('errorMessage'))

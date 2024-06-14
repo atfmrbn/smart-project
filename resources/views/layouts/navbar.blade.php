@@ -1,7 +1,7 @@
 <div class="header">
         <div class="header-left">
           <a href="{{ URL::to('/') }}" class="logo">
-            <img src="{{ URL::to('assets/img/logo.png') }}"  alt="Logo" />
+            <img src="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png" alt="Logo" />
           </a>
         </div>
 
