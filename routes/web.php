@@ -7,7 +7,6 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GradeDetailController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -33,10 +32,6 @@ use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\SocialiteController;
-
-Route::get('/', [DashboardController::class, 'index'])->middleware('auth');
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('/auth', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');

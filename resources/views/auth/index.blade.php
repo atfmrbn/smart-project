@@ -214,7 +214,7 @@
                     </div>
                     <a href="{{ route('forgot-password') }}">Forgot Password?</a>
                 </div>
-                <div class="form-group mt-4">
+                <div class="form-group mt-3">
                     <button class="btn btn-primary btn-block" type="submit">Login</button>
                 </div>
             </form>
@@ -226,9 +226,6 @@
 
             <div class="social-login">
                 <a href="{{ route('redirect') }}"><i class="fab fa-google-plus-g"></i></a>
-                <a href="https://www.facebook.com/login"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://twitter.com/login"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.linkedin.com/login"><i class="fab fa-linkedin-in"></i></a>
             </div>
 
         </div>
