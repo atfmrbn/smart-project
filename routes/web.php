@@ -13,6 +13,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TaskTypeController;
+use App\Http\Controllers\TuitionController;
+use App\Http\Controllers\TuitionTypeController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LibrarianController;
@@ -173,5 +175,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     // Route::get('parents/create', [ParentController::class, 'create'])->name('parents.create');
     // Route::post('parents', [ParentController::class, 'store'])->name('parents.store');
     Route::get('dashboard', [DashboardController::class, 'parent'])->name('dashboard')->middleware('auth');
+
+    Route::resource('tuition-type', TuitionTypeController::class);
 
 });
