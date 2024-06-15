@@ -50,6 +50,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('/teacher', [DashboardController::class, 'teacher']);
+    Route::get('/dashboard/superAdmin', [DashboardController::class, 'superAdmin'])->name('superAdmin.dashboard');
     Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
     Route::get('/dashboard/librarian', [DashboardController::class, 'librarian'])->name('librarian.dashboard');
     Route::get('/dashboard/student', [DashboardController::class, 'student'])->name('student.dashboard');

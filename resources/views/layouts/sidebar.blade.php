@@ -13,6 +13,9 @@
                 {{-- <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student/dashboard') ? 'active' : '' }}">
                     <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                     <ul> --}}
+                <li class="nav-item {{ request()->is('dashboard/teacher') ? 'active' : '' }}">
+                    <a href="{{ route('superAdmin.dashboard') }}" class=""><i class="feather-grid"></i><span> Super Admin Dashboard</span></a>
+                </li>
                 <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
                     <a href="{{ URL::to('/') }}" class=""><i class="feather-grid"></i><span> Admin Dashboard</span></a>
                 </li>
