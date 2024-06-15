@@ -33,13 +33,13 @@
                     <th>#</th>
                     <th>Identity Number</th>
                     <th>Name</th>
-                    <th>Username</th>
+                    {{-- <th>Username</th> --}}
                     <th>Email</th>
                     <th>Gender</th>
                     <th>Date of Birth</th>
                     <th>Phone</th>
-                    <th>NIK</th>
-                    <th>Address</th>
+                    {{-- <th>NIK</th> --}}
+                    {{-- <th>Address</th> --}}
                     <th>Action</th>
                 </tr>
             </thead>
@@ -49,13 +49,13 @@
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $parent->identity_number }}</td>
                         <td>{{ $parent->name }}</td>
-                        <td>{{ $parent->username }}</td>
+                        {{-- <td>{{ $parent->username }}</td> --}}
                         <td>{{ $parent->email }}</td>
                         <td>{{ $parent->gender }}</td>
                         <td>{{ $parent->born_date }}</td>
                         <td>{{ $parent->phone }}</td>
-                        <td>{{ $parent->nik }}</td>
-                        <td>{{ $parent->address }}</td>
+                        {{-- <td>{{ $parent->nik }}</td> --}}
+                        {{-- <td>{{ $parent->address }}</td> --}}
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 <a href="{{ URL::to('parent/parent-list/' . $parent->id) }}"
@@ -70,7 +70,7 @@
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Anda yakin mau menghapus siswa {{ $parent->name }} ?')">
+                                        onclick="return confirm('Anda yakin mau menghapus data orang tua {{ $parent->name }} ?')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>

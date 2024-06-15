@@ -129,7 +129,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="address">Address <span class="login-danger">*</span></label>
                 <input type="text" id="address" name="address"

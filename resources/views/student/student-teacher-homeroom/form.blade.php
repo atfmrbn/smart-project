@@ -20,7 +20,7 @@
             <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
 
-        <div class="col-12 col-sm-4">
+        <div class="col-sm-12 col-lg-6">
             <div class="form-group local-forms">
                 <label for="student_id">Student <span class="login-danger">*</span></label>
                 <select name="student_id" id="student_id" class="form-control data-select-2">
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-4">
+        <div class="col-sm-12 col-lg-6">
             <div class="form-group local-forms">
                 <label for="teacher_homeroom_relationship_id">Teacher Homeroom <span class="login-danger">*</span></label>
                 <select name="teacher_homeroom_relationship_id" id="teacher_homeroom_relationship_id" class="form-control data-select-2 @error('teacher_homeroom_relationship_id') is-invalid @enderror">

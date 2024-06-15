@@ -99,6 +99,7 @@
         <div class="col-12">
             <div class="student-submit">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ URL::to('book') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>

@@ -17,7 +17,7 @@
     <div class="table-responsive">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th width="5%">No.</th>
                     <th>Name</th>
                     <th>Description</th>
@@ -30,8 +30,8 @@
                         <td class="align-middle">{{ $index + 1 }}</td>
                         <td class="align-middle">{{ $extracurricular->name }}</td>
                         <td class="align-middle">{{ $extracurricular->description }}</td>
-                        <td>
-                            <div class="d-flex">
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-center">
                                 <a title="Lihat" href="{{ URL::to('extracurricular/' . $extracurricular->id) }}"
                                     class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
                                 <a href="{{ URL::to('extracurricular/' . $extracurricular->id . '/edit') }}"

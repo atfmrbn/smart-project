@@ -32,6 +32,7 @@
     <div class="row">
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{{ URL::to('book-category') }}" class="btn btn-secondary">Back</a>
         </div>
     </div>
 </form>

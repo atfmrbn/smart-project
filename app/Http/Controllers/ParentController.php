@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,8 +34,10 @@ class ParentController extends Controller
      */
     public function create()
     {
+        $students = User::where('role', 'student')->get();
         $data = [
-            'title' => 'Add Parent'
+            'title' => 'Add Parent',
+            'students' => $students
         ];
 
         return view('parent.form', $data);
@@ -49,123 +52,216 @@ class ParentController extends Controller
             'identity_number' => 'required',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required|min:3',
             'gender' => 'required',
-            'born_date'=> 'required',
-            'phone'=> 'required',
-            'nik'=> 'required',
+            'born_date'=> 'required|date',
+            'phone'=> 'required|numeric',
+            'nik'=> 'required|numeric',
             'address'=> 'required',
             'role' => 'required',
-            'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024'
+            'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024',
+            'students' => 'array'
         ]);
 
-        $data['password'] = Hash::make($data['password']);
+        // Mulai transaksi
+        DB::beginTransaction();
 
-        // Proses unggah gambar
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $data['image'] = $imageName;
-        }   
+        try {
+            // Encrypt password if provided
+            $data = $request->except(['password', 'password_confirmation']);
+            if ($request->filled('password')) {
+                $data['password'] = Hash::make($request->password);
+            }
 
-        // $data['password'] = Hash::make($data["password"]);
-        User::create($data);
+            // Upload image if provided
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images'), $imageName);
+                $data['image'] = $imageName;
+            }
 
-        return redirect('parent/parent-list')->with("successMessage", "Tambah data parent sukses");
+            // Create parent user
+            $parent = User::updateOrCreate(['id' => $request->id], $data);
+
+            // Attach students to parent
+            if ($request->has('students')) {
+                $students = User::whereIn('id', $request->students)->get();
+                foreach ($students as $student) {
+                    $student->parent_id = $parent->id;
+                    $student->save();
+                }
+            }
+
+            // Commit transaction
+            DB::commit();
+
+            return redirect('parent/parent-list')->with("successMessage", "Tambah data parent berhasil.");
+
+        } catch (\Exception $e) {
+            // Rollback transaction on error
+            DB::rollBack();
+
+            // Log error if needed or show error message
+            return redirect()->back()->withErrors('Error: ' . $e->getMessage());
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // public function show(string $id)
+    // {
+    //     $parent = User::where('id', $id)->where('role', 'Parent')->first();
+
+    //     $data = [
+    //         'title' => 'Parent Detail',
+    //         'parent'=> $parent,
+    //     ];
+
+    //     return view('parent.detail', $data);
+
+    // }
+    public function show($id)
     {
-        $parent = User::where('id', $id)->where('role', 'Parent')->first();
+        $parent = User::with('students')->where('id', $id)->where('role', 'Parent')->first();
+
+        if (!$parent) {
+            return redirect('parent/parent-list')->with("errorMessage", "Data parent tidak ditemukan");
+        }
 
         $data = [
-            'title' => 'Parent Detail',
-            'parent'=> $parent,
+            "title" => "Detail User",
+            "parent" => $parent,
         ];
 
         return view('parent.detail', $data);
-
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $parent = User::where('id', $id)->where('role', 'Parent')->first();
+        $students = User::where('role', 'student')->get();
+        
+        // Cari data parent berdasarkan ID dan pastikan rolenya adalah 'Parent'
+        $parent = User::with('students')->where('id', $id)->where('role', 'Parent')->first();
+        
+        // Jika data parent tidak ditemukan, redirect ke halaman parent-list dengan pesan error
         if (!$parent) {
-            return redirect('parent/parent-list')->with("errorMessage", "Data tidak parent ditemukan");
+            return redirect('parent/parent-list')->with("errorMessage", "Data parent tidak ditemukan");
         }
+
+        // Ambil semua ID siswa yang terhubung dengan parent ini
+        $selectedStudents = $parent->students->pluck('id')->toArray();
+
         $data = [
-            "title" => "Edit User",
+            "title" => "Edit Parent",
             "parent" => $parent,
+            "students" => $students,
+            "selectedStudents" => $selectedStudents, // Kirimkan ID siswa yang sudah terpilih ke view
         ];
 
         return view('parent.form', $data);
     }
 
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $data = $request->validate([
             'identity_number' => 'required',
             'name' => 'required',
             'username' => 'required|alpha_num|unique:users,username,' . $id,
-            'email' => 'required|unique:users,email,' . $id,
+            'email' => 'required|email',
+            'password' => 'nullable|min:3',
             'gender' => 'required',
-            'born_date'=> 'required',
-            'phone'=> 'required',
-            'nik'=> 'required|unique:users,nik,' . $id,
+            'born_date'=> 'required|date',
+            'phone'=> 'required|numeric',
+            'nik'=> 'required|numeric',
             'address'=> 'required',
             'role' => 'required',
-            'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024'
+            'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024',
+            'students' => 'array'
         ]);
+
+        DB::beginTransaction();
+
         try {
             $parent = User::find($id);
 
-            if($request->hasFile('image')) {
-                // cek dulu jika ada gambar maka sebelum di update harus dihapus dulu
-                if($parent->image){
-                    Storage::delete("public" . $parent->image);
-                }
-
-                $data['image'] = $request->file('image')->store('img', 'public');
-            } else {
-                $data['image'] = $parent->image;
+            if (!$parent) {
+                return redirect('parent/parent-list')->with("errorMessage", "Data parent tidak ditemukan");
             }
 
+            // Update data parent
             $parent->update($data);
-            
-            // if($request->password){
-            //     $data['password'] = Hash::make($data["password"]);
-            // }else {
-            //     $data['password'] = $parent->password;
-            // }
 
-            return redirect('parent/parent-list')->with("successMessage", "Edit data " . $parent->name . " sukses");
-        } catch (\Throwable $th) {
-            return redirect('parent/parent-list')->with("errorMessage", $th->getMessage());
+            // Upload gambar profil jika ada
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images'), $imageName);
+                $parent->image = $imageName;
+                $parent->save();
+            }
+
+            // Proses student-parent relations (attach/detach)
+            if ($request->has('students')) {
+                $selectedStudents = $request->input('students');
+            } else {
+                $selectedStudents = [];
+            }
+
+            // Remove parent_id from current students
+            User::where('parent_id', $parent->id)->update(['parent_id' => null]);
+
+            // Attach new students to parent
+            User::whereIn('id', $selectedStudents)->update(['parent_id' => $parent->id]);
+
+            DB::commit();
+
+            return redirect('parent/parent-list')->with("successMessage", "Update data parent berhasil.");
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors('Error: ' . $e->getMessage());
         }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
+        DB::beginTransaction();
+
         try {
-            $parent = User::where('id', $id)->where('role', 'Parent')->first();
+            $parent = User::find($id);
+
+            if (!$parent) {
+                return redirect('parent/parent-list')->with("errorMessage", "Data parent tidak ditemukan");
+            }
+
+            // Set parent_id to null for all students associated with this parent
+            User::where('parent_id', $parent->id)->update(['parent_id' => null]);
+
+            // Delete the parent
             $parent->delete();
-            return redirect('parent/parent-list')->with("successMessage", "Hapus data " . $parent->name . " sukses");
-        } catch (\Throwable $th){
-            return redirect('parent/parent-list')->with("errorMessage", $th->getMessage());
+
+            DB::commit();
+
+            return redirect('parent/parent-list')->with("successMessage", "Hapus data parent berhasil.");
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors('Error: ' . $e->getMessage());
         }
     }
 }

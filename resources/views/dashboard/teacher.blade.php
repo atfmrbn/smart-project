@@ -2,8 +2,8 @@
 
 @section('container')
 
-<div class="container mt-5">
-    <div class="card shadow-sm">
+{{-- <div class="container mt-5"> --}}
+    {{-- <div class="card shadow-sm"> --}}
         <div class="card-header">
             @if (Auth::user()->role == 'Admin')
                 <h3 class="mb-0">Admin Dashboard</h3>
@@ -112,8 +112,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    {{-- </div> --}}
+{{-- </div> --}}
 
 
 

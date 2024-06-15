@@ -32,7 +32,7 @@
 <div class="table-responsive">
     <table id="example" class="table table-bordered table-striped">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th>#</th>
                 <th>Student</th>
                 <th>Teacher Homeroom</th>
@@ -42,11 +42,11 @@
         <tbody>
             @foreach ($studentTeacherHomeroomRelationships as $index => $studentTeacherHomeroomRelationship)
             <tr>
-                <td>{{ $index + 1 }}</td>
+                <td class="text-center">{{ $index + 1 }}</td>
                 <td>{{ $studentTeacherHomeroomRelationship->identity_number }} - {{ $studentTeacherHomeroomRelationship->student->name }}</td>
                 <td>{{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->identity_number }} -{{ $studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}</td>
                 <td class="align-middle">
-                    <div class="d-flex justify-content ">
+                    <div class="d-flex justify-content-center">
                         <a title="Lihat" href="{{ URL::to('student/student-teacher-homeroom/' . $studentTeacherHomeroomRelationship->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
                             <a title="Edit" href="{{ URL::to('student/student-teacher-homeroom/' . $studentTeacherHomeroomRelationship->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
                             <form action="{{ URL::to('student/student-teacher-homeroom/' . $studentTeacherHomeroomRelationship->id) }}" method="post">
