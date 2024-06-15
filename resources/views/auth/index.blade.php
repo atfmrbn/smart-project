@@ -186,7 +186,7 @@
                 <div class="form-group position-relative">
                     <label>Username <span class="login-danger">*</span></label>
                     <input type="text" id="username" name="username"
-                        class="form-control @error('username') is-invalid @enderror" placeholder="Enter username">
+                        class="form-control @error('username') is-invalid @enderror" placeholder="Enter username" autofocus>
                     <span class="profile-views"><i class="fas fa-user-circle"></i></span>
                     @error('username')
                         <div class="invalid-feedback">

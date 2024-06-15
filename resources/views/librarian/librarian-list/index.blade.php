@@ -19,13 +19,13 @@
                     <th>#</th>
                     <th>Identity Number</th>
                     <th>Name</th>
-                    <th>Username</th>
+                    {{-- <th>Username</th> --}}
                     <th>Email</th>
                     <th>Gender</th>
                     <th>Date of Birth</th>
                     <th>Phone</th>
-                    <th>NIK</th>
-                    <th>Address</th>
+                    {{-- <th>NIK</th> --}}
+                    {{-- <th>Address</th> --}}
                     <th>Action</th>
                 </tr>
             </thead>
@@ -35,13 +35,13 @@
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $librarian->identity_number }}</td>
                         <td>{{ $librarian->name }}</td>
-                        <td>{{ $librarian->username }}</td>
+                        {{-- <td>{{ $librarian->username }}</td> --}}
                         <td>{{ $librarian->email }}</td>
                         <td>{{ $librarian->gender }}</td>
                         <td>{{ $librarian->born_date }}</td>
                         <td>{{ $librarian->phone }}</td>
-                        <td>{{ $librarian->nik }}</td>
-                        <td>{{ $librarian->address }}</td>
+                        {{-- <td>{{ $librarian->nik }}</td> --}}
+                        {{-- <td>{{ $librarian->address }}</td> --}}
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 <a href="{{ route('librarian.edit', $librarian->id) }}"

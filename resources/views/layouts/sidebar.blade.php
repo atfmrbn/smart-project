@@ -76,16 +76,16 @@
                         <li><a href="{{ URL::to('/teacher/grade-detail') }}" class="{{ request()->is('teacher/grade-detail') ? 'active' : '' }}">Grade Detail</a></li>
                     </ul>
                 </li>
-                <li class="submenu {{ request()->is('librarian*') ? 'active' : '' }}">
+                {{-- <li class="submenu {{ request()->is('librarian*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-book-reader"></i> <span> Librarians</span> <span class="menu-arrow"></span></a>
-                    <ul>
-                        <li><a href="{{ URL::to('librarian/librarian-list') }}" class="{{ request()->is('librarian/librarian-list') ? 'active' : '' }}">Librarian List</a></li>
-                        <li><a href="{{ URL::to('librarian/librarian-list/add') }}" class="{{ request()->is('librarian/librarian-list/add') ? 'active' : '' }}">Librarian Add</a></li>
-                    </ul>
-                </li>
+                    <ul> --}}
+                        {{-- <li><a href="{{ URL::to('librarian/librarian-list/add') }}" class="{{ request()->is('librarian/librarian-list/add') ? 'active' : '' }}">Librarian Add</a></li> --}}
+                    {{-- </ul>
+                </li> --}}
                 <li class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span class="menu-arrow"></span></a>
                     <ul>
+                        <li><a href="{{ URL::to('librarian/librarian-list') }}" class="{{ request()->is('librarian/librarian-list') ? 'active' : '' }} || {{ request()->is('librarian/librarian-list/add') ? 'active' : '' }}">Librarian List</a></li>
                         <li><a href="{{ URL::to('/book') }}" class="{{ request()->is('book') ? 'active' : '' }} || {{ request()->is('book/add') ? 'active' : '' }}">Books</a></li>
                         <li><a href="{{ URL::to('/book-category') }}" class="{{ request()->is('book-category') ? 'active' : '' }} || {{ request()->is('book-category/add') ? 'active' : '' }}">Book Category</a></li>
                         <li><a href="{{ URL::to('/book-borrow') }}" class="{{ request()->is('book-borrow') ? 'active' : '' }} || {{ request()->is('book-borrow/create') ? 'active' : '' }} || {{ request()->is('book-borrow/*/edit') ? 'active' : '' }}">Book Borrowing</a></li>
