@@ -104,14 +104,44 @@ class AuthController extends Controller
         return view('auth.reset-password', compact('token'), $data);
     }
 
+    // public function ResetPassword(Request $request)
+    // {
+    //     // Validasi input awal
+    //     $request->validate([
+    //         'password' => 'required|min:4', // validasi password dan konfirmasi password
+    //         'token' => 'required'
+    //     ]);
+    //     // dd($request->all());
+
+    //     // Cek token reset password
+    //     $token = PasswordResetToken::where('token', $request->token)->first();
+
+    //     if (!$token) {
+    //         return redirect()->route('login')->with('errorMessage', 'Token tidak valid');
+    //     }
+
+    //     // Cek user berdasarkan email yang terkait dengan token
+    //     $user = User::where('email', $token->email)->first();
+    //     // dd($user);
+    //     // Update password user
+    //     $user->password = Hash::make($request->password);
+
+    //     // Simpan perubahan password user
+    //     $user->save();
+
+    //     // Hapus token reset password setelah berhasil mereset password
+    //     $token->delete();
+
+    //     // Redirect dengan pesan sukses
+    //     return redirect()->route('login')->with('successMessage', 'Password berhasil direset.');
+    // }
     public function ResetPassword(Request $request)
     {
         // Validasi input awal
         $request->validate([
-            'password' => 'required|min:4', // validasi password dan konfirmasi password
+            'password' => 'required|min:4',
             'token' => 'required'
         ]);
-        // dd($request->all());
 
         // Cek token reset password
         $token = PasswordResetToken::where('token', $request->token)->first();
@@ -122,7 +152,7 @@ class AuthController extends Controller
 
         // Cek user berdasarkan email yang terkait dengan token
         $user = User::where('email', $token->email)->first();
-        // dd($user);
+
         // Update password user
         $user->password = Hash::make($request->password);
 
@@ -130,11 +160,12 @@ class AuthController extends Controller
         $user->save();
 
         // Hapus token reset password setelah berhasil mereset password
-        $token->delete();
+        PasswordResetToken::where('email', $token->email)->delete();
 
         // Redirect dengan pesan sukses
         return redirect()->route('login')->with('successMessage', 'Password berhasil direset.');
     }
+
 
 
 }

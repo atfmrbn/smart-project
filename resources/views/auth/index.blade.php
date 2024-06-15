@@ -167,7 +167,6 @@
             <div class="login-header">
                 <img src="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png" alt="SMARTS Logo">
                 <h1>Welcome to SMARTS</h1>
-                <h2>{{ $title }}</h2>
             </div>
 
             @if (session()->has('successMessage'))
