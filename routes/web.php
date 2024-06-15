@@ -32,6 +32,7 @@ use App\Http\Controllers\TeacherClassroomRelationshipController;
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
+use App\Http\Controllers\SocialiteController;
 
 Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
 
@@ -39,6 +40,16 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard'
 
 Route::get('/auth', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
+
+// Untuk redirect ke Google
+Route::get('login/google/redirect', [SocialiteController::class, 'redirect'])
+    ->middleware(['guest'])
+    ->name('redirect');
+
+// Untuk callback dari Google
+Route::get('login/google/callback', [SocialiteController::class, 'callback'])
+    ->middleware(['guest'])
+    ->name('callback');
 
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password')->middleware('guest');
 Route::post('/forgot-password', [AuthController::class, 'sendEmailReset'])->name('email-reset')->middleware('guest');

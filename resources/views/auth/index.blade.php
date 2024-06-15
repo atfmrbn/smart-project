@@ -226,7 +226,7 @@
             </div>
 
             <div class="social-login">
-                <a href="https://accounts.google.com/ServiceLogin?service=mail"><i class="fab fa-google-plus-g"></i></a>
+                <a href="{{ route('redirect') }}"><i class="fab fa-google-plus-g"></i></a>
                 <a href="https://www.facebook.com/login"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://twitter.com/login"><i class="fab fa-twitter"></i></a>
                 <a href="https://www.linkedin.com/login"><i class="fab fa-linkedin-in"></i></a>

@@ -34,7 +34,9 @@ class User extends Authenticatable
         'nik',
         'address',
         'role',
+        'google_id',
         'image'
+
     ];
 
     /**
