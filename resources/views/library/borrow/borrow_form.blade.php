@@ -74,7 +74,7 @@
             @if(!isset($borrow))
             <button type="submit" class="btn btn-primary">Submit</button>
             @endif
-            <a href="{{ URL::to('book-borrow')}}" class="btn btn-link">Back</a>
+            <a href="{{ URL::to('book-borrow') }}" class="btn btn-outline-secondary">Back</a>
         </div>
     </div>
 

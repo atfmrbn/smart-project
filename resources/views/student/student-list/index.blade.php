@@ -28,33 +28,33 @@
     <div class="table-responsive">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead class="student-thread">
-                <tr class="text-center">
+                <tr class="align-middle">
                     <th>#</th>
                     <th>Identity Number</th>
                     <th>Name</th>
-                    <th>Username</th>
+                    {{-- <th>Username</th> --}}
                     <th>Email</th>
                     <th>Gender</th>
                     <th>Date of Birth</th>
                     <th>Phone</th>
-                    <th>NIK</th>
-                    <th>Address</th>
+                    {{-- <th>NIK</th> --}}
+                    {{-- <th>Address</th> --}}
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($students as $index => $student)
                     <tr>
-                        <td class="text-center">{{ $index + 1 }}</td>
+                        <td class="align-middle">{{ $index + 1 }}</td>
                         <td>{{ $student->identity_number }}</td>
                         <td>{{ $student->name }}</td>
-                        <td>{{ $student->username }}</td>
+                        {{-- <td>{{ $student->username }}</td> --}}
                         <td>{{ $student->email }}</td>
                         <td>{{ $student->gender }}</td>
                         <td>{{ $student->born_date }}</td>
                         <td>{{ $student->phone }}</td>
-                        <td>{{ $student->nik }}</td>
-                        <td>{{ $student->address }}</td>
+                        {{-- <td>{{ $student->nik }}</td> --}}
+                        {{-- <td>{{ $student->address }}</td> --}}
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 <a href="{{ URL::to('student/student-list/' . $student->id) }}"

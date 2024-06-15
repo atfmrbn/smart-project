@@ -68,7 +68,7 @@
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Anda yakin mau menghapus siswa {{ $user->name }} ?')">
+                                        onclick="return confirm('Anda yakin mau menghapus {{ $user->role }}, {{ $user->name }} ?')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>

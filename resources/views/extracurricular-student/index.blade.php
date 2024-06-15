@@ -32,8 +32,8 @@
                         <td class="align-middle">{{ $extracurricular_student->class_name }} - {{ $extracurricular_student->identity_number }}  - {{ $extracurricular_student->student_name }}</td>
                         <td class="align-middle">{{ $extracurricular_student->extracurricular_name }}</td>
                         <td class="align-middle">{{ $extracurricular_student->extracurricular_description }}</td>
-                        <td>
-                            <div class="d-flex">
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-center">
                                 <a title="View"
                                     href="{{ URL::to('extracurricular-student/' . $extracurricular_student->id) }}"
                                     class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>

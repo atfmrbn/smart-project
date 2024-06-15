@@ -59,7 +59,12 @@ class User extends Authenticatable
 
     public function parents()
     {
-    return $this->hasMany(Parent::class);
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+        
+    public function students()
+    {
+        return $this->hasMany(User::class, 'parent_id');
     }
 
     public static function getActiveStudent($defaultCurriculumId)
