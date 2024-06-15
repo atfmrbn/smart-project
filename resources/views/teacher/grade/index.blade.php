@@ -22,7 +22,7 @@
                 <select name="task_type_id" id="task_type_id" class="form-select" onchange="this.form.submit()">
                         <option value="" {{ request('task_type_id') == "" ? 'selected' : '' }}>
                             All Types
-                        </option>                    
+                        </option>
                     @foreach ($taskTypes as $taskType)
                         <option value="{{ $taskType->id }}" {{ request('task_type_id') == $taskType->id ? 'selected' : '' }}>
                             {{ $taskType->name }}
@@ -34,10 +34,10 @@
                 <select name="teacher_classroom_relationship_id" id="teacher_classroom_relationship_id" class="form-control data-select-2 @error('teacher_classroom_relationship_id') is-invalid @enderror" onchange="this.form.submit()">
                         <option value="" {{ request('teacher_classroom_relationship_id') == "" ? 'selected' : '' }}>
                             All Classes
-                        </option>                         
+                        </option>
                     @foreach ($teacherClassroomRelationships as $teacherClassroomRelationship)
                         <option value="{{ $teacherClassroomRelationship->id }}" {{ request('teacher_classroom_relationship_id') == $teacherClassroomRelationship->id ? 'selected' : '' }}>
-                            {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }} - 
+                            {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }} -
                             {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $teacherClassroomRelationship->TeacherSubjectRelationship->teacher->name }}-{{ $teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
                         </option>
                     @endforeach
@@ -62,7 +62,7 @@
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td class="text-center">{{ $grade->taskType->name }}</td>
-                    <td class="text-center">                            {{ $grade->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }} - 
+                    <td class="text-center">{{ $grade->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }} -
                             {{ $grade->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $grade->teacherClassroomRelationship->TeacherSubjectRelationship->teacher->name }}-{{ $grade->teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}</td>
                     <td class="text-center">{{ $grade->percentage }}</td>
                     <td class="text-center">

@@ -30,4 +30,9 @@ class Grade extends Model
     {
         return $this->belongsTo(TeacherClassroomRelationship::class);
     }
+    
+    public function gradeDetails()
+    {
+        return $this->hasMany(GradeDetail::class);
+    }
 }

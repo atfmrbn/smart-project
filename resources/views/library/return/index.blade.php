@@ -86,17 +86,16 @@
                             <span class="badge bg-success">{{ $filter->status }}</span>
                         @endif
                     </td>
-                    <td class="text-center">
+                    <td class="text-end">
                         @if($filter->status == 'borrowing')
                             @php
                                 $dueDate = \Carbon\Carbon::parse($filter->due_date);
                                 $today = \Carbon\Carbon::now();
-                                $penalty = $today->diffInDays($dueDate); 
-                                $penaltyRate = 1000;
-                                $penaltyAmount = $penalty * $penaltyRate; 
+                                $penaltyRate = $configuration->book_penalty; // Ambil nilai dari controller
+                                $penaltyAmount = ($today->greaterThan($dueDate)) ? $today->diffInDays($dueDate) * $penaltyRate : 0;
                             @endphp
-                            @if ($penalty > 0)
-                                {{ $penaltyAmount }} 
+                            @if ($penaltyAmount > 0)
+                                {{ number_format($penaltyAmount) }}
                             @else
                                 0
                             @endif
