@@ -23,28 +23,7 @@ use App\Models\TeacherSchedule;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        $user = auth()->user();
 
-        // Check role and redirect accordingly
-        if ($user->role === 'Super Admin') {
-            return $this->superAdmin();
-        } elseif ($user->role === 'Admin') {
-            return $this->admin();
-        } elseif ($user->role === 'Student') {
-            return $this->student();
-        } elseif ($user->role === 'Teacher') {
-            return $this->teacher();
-        } elseif ($user->role === 'Librarian') {
-            return $this->librarian();
-        } elseif ($user->role === 'Parent') {
-            return $this->parent();
-        } else {
-            // Handle other roles as needed
-            abort(403, 'Unauthorized action.');
-        }
-    }
     public function admin()
     {
         $userId = Auth::id();
