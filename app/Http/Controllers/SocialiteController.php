@@ -23,7 +23,7 @@ class SocialiteController extends Controller
 
         // Jika tidak ada user dengan email tersebut, tolak akses
         if (!$userFromDatabase) {
-            return redirect('/')->withErrors(['email' => 'Email tidak terdaftar.']);
+            return redirect('/')->with('errorMessage', 'Email tidak terdaftar.');
         }
 
         // Jika user dengan email tersebut sudah ada, update google_id jika perlu

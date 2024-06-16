@@ -110,4 +110,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(TeacherHomeroomRelationship::class, 'teacher_id');
     }
+
+    public function studentTeacherHomeroomRelationships()
+    {
+        return $this->hasMany(StudentTeacherHomeroomRelationship::class,);
+    }
+
 }

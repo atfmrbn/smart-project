@@ -61,6 +61,11 @@ class DashboardController extends Controller
             ->where('role', 'Teacher')
             ->firstOrFail();
 
+        // // Mengambil data siswa yang terkait dengan guru
+        // $students = User::whereHas('studentTeacherHomeroomRelationships.teacherHomeroomRelationship', function ($query) use ($teacherId) {
+        //     $query->where('teacher_id', $teacherId);
+        // })->get();
+
         // Mengambil data jadwal guru
         $teacherSchedules = TeacherSchedule::with([
             'teacherClassroomRelationship.teacherHomeroomRelationship.classroom.classroomType',
@@ -74,17 +79,21 @@ class DashboardController extends Controller
         ->orderBy('schedule_time_start')
         ->get();
 
+        // Mengambil data absensi guru
+        $attendances = Attendance::whereHas('studentTeacherHomeroomRelationship', function ($query) use ($teacherId) {
+            $query->whereHas('teacherHomeroomRelationship', function ($subQuery) use ($teacherId) {
+                $subQuery->where('teacher_id', $teacherId);
+            });
+        })->get();
+
         // Menghitung data yang diperlukan untuk dashboard
         $studentCount = StudentTeacherHomeroomRelationship::whereHas('teacherHomeroomRelationship', function ($query) use ($teacherId) {
             $query->where('teacher_id', $teacherId);
         })->distinct('student_id')->count('student_id');
-
         $teacherClassroomCount = TeacherClassroomRelationship::whereHas('teacherSubjectRelationship', function ($query) use ($teacherId) {
             $query->where('teacher_id', $teacherId);
         })->count();
-
         $teacherSubjectCount = TeacherSubjectRelationship::where('teacher_id', $teacherId)->count();
-
         $attendanceCount = Attendance::whereHas('studentTeacherHomeroomRelationship', function ($query) use ($teacherId) {
             $query->whereHas('teacherHomeroomRelationship', function ($subQuery) use ($teacherId) {
                 $subQuery->where('teacher_id', $teacherId);
@@ -99,6 +108,8 @@ class DashboardController extends Controller
             "attendanceCount" => $attendanceCount,
             "teacher" => $teacher,
             "teacherSchedules" => $teacherSchedules,
+            "attendances" => $attendances,
+            // "students" => $students,
         ];
 
         return view("dashboard.teacher", $data);
