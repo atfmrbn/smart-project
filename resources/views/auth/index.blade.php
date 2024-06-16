@@ -213,7 +213,7 @@
                     </div>
                     <a href="{{ route('forgot-password') }}">Forgot Password?</a>
                 </div>
-                <div class="form-group mt-4">
+                <div class="form-group mt-3">
                     <button class="btn btn-primary btn-block" type="submit">Login</button>
                 </div>
             </form>
@@ -226,6 +226,7 @@
                 <a href="{{ route('redirect') }}">
                     <i class="fab fa-google-plus-g"></i>
                 </a>
+                <a href="{{ route('redirect') }}"><i class="fab fa-google-plus-g"></i></a>
             </div>
         
             @if (session('errorMessage'))
@@ -241,21 +242,6 @@
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('.toggle-password').on('click', function() {
-                var input = $(this).siblings('input');
-                var icon = $(this).find('i');
-                if (input.attr('type') === 'password') {
-                    input.attr('type', 'text');
-                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
-                } else {
-                    input.attr('type', 'password');
-                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
-                }
-            });
-        });
-    </script>
 
 </body>
 </html>

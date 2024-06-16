@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TuitionType extends Model
 {
-    use HasFactory;
-    use SoftDeletes;    
 
-    protected $guarded = [];
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = ['name'];
+
 }
+

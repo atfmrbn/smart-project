@@ -36,10 +36,26 @@ class AuthController extends Controller
 
         // $data['password'] = Hash::make($request->password);
 
-        if(Auth::attempt($data))
-        {
+        if (Auth::attempt($data)) {
             $request->session()->regenerate();
-            return redirect("/");
+            
+            // Check user role and redirect to appropriate dashboard
+            $user = Auth::user();
+            
+            switch ($user->role) {
+                case 'Super Admin':
+                    return redirect()->route('superAdmin.dashboard');
+                case 'Admin':
+                    return redirect()->route('admin.dashboard');
+                case 'Teacher':
+                    return redirect()->route('teacher.dashboard');
+                case 'Librarian':
+                    return redirect()->route('librarian.dashboard');
+                case 'Student':
+                    return redirect()->route('student.dashboard');
+                case 'Parent':
+                    return redirect()->route('parent.dashboard');
+            }
         }
         return back()->with("errorMessage", "Username atau Password tidak ditemukan");
     }
@@ -104,37 +120,6 @@ class AuthController extends Controller
         return view('auth.reset-password', compact('token'), $data);
     }
 
-    // public function ResetPassword(Request $request)
-    // {
-    //     // Validasi input awal
-    //     $request->validate([
-    //         'password' => 'required|min:4', // validasi password dan konfirmasi password
-    //         'token' => 'required'
-    //     ]);
-    //     // dd($request->all());
-
-    //     // Cek token reset password
-    //     $token = PasswordResetToken::where('token', $request->token)->first();
-
-    //     if (!$token) {
-    //         return redirect()->route('login')->with('errorMessage', 'Token tidak valid');
-    //     }
-
-    //     // Cek user berdasarkan email yang terkait dengan token
-    //     $user = User::where('email', $token->email)->first();
-    //     // dd($user);
-    //     // Update password user
-    //     $user->password = Hash::make($request->password);
-
-    //     // Simpan perubahan password user
-    //     $user->save();
-
-    //     // Hapus token reset password setelah berhasil mereset password
-    //     $token->delete();
-
-    //     // Redirect dengan pesan sukses
-    //     return redirect()->route('login')->with('successMessage', 'Password berhasil direset.');
-    // }
     public function ResetPassword(Request $request)
     {
         // Validasi input awal

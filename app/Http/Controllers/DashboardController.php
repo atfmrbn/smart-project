@@ -12,6 +12,7 @@ use App\Models\BookCategory;
 use Illuminate\Http\Request;
 use App\Models\BorrowingBook;
 use App\Models\BorrowingBookDetail;
+use App\Models\Curriculum;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StudentTeacherHomeroom;
 use App\Models\TeacherSubjectRelationship;
@@ -22,10 +23,43 @@ use App\Models\TeacherSchedule;
 
 class DashboardController extends Controller
 {
+
     public function admin()
     {
+        $userId = Auth::id();
+
+        // Fetch the logged-in student details
+        $admin = User::where('id', $userId)
+                        ->where('role', 'Admin')
+                        ->firstOrFail();
+
+        $adminCount = User::where('role', 'Admin')->count();
+
+        $teacherCount = User::where('role', 'Teacher')->count();
+
+        $studentCount = User::where('role', 'Student')->count();
+
+        $parentCount = User::where('role', 'Parent')->count();
+
+        $librarianCount = User::where('role', 'Librarian')->count();
+
+        $subjectCount = Subject::count();
+
+        $classroomCount = Classroom::count();
+
+        $curriculumCount = Curriculum::count();
+
         $data = [
             "title" => "Admin Dashboard",
+            "admin" => $admin,
+            "adminCount" => $adminCount,
+            "teacherCount" => $teacherCount,
+            "studentCount" => $studentCount,
+            "parentCount" => $parentCount,
+            "librarianCount" => $librarianCount,
+            "subjectCount" => $subjectCount,
+            "classroomCount" => $classroomCount,
+            "curriculumCount" => $curriculumCount,
         ];
 
         return view("dashboard.admin", $data);
@@ -179,63 +213,70 @@ class DashboardController extends Controller
 
 
     public function student()
-{
-    $studentBorrowCount = BorrowingBook::where('status', 'borrowing')->count();
-    $studentReturnedCount = BorrowingBook::where('status', 'returned')->count();
-    $userId = Auth::id();
-    $student = User::with(['studentTeacherHomeroom.teacherHomeroomRelationship.classroom', 'attendances'])
-        ->where('id', $userId)
-        ->where('role', 'Student')
-        ->firstOrFail();
+    {
+        $userId = Auth::id();
 
-    $classroomId = $student->studentTeacherHomeroom->teacherHomeroomRelationship->classroom->id;
+        // Count borrowing books for the logged-in student
+        $studentBorrowCount = BorrowingBook::where('student_id', $userId)
+                                        ->where('status', 'borrowing')
+                                        ->count();
 
-    $teacherSchedules = TeacherSchedule::with('teacherClassroomRelationship.teacherHomeroomRelationship.classroom.classroomType', 'teacherClassroomRelationship.teacherSubjectRelationship.teacher', 'teacherClassroomRelationship.teacherSubjectRelationship.subject')
-        ->whereHas('teacherClassroomRelationship.teacherHomeroomRelationship', function($query) use ($classroomId) {
-            $query->where('classroom_id', $classroomId);
-        })
-        ->get();
+        // Count returned books for the logged-in student
+        $studentReturnedCount = BorrowingBook::where('student_id', $userId)
+                                            ->where('status', 'returned')
+                                            ->count();
 
-    // Order days
-    $daysOrder = [
-        'Monday' => 1,
-        'Tuesday' => 2,
-        'Wednesday' => 3,
-        'Thursday' => 4,
-        'Friday' => 5,
-        'Saturday' => 6
-    ];
+        // Fetch the logged-in student details
+        $student = User::with(['studentTeacherHomeroom.teacherHomeroomRelationship.classroom', 'attendances'])
+                        ->where('id', $userId)
+                        ->where('role', 'Student')
+                        ->firstOrFail();
 
-    // Sort and group schedules by day
-    $teacherSchedules = $teacherSchedules->sortBy(function($schedule) use ($daysOrder) {
-        return $daysOrder[$schedule->schedule_day] ?? 7; // Default to end if day not found
-    })->groupBy('schedule_day');
+        // Use optional chaining and conditional checks to handle null cases
+        $classroomId = optional(optional(optional($student->studentTeacherHomeroom)->teacherHomeroomRelationship)->classroom)->id;
 
-    $extracurriculars = StudentExtracurricularRelationship::join('extracurriculars as extra', 'student_extracurricular_relationships.extracurricular_id', '=', 'extra.id')
-        ->select([
-            'extra.name as extracurricular_name',
-            'extra.description as extracurricular_description',
-            'student_extracurricular_relationships.id'
-        ])
-        ->where('student_extracurricular_relationships.student_id', $student->id)
-        ->get();
+        // Initialize teacher schedules as an empty collection
+        $teacherSchedules = collect([]);
 
-    $subjectCount = Subject::count();
-    $totalStudents = User::where('role', 'Student')->count();
+        // Fetch teacher schedules if classroom_id exists
+        if ($classroomId) {
+            $teacherSchedules = TeacherSchedule::with('teacherClassroomRelationship.teacherHomeroomRelationship.classroom.classroomType', 'teacherClassroomRelationship.teacherSubjectRelationship.teacher', 'teacherClassroomRelationship.teacherSubjectRelationship.subject')
+                                            ->whereHas('teacherClassroomRelationship.teacherHomeroomRelationship', function($query) use ($classroomId) {
+                                                $query->where('classroom_id', $classroomId);
+                                            })
+                                            ->get()
+                                            ->sortBy('schedule_day') // Sort schedules by day if needed
+                                            ->groupBy('schedule_day'); // Group schedules by day
+        }
 
-    $data = [
-        "title" => "Student Dashboard",
-        "extracurricularCount" => $extracurriculars->count(),
-        "extracurriculars" => $extracurriculars,
-        "student" => $student,
-        "studentCount" => $totalStudents,
-        "studentBorrowCount" => $studentBorrowCount,
-        "studentReturnedCount" => $studentReturnedCount,
-        "subjectCount" => $subjectCount,
-        "teacherSchedules" => $teacherSchedules, // Grouped by day and sorted
-    ];
+        // Fetch extracurricular activities for the logged-in student
+        $extracurriculars = StudentExtracurricularRelationship::join('extracurriculars as extra', 'student_extracurricular_relationships.extracurricular_id', '=', 'extra.id')
+                                                            ->select([
+                                                                'extra.name as extracurricular_name',
+                                                                'extra.description as extracurricular_description',
+                                                                'student_extracurricular_relationships.id'
+                                                            ])
+                                                            ->where('student_extracurricular_relationships.student_id', $userId)
+                                                            ->get();
 
-    return view("dashboard.student", $data);
-}
+        // Count total subjects and students
+        $subjectCount = Subject::count();
+        $totalStudents = User::where('role', 'Student')->count();
 
+        // Prepare data for the view
+        $data = [
+            "title" => "Student Dashboard",
+            "extracurricularCount" => $extracurriculars->count(),
+            "extracurriculars" => $extracurriculars,
+            "student" => $student,
+            "studentCount" => $totalStudents,
+            "studentBorrowCount" => $studentBorrowCount,
+            "studentReturnedCount" => $studentReturnedCount,
+            "subjectCount" => $subjectCount,
+            "teacherSchedules" => $teacherSchedules,
+        ];
+
+        // Return view with data
+        return view("dashboard.student", $data);
+    }
 }
