@@ -18,31 +18,37 @@
                     <a href="{{ route('superAdmin.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
                 @endif
+                
                 @if (auth()->user()->role == 'Admin')
                 <li class="nav-item {{ request()->is('dashboard/admin') ? 'active' : '' }}">
                     <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('dashboard/admin') ? 'active' : '' }}"><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
                 @endif
+                
                 @if (auth()->user()->role == 'Teacher')
                 <li class="nav-item {{ request()->is('dashboard/teacher') ? 'active' : '' }}">
                     <a href="{{ route('teacher.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
                 @endif
+                
                 @if (auth()->user()->role == 'Student')
                 <li class="nav-item {{ request()->is('dashboard/student') ? 'active' : '' }}">
                     <a href="{{ route('student.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
                 @endif
+                
                 @if (auth()->user()->role == 'Librarian')
                 <li class="nav-item {{ request()->is('dashboard/librarian') ? 'active' : '' }}">
                     <a href="{{ route('librarian.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
                 @endif
+                
                 @if (auth()->user()->role == 'Parent')
                 <li class="nav-item {{ request()->is('dashboard/parent') ? 'active' : '' }}">
                     <a href="{{ route('parent.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
                 @endif
+                
                     {{-- </ul>
                 </li> --}}
                 <li class="submenu {{ request()->is('student/*') || request()->is('extracurricular*') ? 'active' : '' }}">
@@ -109,6 +115,10 @@
                 </li>
                 <li class="nav-item {{ request()->is('task-type') ? 'active' : '' }}">
                     <a href="{{ URL::to('/task-type') }}"><i class="fas fa-tags"></i> <span> Task Type</span></a>
+                </li>
+
+                <li class="nav-item {{ request()->is('tuition-type') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/tuition-type') }}"><i class="fas fa-tags"></i> <span> Tuition Type</span></a>
                 </li>
                 <li class="nav-item {{ request()->is('configuration') ? 'active' : '' }}">
                     <a href="{{ URL::to('/configuration') }}"><i class="fas fa-cog"></i> <span> Configuration</span></a>
