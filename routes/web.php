@@ -7,7 +7,6 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GradeDetailController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -36,10 +35,6 @@ use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\SocialiteController;
 
-Route::get('/', [DashboardController::class, 'admin'])->middleware('auth');
-
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
-
 Route::get('/auth', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 
@@ -64,9 +59,11 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('/teacher', [DashboardController::class, 'teacher']);
     Route::get('/dashboard/superAdmin', [DashboardController::class, 'superAdmin'])->name('superAdmin.dashboard');
+    Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->name('admin.dashboard');
     Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('teacher.dashboard');
     Route::get('/dashboard/librarian', [DashboardController::class, 'librarian'])->name('librarian.dashboard');
     Route::get('/dashboard/student', [DashboardController::class, 'student'])->name('student.dashboard');
+    Route::get('/dashboard/parent', [DashboardController::class, 'parent'])->name('parent.dashboard');
 
 
     Route::controller(BookCategoryController::class)->group(function () {

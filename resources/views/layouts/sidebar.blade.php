@@ -13,21 +13,42 @@
                 {{-- <li class="submenu {{ request()->is('/') || request()->is('teacher/dashboard') || request()->is('student/dashboard') ? 'active' : '' }}">
                     <a href="#"><i class="feather-grid"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                     <ul> --}}
+                @if (auth()->user()->role == 'Super Admin')
                 <li class="nav-item {{ request()->is('dashboard/superAdmin') ? 'active' : '' }}">
-                    <a href="{{ route('superAdmin.dashboard') }}" class=""><i class="feather-grid"></i><span> Super Admin Dashboard</span></a>
+                    <a href="{{ route('superAdmin.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
-                <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
-                    <a href="{{ URL::to('/') }}" class=""><i class="feather-grid"></i><span> Admin Dashboard</span></a>
+                @endif
+                
+                @if (auth()->user()->role == 'Admin')
+                <li class="nav-item {{ request()->is('dashboard/admin') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('dashboard/admin') ? 'active' : '' }}"><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
+                @endif
+                
+                @if (auth()->user()->role == 'Teacher')
                 <li class="nav-item {{ request()->is('dashboard/teacher') ? 'active' : '' }}">
-                    <a href="{{ route('teacher.dashboard') }}" class=""><i class="feather-grid"></i><span> Teacher Dashboard</span></a>
+                    <a href="{{ route('teacher.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
+                @endif
+                
+                @if (auth()->user()->role == 'Student')
                 <li class="nav-item {{ request()->is('dashboard/student') ? 'active' : '' }}">
-                    <a href="{{ route('student.dashboard') }}" class=""><i class="feather-grid"></i><span> Student Dashboard</span></a>
+                    <a href="{{ route('student.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
+                @endif
+                
+                @if (auth()->user()->role == 'Librarian')
                 <li class="nav-item {{ request()->is('dashboard/librarian') ? 'active' : '' }}">
-                    <a href="{{ route('librarian.dashboard') }}" class=""><i class="feather-grid"></i><span> Librarian Dashboard</span></a>
+                    <a href="{{ route('librarian.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
                 </li>
+                @endif
+                
+                @if (auth()->user()->role == 'Parent')
+                <li class="nav-item {{ request()->is('dashboard/parent') ? 'active' : '' }}">
+                    <a href="{{ route('parent.dashboard') }}" class=""><i class="feather-grid"></i><span>Dashboard</span></a>
+                </li>
+                @endif
+                
                     {{-- </ul>
                 </li> --}}
                 <li class="submenu {{ request()->is('student/*') || request()->is('extracurricular*') ? 'active' : '' }}">
