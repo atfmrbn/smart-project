@@ -13,16 +13,18 @@
         {{ session("errorMessage") }}
     </div>
 @endif
-    
+
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col">
             <h3 class="page-title">{{ $title }}</h3>
         </div>
+        @if(in_array(Auth::user()->role, ['Super Admin', 'Admin', 'Librarian']))
         <div class="col-auto text-end float-end ms-auto download-grp">
             <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-            <a href="{{ URL::to('book/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a href="{{ URL::to('book/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
         </div>
+        @endif
     </div>
 </div>
 
@@ -56,7 +58,8 @@
                         <span class="badge badge-danger">Unavailable</span>
                     @endif
                 </td>
-                <td class=" text-center">
+                <td class="text-center">
+                    @if(in_array(Auth::user()->role, ['Super Admin', 'Admin', 'Librarian']))
                     <div class="d-flex justify-content-center align-items-center">
                         <a href="{{ URL::to('book/' . $book->id . '/edit') }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
                             <i class="fas fa-edit"></i>
@@ -69,8 +72,12 @@
                             </button>
                         </form>
                     </div>
+                    @else
+                        <div class="d-flex justify-content-center align-items-center">
+                            <span class="text-muted">No actions available</span>
+                        </div>
+                    @endif
                 </td>
-
             </tr>
             @endforeach
         </tbody>

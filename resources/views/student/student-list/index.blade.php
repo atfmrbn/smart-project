@@ -19,8 +19,10 @@
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
                 <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                <a href="{{ URL::to('student/student-list/create') }}" class="btn btn-primary"><i
-                        class="fas fa-plus"></i></a>
+                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
+                    <a href="{{ URL::to('student/student-list/create') }}" class="btn btn-primary"><i
+                            class="fas fa-plus"></i>Add New</a>
+                @endif
             </div>
         </div>
     </div>
@@ -57,24 +59,31 @@
                         {{-- <td>{{ $student->address }}</td> --}}
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="{{ URL::to('student/student-list/' . $student->id) }}"
-                                    class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                                <a href="{{ URL::to('student/student-list/' . $student->id) . '/edit' }}"
-                                    class="btn btn-sm btn-outline-primary me-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form method="POST"
-                                    action="{{ URL::to('student/student-list/' . $student->id) }}">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Anda yakin mau menghapus siswa {{ $student->name }} ?')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher']))
+                                    <a href="{{ URL::to('student/student-list/' . $student->id) }}"
+                                        class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                                @else
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <span class="text-muted">No actions available</span>
+                                    </div>
+                                @endif
+
+                                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
+                                    <a href="{{ URL::to('student/student-list/' . $student->id) . '/edit' }}"
+                                        class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form method="POST" action="{{ URL::to('student/student-list/' . $student->id) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Anda yakin mau menghapus siswa {{ $student->name }} ?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
-
                     </tr>
                 @endforeach
             </tbody>

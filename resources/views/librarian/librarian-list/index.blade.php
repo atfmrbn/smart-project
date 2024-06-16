@@ -7,7 +7,7 @@
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
                 <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                <a href="{{ route('librarian.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                <a href="{{ route('librarian.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
             </div>
         </div>
     </div>
@@ -48,14 +48,16 @@
                                     class="btn btn-sm btn-outline-primary me-2">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form method="POST" action="{{ route('librarian.destroy', $librarian->id) }}">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Anda yakin mau menghapus siswa {{ $librarian->name }} ?')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
+                                    <form method="POST" action="{{ route('librarian.destroy', $librarian->id) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Anda yakin mau menghapus siswa {{ $librarian->name }} ?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

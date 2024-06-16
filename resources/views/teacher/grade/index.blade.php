@@ -7,10 +7,10 @@
             <div class="col">
                 <h3 class="page-title">Grades</h3>
             </div>
-            <div class="col-auto ms-auto">
+            <div class="col-auto text-end float-end ms-auto download-grp">
                 <div class="btn-group" role="group" aria-label="Actions">
-                    <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download me-1"></i>Download</a>
-                    <a href="{{ route('grade.create') }}" class="btn btn-primary"><i class="fas fa-plus me-1"></i>Add Grade</a>
+                    <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                    <a href="{{ route('grade.create') }}" class="btn btn-primary"><i class="fas fa-plus me-1"></i>Add New</a>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
     </form>
 
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr class="text-center">
                     <th>ID</th>
