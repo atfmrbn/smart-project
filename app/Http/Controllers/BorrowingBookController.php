@@ -58,22 +58,14 @@ class BorrowingBookController extends Controller
      */
     public function store(Request $request)
     {
-
-        $messages = [
-            'student_id.required' => 'Tolong isi namenya.',
-            'description.required' => 'Isi donk description',
-            'checkout_date.required' => 'Isi donk description',
-            'due_date.required' => 'Isi donk description',
-        ];
-
         $data = $request->validate([
             // 'id',
             'student_id' => 'required',
             'description' => 'required',
             'checkout_date' => 'required',
             'due_date' => 'required'
-        ], $messages);
-        // $data['librarian_id'] = auth()->user()->id;
+        ]);
+        $data['librarian_id'] = auth()->user()->id;
 
         // BorrowingBook::create($data);
         $borrowingBook = BorrowingBook::create($data);

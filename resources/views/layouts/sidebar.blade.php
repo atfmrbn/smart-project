@@ -117,9 +117,14 @@
                     <a href="{{ URL::to('/task-type') }}"><i class="fas fa-tags"></i> <span> Task Type</span></a>
                 </li>
 
-                <li class="nav-item {{ request()->is('tuition-type') ? 'active' : '' }}">
-                    <a href="{{ URL::to('/tuition-type') }}"><i class="fas fa-tags"></i> <span> Tuition Type</span></a>
+                <li class="nav-item {{ request()->is('tuition-type') ? 'active' : '' }} || {{ request()->is('tuition-type/create') ? 'active' : '' }} || {{ request()->is('tuition-type/*/edit') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/tuition-type') }}"><i class="fas fa-file-invoice-dollar"></i> <span> Tuition Type</span></a>
                 </li>
+
+                <li class="nav-item {{ request()->is('tuition') ? 'active' : '' }} || {{ request()->is('tuition/create') ? 'active' : '' }} || {{ request()->is('tuition/*/edit') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/tuition') }}"><i class="fas fa-money-bill-wave"></i> <span> Tuition</span></a>
+                </li>
+
                 <li class="nav-item {{ request()->is('configuration') ? 'active' : '' }}">
                     <a href="{{ URL::to('/configuration') }}"><i class="fas fa-cog"></i> <span> Configuration</span></a>
                 </li>

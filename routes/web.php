@@ -34,6 +34,7 @@ use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\TuitionDetailController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
@@ -174,5 +175,8 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'parent'])->name('dashboard')->middleware('auth');
 
     Route::resource('tuition-type', TuitionTypeController::class);
+    Route::resource('tuition', TuitionController::class);
+    Route::resource('tuition-detail', TuitionDetailController::class);
+    Route::get('tuition/{id}/payment', [TuitionController::class, 'payment'])->name('tuition.payment');
 
 });

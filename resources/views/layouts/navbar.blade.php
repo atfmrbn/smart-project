@@ -22,17 +22,17 @@
             </a>
           </li>
 
-          <li class="nav-item dropdown has-arrow new-user-menus">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          <li class="nav-item new-user-menus">
+            <a href="#" class="nav-link" aria-expanded="false">
                 <span class="user-img">
-                    <img class="rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" width="31" alt="User Image">
+                    <img class="rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" width="31">
                     <div class="user-text">
                         <h6>{{ Auth::user()->name }}</h6>
                         <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
                     </div>
                 </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            {{-- <div class="dropdown-menu dropdown-menu-right">
                 <div class="user-header">
                     <div class="avatar avatar-sm">
                         <img src="{{ asset('images/' . Auth::user()->image) }}" alt="User Image" class="avatar-img rounded-circle">
@@ -44,7 +44,7 @@
                 </div>
                 <a class="dropdown-item" href="#">My Profile</a>
                 <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-            </div>
+            </div> --}}
         </li>
 
 
