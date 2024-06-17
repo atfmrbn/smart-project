@@ -70,6 +70,19 @@
                                         List</a></li>
                             @endif
 
+
+                <li class="nav-item {{ request()->is('tuition-type') ? 'active' : '' }} || {{ request()->is('tuition-type/create') ? 'active' : '' }} || {{ request()->is('tuition-type/*/edit') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/tuition-type') }}"><i class="fas fa-file-invoice-dollar"></i> <span> Tuition Type</span></a>
+                </li>
+
+                <li class="nav-item {{ request()->is('tuition') ? 'active' : '' }} || {{ request()->is('tuition/create') ? 'active' : '' }} || {{ request()->is('tuition/*/edit') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/tuition') }}"><i class="fas fa-money-bill-wave"></i> <span> Tuition</span></a>
+                </li>
+
+                <li class="nav-item {{ request()->is('configuration') ? 'active' : '' }}">
+                    <a href="{{ URL::to('/configuration') }}"><i class="fas fa-cog"></i> <span> Configuration</span></a>
+                </li>
+
                             @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher', 'Student', 'Parent']))
                                 <li><a href="{{ URL::to('/student/student-teacher-homeroom') }}"
                                         class="{{ request()->is('student/student-teacher-homeroom') ? 'active' : '' }}">Student
@@ -241,16 +254,20 @@
                                     Type</span></a>
                         </li>
 
-                        <li class="nav-item {{ request()->is('tuition-type') ? 'active' : '' }}">
-                            <a href="{{ URL::to('/tuition-type') }}"><i class="fas fa-tags"></i> <span> Tuition
-                                    Type</span></a>
+                         <li class="nav-item {{ request()->is('tuition-type') ? 'active' : '' }} || {{ request()->is('tuition-type/create') ? 'active' : '' }} || {{ request()->is('tuition-type/*/edit') ? 'active' : '' }}">
+                            <a href="{{ URL::to('/tuition-type') }}"><i class="fas fa-file-invoice-dollar"></i> <span> Tuition Type</span></a>
                         </li>
+
+                        <li class="nav-item {{ request()->is('tuition') ? 'active' : '' }} || {{ request()->is('tuition/create') ? 'active' : '' }} || {{ request()->is('tuition/*/edit') ? 'active' : '' }}">
+                            <a href="{{ URL::to('/tuition') }}"><i class="fas fa-money-bill-wave"></i> <span> Tuition</span></a>
+                        </li>
+
                         <li class="nav-item {{ request()->is('configuration') ? 'active' : '' }}">
-                            <a href="{{ URL::to('/configuration') }}"><i class="fas fa-cog"></i> <span>
-                                    Configuration</span></a>
+                            <a href="{{ URL::to('/configuration') }}"><i class="fas fa-cog"></i> <span> Configuration</span></a>
                         </li>
                     @endif
                 @endif
+
                 @if (auth()->user()->role == 'Super Admin')
                     <li class="menu-title"><span>Others</span></li>
                     {{-- <li class="submenu {{ request()->is('user') || request()->is('forgot-password') || request()->is('error-404') ? 'active' : '' }}">

@@ -13,10 +13,22 @@ return new class extends Migration
     {
         Schema::create('tuitions', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
+            $table->unsignedBigInteger('tuition_type_id');
+            $table->unsignedBigInteger('student_teacher_homeroom_relationship_id');
+            $table->float('value');
             $table->string('description');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('tuition_type_id')
+                  ->references('id')
+                  ->on('tuition_types')
+                  ->onDelete('cascade');
+
+            $table->foreign('student_teacher_homeroom_relationship_id')
+                  ->references('id')
+                  ->on('student_teacher_homeroom_relationships')
+                  ->onDelete('cascade');
         });
     }
 
@@ -27,4 +39,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('tuitions');
     }
+
 };

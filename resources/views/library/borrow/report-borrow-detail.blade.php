@@ -58,7 +58,7 @@
         </div>
     </div> --}}
 
-    <div class="col-12 col-sm-6">
+    {{-- <div class="col-12 col-sm-6">
         <div class="form-group local-forms">
             <label for="description">Description <span class="login-danger">*</span></label>
             <input type="text" id="description" name="description" class="form-control" value="{{ isset($borrow) ? $borrow->description : old('description') }}" {{ isset($borrow) ? 'disabled' : '' }} placeholder="Add description">
@@ -77,7 +77,7 @@
             <label for="due_date">Due Date <span class="login-danger">*</span></label>
             <input type="date" id="due_date" name="due_date" class="form-control" value="{{ isset($borrow) ? $borrow->due_date : old('due_date') }}" {{ isset($borrow) ? 'disabled' : '' }}>
         </div>
-    </div>
+    </div> --}}
 
 </div>
 

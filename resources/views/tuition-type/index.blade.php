@@ -19,7 +19,8 @@
             <h3 class="page-title">{{ $title }}</h3>
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
-            <a href="{{ route('tuition-type.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+            {{-- <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a> --}}
+            <a href="{{ route('tuition-type.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
         </div>
     </div>
 </div>
@@ -35,12 +36,12 @@
         </thead>
         <tbody>
             @foreach ($tuitionTypes as $index => $tuitionType)
-                <tr class="text-center">
-                    <td>{{ $index + 1 }}</td>
+                <tr class="align-middle">
+                    <td class="text-center" style="width:10%">{{ $index + 1 }}</td>
                     <td>{{ $tuitionType->name }}</td>
-                    <td class="align-middle text-center">
+                    <td class="align-middle text-center" style="width:20%">
                         <div class="d-flex justify-content-center align-items-center">
-                            <a title="Lihat" href="{{ URL::to('tuition-type/' . $tuitionType->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                            {{-- <a title="Lihat" href="{{ URL::to('tuition-type/' . $tuitionType->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a> --}}
                             <a title="Edit" href="{{ URL::to('tuition-type/' . $tuitionType->id. '/edit') }}" class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
                             <form action="{{ URL::to('tuition-type/' . $tuitionType->id) }}" method="post">
                                 @csrf

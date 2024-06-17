@@ -34,6 +34,7 @@ use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\TuitionDetailController;
 
     Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
     Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
@@ -185,5 +186,12 @@ use App\Http\Controllers\SocialiteController;
     Route::get('dashboard', [DashboardController::class, 'parent'])->name('dashboard')->middleware('auth');
 
     Route::resource('tuition-type', TuitionTypeController::class);
+    Route::resource('tuition', TuitionController::class);
+    Route::resource('tuition-detail', TuitionDetailController::class);
+    // Route::get('/tuition/{tuition}/payoff', [TuitionDetailController::class, 'Payoff'])->name('tuition.payoff');
+    Route::post('/tuition/{id}/payoff', [TuitionDetailController::class, 'payOff'])->name('tuition.payoff');
+    Route::get('/invoice/{id}', [TuitionDetailController::class, 'invoice'])->name('invoice.show');
+
+    // Route::get('/tuition/{id}/paymidtrans', [TuitionDetailController::class, 'payMidtrans'])->name('tuition.paymidtrans');
 
 });
