@@ -171,7 +171,9 @@ use App\Http\Controllers\SocialiteController;
     Route::get('/teacher-schedule/download', [TeacherScheduleController::class, 'download'])->name('teacher-schedule.download');
 
     Route::resource('teacher/grade', GradeController::class);
+    Route::get('grade/download', [GradeController::class, 'download'])->name('grade.download');
     Route::resource('teacher/grade-detail', GradeDetailController::class);
+    Route::get('grade-detail/download', [GradeDetailController::class, 'download'])->name('grade-detail.download');
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);
