@@ -78,15 +78,15 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <div class="card text-white mb-3" style="background-color: #3D5EE1;">
+                    <div class="card mb-3">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="text-center" style="width: 100%">
-                                    <h5 class="card-title text-white">Schedule List</h5>
+                                    <h3 class="card-title text-primary">Schedule List</h3>
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered text-white">
+                                <table class="table table-bordered text-primary">
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
@@ -99,8 +99,8 @@
                                         @foreach ($teacherSchedules as $index => $teacherSchedule)
                                             <tr class="text-center">
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>{{ $teacherSchedule->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }} - {{ $teacherSchedule->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }}  </td>
-                                                <td>{{ $teacherSchedule->teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}  </td>            
+                                                <td>{{ $teacherSchedule->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }} - {{ $teacherSchedule->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }}</td>
+                                                <td>{{ $teacherSchedule->teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}</td>            
                                                 <td>{{ $teacherSchedule->schedule_day }} {{ DateFormat($teacherSchedule->schedule_time_start, "HH:mm") }} - {{ DateFormat($teacherSchedule->schedule_time_end, "HH:mm") }}</td>
                                             </tr>
                                         @endforeach
@@ -112,6 +112,46 @@
                 </div>
             </div>
         </div>
+        
+        {{-- <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="text-center" style="width: 100%">
+                                    <h3 class="card-title text-primary">Class List</h3>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-primary">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>No</th>
+                                            <th>Classroom</th>
+                                            <th>Student Name</th>            
+                                            <th>Schedule</th>
+                                            <th>Attendance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($students as $index => $student)
+                                            <tr class="text-center">
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $student->classroom->classroomType->name ?? ''}} - {{ $student->classroom->name ?? ''}}</td>
+                                                <td>{{ $student->name ?? '' }}</td>
+                                                <td>{{ $student->schedule_day }} {{ DateFormat($student->schedule_time_start, "HH:mm") }} - {{ DateFormat($student->schedule_time_end, "HH:mm") }}</td>              
+                                                <td>{{ $student->Attendance ?? '' }} </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
     {{-- </div> --}}
 {{-- </div> --}}
 

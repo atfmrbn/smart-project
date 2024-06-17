@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -168,19 +167,19 @@
                 <img src="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png" alt="SMARTS Logo">
                 <h1>Welcome to SMARTS</h1>
             </div>
-
-            @if (session()->has('successMessage'))
+    
+            @if (session('successMessage'))
                 <div class="alert alert-success">
                     {{ session('successMessage') }}
                 </div>
             @endif
-
-            @if (session()->has('errorMessage'))
+    
+            @if (session('errorMessage'))
                 <div class="alert alert-danger">
                     {{ session('errorMessage') }}
                 </div>
             @endif
-
+    
             <form method="POST" action="{{ URL::to('/login') }}" autocomplete="off">
                 @csrf
                 <div class="form-group position-relative">
@@ -218,24 +217,31 @@
                     <button class="btn btn-primary btn-block" type="submit">Login</button>
                 </div>
             </form>
-
+    
             <div class="login-or">
                 <span class="or-line"></span>
                 <span class="span-or">or</span>
-            </div>
-
+    
             <div class="social-login">
+                <a href="{{ route('redirect') }}">
+                    <i class="fab fa-google-plus-g"></i>
+                </a>
                 <a href="{{ route('redirect') }}"><i class="fab fa-google-plus-g"></i></a>
             </div>
+        
+            @if (session('errorMessage'))
+                <div class="alert alert-danger">
+                    {{ session('errorMessage') }}
+                </div>
+            @endif
 
         </div>
     </div>
 
-    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
 </body>
-
 </html>

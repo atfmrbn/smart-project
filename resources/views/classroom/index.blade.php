@@ -11,10 +11,11 @@
         {{ session("errorMessage") }}
     </div>
 @endif --}}
-
-    <a href="{{ URL::to('classroom/create') }}" class="btn btn-primary mb-3">
-        <i class="fas fa-plus" aria-hidden="true"></i> Add</a>
-    <div class="table-responsive">
+    <div class="col-auto text-end float-end ms-auto download-grp">
+        <a href="{{ URL::to('classroom/create') }}" class="btn btn-primary mb-3">
+            <i class="fas fa-plus" aria-hidden="true"></i>Add New</a>
+    </div>
+    <div class="table-responsive mt-5">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>

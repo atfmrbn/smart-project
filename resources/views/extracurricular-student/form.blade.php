@@ -9,22 +9,27 @@
     @csrf
     <div class="row">
         <div class="col-6">
-            <div class="form-group local-forms">
-                <label for="student_id">Student Name <span class="login-danger">*</span></label>
-                <select class="form-control data-select-2" name="student_id" id="student_id">
-                    <option value="">Select Student</option>
-                    @foreach ($students as $student)
-                        <option value="{{ $student->id }}"
-                            {{ isset($extracurricular_student) ? ($extracurricular_student->student_id === $student->id ? ' selected' : '') : (old('student_id') == $student->id ? ' selected' : '') }}>
-                            {{ $student->class_name }} - {{ $student->identity_number }}  - {{ $student->name }}</option>
-                    @endforeach
-                </select>
-                @error('student_id')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
+            @if(auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                <div class="form-group local-forms">
+                    <label for="student_id">Student Name <span class="login-danger">*</span></label>
+                    <select class="form-control data-select-2" name="student_id" id="student_id">
+                        <option value="">Select Student</option>
+                        @foreach ($students as $student)
+                            <option value="{{ $student->id }}"
+                                {{ isset($extracurricular_student) ? ($extracurricular_student->student_id === $student->id ? ' selected' : '') : (old('student_id') == $student->id ? ' selected' : '') }}>
+                                {{ $student->class_name }} - {{ $student->identity_number }}  - {{ $student->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('student_id')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+            @else
+                <input type="hidden" name="student_id" value="{{ auth()->user()->id }}">
+            @endif
+
             <div class="form-group local-forms">
                 <label for="extracurricular_id">Extracurricular Name <span class="login-danger">*</span></label>
                 <select class="form-control data-select-2" name="extracurricular_id" id="extracurricular_id" onchange="updateDescription()">
