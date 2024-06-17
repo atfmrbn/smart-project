@@ -1,5 +1,4 @@
 @extends("layouts.main")
-{{-- @section('title', $title) --}}
 @section('container')
 
 @if(session()->has("successMessage"))
@@ -40,7 +39,7 @@
                 <select name="student_teacher_homeroom_relationship_id" id="student_teacher_homeroom_relationship_id" class="form-control data-select-2" {{ isset($tuition) ? 'disabled' : '' }}>
                     <option value="">Select Student</option>
                     @foreach ($students as $student)
-                        <option value="{{ $student->id }}" {{ (isset($tuition) && $tuition->student_teacher_homeroom_relationship_id == $student->id) ? 'selected' : '' }}>
+                        <option value="{{ $student->student_teacher_homeroom_relationship_id }}" {{ (isset($tuition) && $tuition->student_teacher_homeroom_relationship_id == $student->student_teacher_homeroom_relationship_id) ? 'selected' : '' }}>
                             {{ $student->classroom_name }} - {{ $student->identity_number }}  - {{ $student->name }}
                         </option>
                     @endforeach
@@ -51,7 +50,7 @@
         <div class="col-12 col-sm-6">
             <div class="form-group local-forms">
                 <label for="tuition_date">Tuition Date <span class="login-danger">*</span></label>
-                <input type="date" id="tuition_date" name="tuition_date" class="form-control" value="{{ isset($tuition) ? $tuition->tuition_date : old('tuition_date') }}" {{ isset($tuition) ? 'disabled' : '' }}>
+                <input type="date" id="tuition_date" name="tuition_date" class="form-control" value="{{ isset($tuition) ? DateFormat($tuition->tuition_date, "Y-MM-DD") : old('tuition_date') }}" {{ isset($tuition) ? 'disabled' : '' }}>
             </div>
         </div>
 
@@ -76,85 +75,107 @@
 </div>
 
 <div class="row">
-            {{-- @if($canBorrow) --}}
-            <form action="{{ route('tuition-detail.store') }}" method="POST" autocomplete="off" class="mt-4">
-                @csrf
-                <div class="col-12">
-                    <div class="form-group local-forms">
-                        <label for="value">Tuition Type <span class="login-danger">*</span></label>
-                        <input type="hidden" name="tuition_id" value="{{ $tuition->id }}">
-                        <select name="tuition_type_id" id="tuition_type_id" class="form-control data-select-2">
-                            <option value="">Select Tuition Type</option>
-                            @foreach ($tuitionTypes as $tuitionType)
-                                <option value="{{ $tuitionType->id }}">
-                                    {{ $tuitionType->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+    <form action="{{ route('tuition-detail.store') }}" method="POST" autocomplete="off" class="mt-4">
+        @csrf
+        <div class="col-12">
+            <div class="form-group local-forms">
+                <label for="value">Tuition Type <span class="login-danger">*</span></label>
+                <input type="hidden" name="tuition_id" value="{{ $tuition->id }}">
+                <select name="tuition_type_id" id="tuition_type_id" class="form-control data-select-2">
+                    <option value="">Select Tuition Type</option>
+                    @foreach ($tuitionTypes as $tuitionType)
+                        <option value="{{ $tuitionType->id }}">
+                            {{ $tuitionType->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
-                <div class="col-12">
-                    <div class="form-group local-forms">
-                        <label for="value">Bill <span class="login-danger">*</span></label>
-                        <input type="text" id="value" name="value" class="form-control @error('value') is-invalid @enderror" value="{{ isset($tuition) ? $tuition->value : old('value') }}">
-                        @error('value')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+        <div class="col-12">
+            <div class="form-group local-forms">
+                <label for="value">Bill <span class="login-danger">*</span></label>
+                <input type="text" id="value" name="value" class="form-control @error('value') is-invalid @enderror" value="{{ isset($tuition) ? $tuition->value : old('value') }}">
+                @error('value')
+                    <div class="invalid-feedback">
+                        {{ $message }}
                     </div>
-                </div>
+                @enderror
+            </div>
+        </div>
 
-                <div class="col-12 col-sm-12">
-                    <div class="form-group local-forms">
-                        <label for="description">Description <span class="login-danger">*</span></label>
-                        <input type="text" id="description" name="description" class="form-control" value="{{ isset($tuition) ? $tuition->description : old('description') }}" {{ isset($tuitionDetail) ? 'disabled' : '' }} placeholder="Add description">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Submit</button>
-            </form>
-            {{-- @endif --}}
+        <div class="col-12 col-sm-12">
+            <div class="form-group local-forms">
+                <label for="description">Description <span class="login-danger">*</span></label>
+                <input type="text" id="description" name="description" class="form-control" value="{{ isset($tuition) ? $tuition->description : old('description') }}" {{ isset($tuitionDetail) ? 'disabled' : '' }} placeholder="Add description">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Add Tuition</button>
+    </form>
 
     <div class="col-md-12 mt-2 table-responsive">
-        <table id="example" class="table table-responsive table-striped table-bordered mt-4">
-        <thead>
-            <tr>
-                <th style="width: 5%; text-align: center">No</th>
-                <th style="text-align: center">Tuition Type</th>
-                <th style="text-align: center">Bill (Rp.)</th>
-                <th style="text-align: center">Description</th>
-                <th style="width: 10%; text-align: center">Action</th>
-            </tr>
-        </thead>
-        <tbody>
+        <table id="" class="table table-responsive table-striped table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th style="width: 5%; text-align: center">No</th>
+                    <th style="text-align: center">Tuition Type</th>
+                    <th style="text-align: center">Description</th>
+                    <th style="text-align: center">Bill (Rp.)</th>
+                    <th style="width: 10%; text-align: center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php $total = 0; @endphp
+                @foreach($tuition->tuitionDetails as $index => $tuitionDetail)
+                <tr>
+                    <td class="align-middle" style="text-align: center">{{ $index + 1 }}</td>
+                    <td class="align-middle">{{ $tuitionDetail->tuitionType->name }}</td>
+                    <td class="align-middle">{{ $tuitionDetail->description }}</td>
+                    <td class="align-middle text-end">
+                        {{ NumberFormat($tuitionDetail->value) }}
+                        @php $total += $tuitionDetail->value; @endphp
+                    </td>
+                    <td class="align-middle">
+                        <div class="text-center d-flex justify-content-center">
+                            <form method="POST" action="{{ route('tuition-detail.destroy', $tuitionDetail->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger ms-2" title="Delete" onclick="return confirm('Anda yakin mau menghapus tagihan {{ $tuitionDetail->tuitionType->name }}?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+                <tr>
+                    <td colspan="3" class="text-center"><strong>Total</strong></td>
+                    <td class="text-end"><strong>{{ NumberFormat($total) }}</strong></td>
+                    <td colspan="2"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Pay Off Form -->
+        <form method="POST" action="{{ route('tuition.payoff', $tuition->id) }}">
+            @csrf
             @foreach($tuition->tuitionDetails as $index => $tuitionDetail)
-            <tr>
-                <td class="align-middle" style="text-align: center">{{ $index + 1 }}</td>
-                <td class="align-middle">{{ $tuitionDetail->tuitionType->name }}</td>
-                <td class="align-middle text-end">
-                    {{ NumberFormat($tuitionDetail->value) }}
-                </td>
-                <td class="align-middle">{{ $tuitionDetail->description }}</td>
-                <td class="align-middle">
-                    <div class="text-center d-flex justify-content-center">
-                        <form method="POST" action="{{ route('tuition-detail.destroy', $tuitionDetail->id) }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger ms-2" title="Delete" onclick="return confirm('Anda yakin mau menghapus tagihan {{ $tuitionDetail->tuitionType->name }}?')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
+            <input type="hidden" name="tuitionDetails[{{ $index }}][name]" value="{{ $tuitionDetail->tuitionType->name }}">
+            <input type="hidden" name="tuitionDetails[{{ $index }}][value]" value="{{ $tuitionDetail->value }}">
             @endforeach
-        </tbody>
-    </table>
+            <input type="hidden" name="total" value="{{ $total }}">
+            <div class="text-end mt-3">
+                <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-dollar-sign"></i> Pay Off</button>
+            </div>
+        </form>
+
 
     </div>
+
+
 </div>
 @endif
-
-
+<script type="text/javascript"
+    src="https://app.stg.midtrans.com/snap/snap.js"
+data-client-key="{{ config('midtrans.client_key') }}"></script>
 @endsection

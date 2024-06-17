@@ -13,9 +13,9 @@ class Tuition extends Model
 
     protected $guarded = [];
 
-    public function StudentTeacherHomeroomRelationship()
+    public function studentTeacherHomeroomRelationship()
     {
-        return $this->belongsTo(StudentTeacherHomeroomRelationship::class);
+        return $this->belongsTo(StudentTeacherHomeroomRelationship::class, 'student_teacher_homeroom_relationship_id');
     }
     
     public function tuitionDetails()

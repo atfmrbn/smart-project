@@ -19,20 +19,14 @@ class TuitionController extends Controller
      */
     public function index()
     {
-        // Fetch active students based on the default curriculum
-        // $students = User::getActiveStudent($this->defaultCurriculum->id);
-
-        // Fetch tuitions with related tuition types and student-teacher homeroom relationships
         $tuitions = Tuition::with(['studentTeacherHomeroomRelationship.student'])->get();
-
-        // Prepare the data for the view
+        // dd( $tuitions);
+        
         $data = [
             'title' => 'Tuitions',
             'tuitions' => $tuitions,
-            // 'students' => $students,
         ];
 
-        // Return the view with the data
         return view('tuition.index', $data);
     }
 
@@ -43,7 +37,9 @@ class TuitionController extends Controller
     {
         $students = User::getActiveStudent($this->defaultCurriculum->id);
 
-        $tuitions = Tuition::with(['tuitionType', 'studentTeacherHomeroomRelationship.student']);
+        // $tuitions = Tuition::with(['tuitionType', 'studentTeacherHomeroomRelationship.student']);
+        $tuitions = Tuition::with(['studentTeacherHomeroomRelationship.student'])->get();
+
 
         $data = [
             'title' => 'Tuition',

@@ -71,7 +71,7 @@ class User extends Authenticatable
 
     public static function getActiveStudent($defaultCurriculumId)
     {
-      return self::select('users.id', 'users.identity_number', 'users.name', 'classrooms.name as classroom_name')
+      return self::select('users.id', 'users.identity_number', 'users.name', 'classrooms.name as classroom_name', 'student_teacher_homeroom_relationships.id as student_teacher_homeroom_relationship_id')
             ->join('student_teacher_homeroom_relationships', 'users.id', '=', 'student_teacher_homeroom_relationships.student_id')
             ->join('teacher_homeroom_relationships', 'teacher_homeroom_relationships.id', '=', 'student_teacher_homeroom_relationships.teacher_homeroom_relationship_id')
             ->join('classrooms', 'classrooms.id', '=', 'teacher_homeroom_relationships.classroom_id')

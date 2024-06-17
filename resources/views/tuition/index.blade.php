@@ -30,11 +30,7 @@
             <tr class="align-middle">
                 <td class="text-center">{{ $index + 1 }}</td>
                 <td>
-                    @if ($tuition->studentTeacherHomeroomRelationship)
-                        {{ $tuition->studentTeacherHomeroomRelationship->student->name }}
-                    @else
-                        <span class="text-muted">No student assigned</span>
-                    @endif
+                    {{ $tuition->studentTeacherHomeroomRelationship->student->identity_number }} - {{ $tuition->studentTeacherHomeroomRelationship->student->name }}
                 </td>
                 {{-- <td>{{ $tuition->classroom_name }} - {{ $tuition->identity_number }}  - {{ $tuition->name }}</td> --}}
                 <td>{{ DateFormat($tuition->tuition_date, "DD MMMM Y") }}</td>
@@ -48,7 +44,7 @@
                 <td class=" text-center">
                     <div class="d-flex justify-content-center align-items-center">
                         <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-edit"></i>Edit
                         </a>
                         <form method="POST" action="{{ URL::to('tuition/' . $tuition->id) }}">
                             @csrf

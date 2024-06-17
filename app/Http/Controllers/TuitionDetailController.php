@@ -6,6 +6,8 @@ use App\Models\Tuition;
 use App\Models\TuitionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Midtrans\Config;
+use Midtrans\Snap;
 
 class TuitionDetailController extends Controller
 {
@@ -97,25 +99,112 @@ class TuitionDetailController extends Controller
         }
     }
 
-
-    public function download($id)
+    public function payOff(Request $request, $id)
     {
-        $tuitionDetails = TuitionDetail::with('book')
-                       ->where('borrowing_book_id', $id)
-                       ->get();
+        // Load tuition with its relationship to student
+        $tuition = Tuition::with('studentTeacherHomeroomRelationship')->findOrFail($id);
+        // Validate if student information is available
+        if (!$tuition->studentTeacherHomeroomRelationship || !$tuition->studentTeacherHomeroomRelationship->student) {
+            return redirect()->back()->with('errorMessage','Informasi siswa tidak tersedia.');
+        }
 
-        $borrowingBook = Tuition::find($id);
+        // Calculate total bill
+        $totalBill = $tuition->tuitionDetails()->sum('value');
 
-        $data = [
-            'title' => 'Borrowed Books List',
-            'tuitionDetails' => $tuitionDetails,
-            'borrowingBook' => $borrowingBook
+        // Configure Midtrans
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = false; // Set true for production environment
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+
+        // Payment parameters
+        $params = [
+            'transaction_details' => [
+                'order_id' => $tuition->id,
+                'gross_amount' => $totalBill,
+            ],
+            'customer_details' => [
+                'first_name' => $tuition->studentTeacherHomeroomRelationship->student->name,
+                'last_name' =>  '',
+                'email' => $tuition->studentTeacherHomeroomRelationship->student->email,
+            ],
         ];
 
-        // dd($data);
+        // Get Snap Token from Midtrans
+        $snapToken = Snap::getSnapToken($params);
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.borrow.report-borrow-detail', $data);
-
-	    return $pdf->download('laporan-perpustakaan-pdf');
+        // Pass data to view
+        return view('tuition.tuition_payment', [
+            'title' => 'Pembayaran Detail Biaya Sekolah',
+            'tuition' => $tuition,
+            'totalBill' => $totalBill,
+            'snapToken' => $snapToken,
+        ]);
     }
+    
+    public function callback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+
+        $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+
+        if ($hashed == $request->signature_key) {
+            if ($request->transaction_status == 'capture'  || $request->transaction_status == 'settlement') {
+                $tuition = Tuition::find($request->order_id);
+                if ($tuition) {
+                    $tuition->update(['status' => 'Paid']);
+                    return redirect()->route('invoice.show', ['id' => $tuition->id]);
+                } else {
+                    dd("Tuition with ID {$request->order_id} not found.");
+                }
+            } else {
+                dd("Transaction status is not 'capture'.");
+            }
+        } else {
+            dd("Signature key does not match.");
+        }
+    }
+
+    
+
+    public function invoice($id)
+    {
+        // Pastikan tuition ditemukan dan memuat relasi tuitionDetails
+        $tuition = Tuition::with('tuitionDetails')->find($id);
+
+        if (!$tuition) {
+            // Jika tuition tidak ditemukan, tampilkan pesan atau redirect ke halaman lain
+            return redirect()->back()->withErrors('Transaksi tidak ditemukan.');
+        }
+
+        // Hitung total tagihan
+        $totalBill = 0;
+        foreach ($tuition->tuitionDetails as $tuitionDetail) {
+            $totalBill += $tuitionDetail->value;
+        }
+
+        $data = [
+            'title' => 'Invoice',
+            'tuition' => $tuition,
+            'totalBill' => $totalBill
+        ];
+
+        return view('tuition.invoice', $data);
+    }
+
+
+    // public function invoice($id)
+    // {
+
+    //     $tuition = Tuition::find($id);
+    //     // Hitung total tagihan
+    //     $totalBill = 0;
+    //     foreach ($tuition->tuitionDetails as $tuitionDetail) {
+    //         $totalBill += $tuitionDetail->value;
+    //     }   
+    //     $data = ['title' => 'Invoice'];
+    //     return view('tuition.invoice', $data, compact('tuition', 'totalBill'));
+    // }
+
+
 }
