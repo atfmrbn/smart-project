@@ -146,4 +146,23 @@ class TeacherClassroomRelationshipController extends Controller
             return redirect()->route('teacher-classroom.index')->with('errorMessage', $th->getMessage());
         }
     }
+    public function download()
+    {
+    // Retrieve data (adjust the query as per your application logic)
+    $teacher_classrooms = TeacherClassroomRelationship::with(['teacherHomeroomRelationship.classroom.classroomType', 'teacherSubjectRelationship.teacher', 'teacherSubjectRelationship.subject'])->get();
+
+    $data = [
+        'title' => 'Teachers Classroom Report',
+        'teacher_classrooms' => $teacher_classrooms
+    ];
+
+    // Load the view and generate the PDF
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('teacher.teacher-classroom.report', $data);
+    $pdf->setPaper('a4', 'landscape');
+    return $pdf->download('teachers_classroom_report.pdf');
+    }
+
+
+
+
 }

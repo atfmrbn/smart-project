@@ -138,4 +138,26 @@ class TeacherScheduleController extends Controller
         ->select('teacher_classroom_relationships.*', 'users.identity_number')->get();
     }
 
+    public function download()
+    {
+    // Retrieve data (adjust the query as per your application logic)
+    $teacherSchedules = TeacherSchedule::with([
+        'teacherClassroomRelationship.teacherHomeroomRelationship.classroom.classroomType',
+        'teacherClassroomRelationship.teacherSubjectRelationship.teacher',
+        'teacherClassroomRelationship.teacherSubjectRelationship.subject'
+    ])->get();
+
+    // Prepare the data for the view
+    $data = [
+        'title' => 'Teachers Schedule Report',
+        'teacherSchedules' => $teacherSchedules
+    ];
+
+    // Load the view and generate the PDF
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('teacher.teacher-schedule.report', $data);
+    $pdf->setPaper('a4', 'landscape');
+    return $pdf->download('teachers_schedule_report.pdf');
+    }
+
+
 }

@@ -132,4 +132,25 @@ class TeacherSubjectRelationshipController extends Controller
             return redirect()->route('teacher-subject.index')->with('errorMessage', $th->getMessage());
         }
     }
+
+    public function download()
+    {
+    // Retrieve data (adjust the query as per your application logic)
+    $teacher_subjects = TeacherSubjectRelationship::with([
+        'teacher',
+        'subject'
+    ])->get();
+
+    // Prepare the data for the view
+    $data = [
+        'title' => 'Teachers Subject Report',
+        'teacher_subjects' => $teacher_subjects
+    ];
+
+    // Load the view and generate the PDF
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('teacher.teacher-subject.report', $data);
+    $pdf->setPaper('a4', 'landscape');
+    return $pdf->download('teachers_subject_report.pdf');
+    }
+
 }
