@@ -3,24 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>{{ $title }}</title>
-
+    <title>{{ $title }}</title> 
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
-
     <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('assets/plugins/feather/feather.css') }}">
-
     <link rel="stylesheet" href="{{ asset('assets/plugins/icons/flags/flags.css') }}">
-
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <style>
@@ -159,7 +150,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="main-wrapper login-body">
         <div class="login-card">
@@ -167,81 +157,83 @@
                 <img src="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png" alt="SMARTS Logo">
                 <h1>Welcome to SMARTS</h1>
             </div>
-    
-            @if (session('successMessage'))
-                <div class="alert alert-success">
-                    {{ session('successMessage') }}
-                </div>
-            @endif
-    
-            @if (session('errorMessage'))
-                <div class="alert alert-danger">
-                    {{ session('errorMessage') }}
-                </div>
-            @endif
-    
-            <form method="POST" action="{{ URL::to('/login') }}" autocomplete="off">
-                @csrf
-                <div class="form-group position-relative">
-                    <label>Username <span class="login-danger">*</span></label>
-                    <input type="text" id="username" name="username"
-                        class="form-control @error('username') is-invalid @enderror" placeholder="Enter username">
-                    <span class="profile-views"><i class="fas fa-user-circle"></i></span>
-                    @error('username')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="form-group position-relative">
-                    <label>Password <span class="login-danger">*</span></label>
-                    <input type="password" id="password" name="password"
-                        class="form-control @error('password') is-invalid @enderror" placeholder="Enter password">
-                    <span class="profile-views feather-eye toggle-password"></span>
-                    @error('password')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="forgotpass d-flex justify-content-between align-items-center">
-                    <div class="remember-me">
-                        <label class="custom_check mb-0 d-inline-flex"> Remember me
-                            <input type="checkbox" name="remember">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <a href="{{ route('forgot-password') }}">Forgot Password?</a>
-                </div>
-                <div class="form-group mt-3">
-                    <button class="btn btn-primary btn-block" type="submit">Login</button>
-                </div>
-            </form>
-    
-            <div class="login-or">
-                <span class="or-line"></span>
-                <span class="span-or">or</span>
-    
-            <div class="social-login">
-                <a href="{{ route('redirect') }}">
-                    <i class="fab fa-google-plus-g"></i>
-                </a>
-                <a href="{{ route('redirect') }}"><i class="fab fa-google-plus-g"></i></a>
-            </div>
-        
-            @if (session('errorMessage'))
-                <div class="alert alert-danger">
-                    {{ session('errorMessage') }}
-                </div>
-            @endif
 
+        @if (session()->has('successMessage'))
+            <div class="alert alert-success">
+                {{ session('successMessage') }}
+            </div>
+        @endif
+
+        @if (session()->has('errorMessage'))
+            <div class="alert alert-danger">
+                {{ session('errorMessage') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ URL::to('/login') }}" autocomplete="off">
+            @csrf
+            <div class="form-group position-relative">
+                <label>Username <span class="login-danger">*</span></label>
+                <input type="text" id="username" name="username"
+                    class="form-control @error('username') is-invalid @enderror" placeholder="Enter username">
+                <span class="profile-views"><i class="fas fa-user-circle"></i></span>
+                @error('username')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group position-relative">
+                <label>Password <span class="login-danger">*</span></label>
+                <input type="password" id="password" name="password"
+                    class="form-control @error('password') is-invalid @enderror" placeholder="Enter password">
+                <span class="profile-views feather-eye toggle-password"></span>
+                @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="forgotpass d-flex justify-content-between align-items-center">
+                <div class="remember-me">
+                    <label class="custom_check mb-0 d-inline-flex"> Remember me
+                        <input type="checkbox" name="remember">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <a href="{{ route('forgot-password') }}">Forgot Password?</a>
+            </div>
+            <div class="form-group mt-4">
+                <button class="btn btn-primary btn-block" type="submit">Login</button>
+            </div>
+        </form>
+
+        <div class="login-or">
+            <span >Login with Google</span>
+        <div class="social-login">
+            <a href="{{ route('redirect') }}">
+                <i class="fab fa-google-plus-g"></i> 
+            </a>
+        </div>
         </div>
     </div>
+</div>
 
-    <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/feather.min.js') }}"></script>
-    <script src="{{ asset('assets/js/script.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/feather.min.js') }}"></script>
+<script src="{{ asset('assets/js/script.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('.toggle-password').on('click', function () {
+            var passwordField = $(this).prev('input');
+            var passwordFieldType = passwordField.attr('type');
+            var newFieldType = passwordFieldType === 'password' ? 'text' : 'password';
+            passwordField.attr('type', newFieldType);
+            $(this).toggleClass('feather-eye feather-eye-off');
+        });
+    });
+</script>
 
 </body>
 </html>
