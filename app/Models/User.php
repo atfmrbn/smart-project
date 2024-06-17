@@ -113,7 +113,7 @@ class User extends Authenticatable
 
     public function studentTeacherHomeroomRelationships()
     {
-        return $this->hasMany(StudentTeacherHomeroomRelationship::class,);
+        return $this->hasMany(StudentTeacherHomeroomRelationship::class);
     }
 
 }
