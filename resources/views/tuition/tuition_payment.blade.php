@@ -50,35 +50,6 @@
     var payButton = document.getElementById('pay-button');
     payButton.addEventListener('click', function () {
         // Trigger snap popup
-        window.snap.pay('{{ $snapToken }}', {
-            onSuccess: function (result) {
-                const tuitionId = '{{ $tuition->id }}'; // Mengambil nilai ID dari Blade template
-                const url = "/invoice/" + tuitionId; // Membuat URL berdasarkan ID tuition
-
-                // Buka halaman invoice dengan ID tuition setelah pembayaran sukses
-                window.open(url, '_self');  
-                console.log(result);
-            },
-            onPending: function (result) {
-                alert("Pembayaran sedang diproses!");
-                console.log(result);
-            },
-            onError: function (result) {
-                alert("Pembayaran gagal!");
-                console.log(result);
-            },
-            onClose: function () {
-                alert('Anda menutup popup tanpa menyelesaikan pembayaran');
-            }
-        });
-    });
-</script>
-
-
-{{-- <script type="text/javascript">
-    var payButton = document.getElementById('pay-button');
-    payButton.addEventListener('click', function () {
-        // Trigger snap popup
         window.snap.embed('{{ $snapToken }}', {
             embedId: 'snap-container',
             onSuccess: function (result) {
@@ -108,6 +79,6 @@
             }
         });
     });
-</script> --}}
+</script>
 
 @endsection

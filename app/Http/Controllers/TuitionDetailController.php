@@ -153,7 +153,7 @@ class TuitionDetailController extends Controller
                 $tuition = Tuition::find($request->order_id);
                 if ($tuition) {
                     $tuition->update(['status' => 'Paid']);
-                    return redirect()->route('invoice.show', ['id' => $tuition->id]);
+                    return $this->invoice($tuition->id);
                 } else {
                     dd("Tuition with ID {$request->order_id} not found.");
                 }
