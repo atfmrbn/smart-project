@@ -88,4 +88,34 @@ class GradeController extends Controller
 
         return redirect()->route('grade.index')->with('success', 'Grade successfully deleted');
     }
+
+    public function download(Request $request)
+    {
+        $taskTypes = TaskType::all();
+        $teacherClassroomRelationships = TeacherClassroomRelationship::all();
+
+        $gradesQuery = Grade::with(['taskType', 'teacherClassroomRelationship.teacherHomeroomRelationship.teacher']);
+
+        if ($request->filled('task_type_id')) {
+            $gradesQuery->where('task_type_id', $request->task_type_id);
+        }
+
+        if ($request->filled('teacher_classroom_relationship_id')) {
+            $gradesQuery->where('teacher_classroom_relationship_id', $request->teacher_classroom_relationship_id);
+        }
+
+        $grades = $gradesQuery->get();
+
+        $data = [
+            'title' => 'Grades',
+            'grades' => $grades,
+            'taskTypes' => $taskTypes,
+            'teacherClassroomRelationships' => $teacherClassroomRelationships,
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\PDF::loadView('teacher.grade.report', $data);
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->download('grades.pdf');
+    }
 }

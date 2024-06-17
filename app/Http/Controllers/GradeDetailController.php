@@ -7,6 +7,7 @@ use App\Models\Grade;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class GradeDetailController extends Controller
 {
@@ -62,6 +63,15 @@ class GradeDetailController extends Controller
                          ->with('success', 'GradeDetail successfully added');
     }
 
+    public function show(GradeDetail $gradeDetail)
+    {
+        $grades = Grade::all();
+        $students = User::where('role', 'student')->get();
+        $title = 'Show GradeDetail';
+
+        return view('teacher.grade-detail.show', compact('gradeDetail', 'grades', 'students', 'title'));
+    }
+
     public function edit(GradeDetail $gradeDetail)
     {
         $grades = Grade::all();
@@ -91,5 +101,37 @@ class GradeDetailController extends Controller
 
         return redirect()->route('grade-detail.index')
                          ->with('success', 'GradeDetail successfully deleted');
+    }
+
+    public function download(Request $request)
+    {
+        $grades = Grade::all();
+        $students = User::where('role', 'student')->get();
+
+        $gradeDetailsQuery = GradeDetail::with(['grade', 'student']);
+
+        if ($request->filled('grade_id')) {
+            $gradeDetailsQuery->whereHas('grade', function ($query) use ($request) {
+                $query->where('id', $request->grade_id);
+            });
+        }
+
+        if ($request->filled('student_id')) {
+            $gradeDetailsQuery->where('student_id', $request->student_id);
+        }
+
+        $gradeDetails = $gradeDetailsQuery->get();
+
+        $data = [
+            'title' => 'Grade Details',
+            'gradeDetails' => $gradeDetails,
+            'grades' => $grades,
+            'students' => $students,
+        ];
+
+        $pdf = PDF::loadView('teacher.grade-detail.report', $data);
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->download('grade-details.pdf');
     }
 }
