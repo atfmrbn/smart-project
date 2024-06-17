@@ -145,4 +145,19 @@ class StudentController extends Controller
             return redirect('student/student-list')->with("errorMessage", $th->getMessage());
         }
     }
+
+    public function download()
+    {
+        $students = User::where('role', 'Student')->get();
+
+        $data = [
+            'title' => 'Student List',
+            'students' => $students
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('student.student-list.report', $data);
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->download('List-Student.pdf');
+    }
 }

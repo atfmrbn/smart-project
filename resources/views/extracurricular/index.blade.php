@@ -19,7 +19,6 @@
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
                 @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
-                    <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
                     <a href="{{ URL::to('extracurricular/create') }}" class="btn btn-primary">
                         <i class="fas fa-plus" aria-hidden="true"></i>Add New</a>
                 @endif
