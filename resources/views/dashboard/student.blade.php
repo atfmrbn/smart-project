@@ -178,7 +178,7 @@
                             </tr>
                             <tr>
                                 <th>Student's Parent</th>
-                                <td></td>
+                                <td>{{ $student->parent ? $student->parent->name : 'N/A' }}</td>
                             </tr>
                         </tbody>
                     </table>
