@@ -13,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    use SoftDeletes;    
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -63,7 +63,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'parent_id');
     }
-        
+
     public function students()
     {
         return $this->hasMany(User::class, 'parent_id');
@@ -87,6 +87,11 @@ class User extends Authenticatable
     public function parent()
     {
         return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    public function child()
+    {
+        return $this->hasOne(User::class, 'parent_id');
     }
 
     public function attendances()
@@ -113,7 +118,7 @@ class User extends Authenticatable
 
     public function studentTeacherHomeroomRelationships()
     {
-        return $this->hasMany(StudentTeacherHomeroomRelationship::class,);
+        return $this->hasMany(StudentTeacherHomeroomRelationship::class, 'student_id');
     }
 
 }

@@ -6,7 +6,7 @@
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                <a href="{{ route('teacher-classroom.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
                 @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin' || auth()->user()->role === 'Teacher')
                     <a href="{{ URL::to('teacher/teacher-classroom/create') }}" class="btn btn-primary"><i
                             class="fas fa-plus"></i>Add New</a>

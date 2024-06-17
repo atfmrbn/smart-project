@@ -158,10 +158,13 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::get('/teacher/teacher-homeroom/{id}/edit', 'edit')->name('teacher-homeroom.edit');
         Route::put('/teacher/teacher-homeroom/{id}', 'update')->name('teacher-homeroom.update');
         Route::delete('/teacher/teacher-homeroom/{id}', 'destroy')->name('teacher-homeroom.destroy');
+        Route::get('/teacher-homeroom/download', [TeacherHomeroomRelationshipController::class, 'download'])->name('teacher-homeroom.download');
     });
 
     Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
+    Route::get('/teacher-classroom/download', [TeacherClassroomRelationshipController::class, 'download'])->name('teacher-classroom.download');
+
     Route::resource('/teacher/teacher-schedule', TeacherScheduleController::class);
     Route::resource('teacher/grade', GradeController::class);
     Route::resource('teacher/grade-detail', GradeDetailController::class);
