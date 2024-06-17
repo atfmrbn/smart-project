@@ -110,8 +110,10 @@ use App\Http\Controllers\SocialiteController;
 
     Route::resource('/parent/parent-list', ParentController::class);
     Route::resource('/student/student-list', StudentController::class);
+    Route::get('/student-list/download', [StudentController::class, 'download'])->name('student.download');
     Route::resource('/student/student-teacher-classroom', StudentTeacherClassroomRelationshipController::class);
     Route::resource('/student/student-teacher-homeroom', StudentTeacherHomeroomRelationshipController::class);
+    Route::get('/student-teacher-homeroom/download', [StudentTeacherHomeroomRelationshipController::class, 'download'])->name('student-teacher.download');
 
     Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
     Route::resource('/classroom', ClassroomController::class);
