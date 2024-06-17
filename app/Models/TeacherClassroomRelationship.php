@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TeacherClassroomRelationship extends Model
 {
     use HasFactory;
-    use SoftDeletes;    
+    use SoftDeletes;
 
     protected $fillable = [
         'teacher_homeroom_relationship_id',

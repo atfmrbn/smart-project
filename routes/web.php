@@ -36,28 +36,28 @@ use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\TuitionDetailController;
 
-Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
+    Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
+    Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 
-// Untuk redirect ke Google
-Route::get('login/google/redirect', [SocialiteController::class, 'redirect'])
+    // Untuk redirect ke Google
+    Route::get('login/google/redirect', [SocialiteController::class, 'redirect'])
     ->middleware(['guest'])
     ->name('redirect');
 
-// Untuk callback dari Google
-Route::get('login/google/callback', [SocialiteController::class, 'callback'])
+    // Untuk callback dari Google
+    Route::get('login/google/callback', [SocialiteController::class, 'callback'])
     ->middleware(['guest'])
     ->name('callback');
 
-Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password')->middleware('guest');
-Route::post('/forgot-password', [AuthController::class, 'sendEmailReset'])->name('email-reset')->middleware('guest');
+    Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password')->middleware('guest');
+    Route::post('/forgot-password', [AuthController::class, 'sendEmailReset'])->name('email-reset')->middleware('guest');
 
-Route::get('/reset-password/{token}', [AuthController::class, 'emailResetPassword'])->name('email-reset-password')->middleware('guest');
-Route::post('/reset-password', [AuthController::class, 'ResetPassword'])->name('reset-passowrd')->middleware('guest');
+    Route::get('/reset-password/{token}', [AuthController::class, 'emailResetPassword'])->name('email-reset-password')->middleware('guest');
+    Route::post('/reset-password', [AuthController::class, 'ResetPassword'])->name('reset-passowrd')->middleware('guest');
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('/')->middleware('auth')->group(function () {
+    Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('/teacher', [DashboardController::class, 'teacher']);
     Route::get('/dashboard/superAdmin', [DashboardController::class, 'superAdmin'])->name('superAdmin.dashboard');
     Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->name('admin.dashboard');
@@ -111,8 +111,10 @@ Route::prefix('/')->middleware('auth')->group(function () {
 
     Route::resource('/parent/parent-list', ParentController::class);
     Route::resource('/student/student-list', StudentController::class);
+    Route::get('/student-list/download', [StudentController::class, 'download'])->name('student.download');
     Route::resource('/student/student-teacher-classroom', StudentTeacherClassroomRelationshipController::class);
     Route::resource('/student/student-teacher-homeroom', StudentTeacherHomeroomRelationshipController::class);
+    Route::get('/student-teacher-homeroom/download', [StudentTeacherHomeroomRelationshipController::class, 'download'])->name('student-teacher.download');
 
     Route::resource('/classroom/classroom-type', ClassroomTypeController::class);
     Route::resource('/classroom', ClassroomController::class);
@@ -159,13 +161,22 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::get('/teacher/teacher-homeroom/{id}/edit', 'edit')->name('teacher-homeroom.edit');
         Route::put('/teacher/teacher-homeroom/{id}', 'update')->name('teacher-homeroom.update');
         Route::delete('/teacher/teacher-homeroom/{id}', 'destroy')->name('teacher-homeroom.destroy');
+        Route::get('/teacher-homeroom/download', [TeacherHomeroomRelationshipController::class, 'download'])->name('teacher-homeroom.download');
     });
 
     Route::resource('/teacher/teacher-subject', TeacherSubjectRelationshipController::class);
+    Route::get('/teacher-subject/download', [TeacherSubjectRelationshipController::class, 'download'])->name('teacher-subject.download');
+
     Route::resource('/teacher/teacher-classroom', TeacherClassroomRelationshipController::class);
+    Route::get('/teacher-classroom/download', [TeacherClassroomRelationshipController::class, 'download'])->name('teacher-classroom.download');
+
     Route::resource('/teacher/teacher-schedule', TeacherScheduleController::class);
+    Route::get('/teacher-schedule/download', [TeacherScheduleController::class, 'download'])->name('teacher-schedule.download');
+
     Route::resource('teacher/grade', GradeController::class);
+    Route::get('grade/download', [GradeController::class, 'download'])->name('grade.download');
     Route::resource('teacher/grade-detail', GradeDetailController::class);
+    Route::get('grade-detail/download', [GradeDetailController::class, 'download'])->name('grade-detail.download');
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
     Route::resource('attendance', AttendanceController::class);

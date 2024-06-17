@@ -19,8 +19,7 @@
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                
+
                 @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Teacher')
                     <a href="{{ URL::to('parent/parent-list/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
                 @endif
@@ -61,13 +60,13 @@
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 <a href="{{ URL::to('parent/parent-list/' . $parent->id) }}" class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                                
+
                                 {{-- Hanya tampilkan tombol "Edit" dan "Delete" untuk Super Admin dan Admin --}}
                                 @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
                                     <a href="{{ URL::to('parent/parent-list/' . $parent->id) . '/edit' }}" class="btn btn-sm btn-outline-primary me-2">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    
+
                                     <form method="POST" action="{{ URL::to('parent/parent-list/' . $parent->id) }}">
                                         @csrf
                                         @method('delete')

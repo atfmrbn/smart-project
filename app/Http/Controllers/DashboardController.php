@@ -152,15 +152,36 @@ class DashboardController extends Controller
 
     public function parent()
     {
+        $parentId = Auth::id();
+
+        // Retrieve the parent's details
+        $parent = User::with('child')->findOrFail($parentId);
+
+        // Retrieve schedules for the parent's children
+        $schedules = User::where('users.id', $parentId)
+            ->join('users as child', 'child.parent_id', '=', 'users.id')
+            ->join('student_teacher_homeroom_relationships as sthr', 'child.id', '=', 'sthr.student_id')
+            ->join('teacher_homeroom_relationships as thr', 'sthr.teacher_homeroom_relationship_id', '=', 'thr.id')
+            ->join('teacher_classroom_relationships as tcr', 'thr.id', '=', 'tcr.teacher_homeroom_relationship_id')
+            ->join('teacher_schedules as ts', 'tcr.id', '=', 'ts.teacher_classroom_relationship_id')
+            ->join('teacher_subject_relationships as tsr', 'tcr.teacher_subject_relationship_id', '=', 'tsr.id')
+            ->join('users as teacher', 'tsr.teacher_id', '=', 'teacher.id')
+            ->join('subjects', 'tsr.subject_id', '=', 'subjects.id')
+            ->where('thr.curriculum_id', $this->defaultCurriculum->id)
+            ->select('ts.*', 'teacher.name as teacher_name', 'subjects.name as subject_name')
+            ->orderBy('ts.schedule_day')
+            ->orderBy('ts.schedule_time_start')
+            ->get();
+
         $data = [
-            "title" => "Dashboard",
+            "title" => "Parent Dashboard",
+            "parent" => $parent, // Pass the parent data to the view
+            "schedules" => $schedules, // Pass the schedules data to the view
         ];
-        // $user = Auth::user();
-        // $parents = $user->parents; // Mendapatkan informasi orang tua dari user
 
         return view("dashboard.parent", $data);
-        // compact('user', 'parents')
     }
+
 
     public function librarian()
     {

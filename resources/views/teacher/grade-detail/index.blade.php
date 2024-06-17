@@ -9,8 +9,7 @@
                 @if (Auth::user()->role == 'Teacher')
                     <div class="col-auto text-end float-end ms-auto download-grp">
                         <div class="btn-group" role="group" aria-label="Actions">
-                            <a href="#" class="btn btn-outline-primary me-2"><i
-                                    class="fas fa-download me-1"></i>Download</a>
+                            <a href="{{ route('grade-detail.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
                             <a href="{{ route('grade-detail.create') }}" class="btn btn-primary"><i
                                     class="fas fa-plus me-1"></i>Add New</a>
                         </div>
