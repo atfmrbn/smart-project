@@ -120,7 +120,7 @@ class TuitionDetailController extends Controller
         // Payment parameters
         $params = [
             'transaction_details' => [
-                'order_id' => $tuition->id,
+                'order_id' => $tuition->id . '-' . time(),
                 'gross_amount' => $totalBill,
             ],
             'customer_details' => [
@@ -129,6 +129,8 @@ class TuitionDetailController extends Controller
                 'email' => $tuition->studentTeacherHomeroomRelationship->student->email,
             ],
         ];
+
+        // dd($params);
 
         // Get Snap Token from Midtrans
         $snapToken = Snap::getSnapToken($params);

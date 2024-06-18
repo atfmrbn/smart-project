@@ -61,7 +61,7 @@ class TuitionController extends Controller
             'tuition_date' => 'required',
         ]);
         
-        dd($data);
+        // dd($data);
 
         // Save the validated data into the database
         $tuition = Tuition::create([
