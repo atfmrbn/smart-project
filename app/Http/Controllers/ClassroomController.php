@@ -16,7 +16,7 @@ class ClassroomController extends Controller
     {
         $classrooms = Classroom::with('classroomType')->orderBy('id')->get();
         $data = [
-            "title" => "Ruang Kelas",
+            "title" => "Classrooms",
             "classrooms" => $classrooms,
         ];
 

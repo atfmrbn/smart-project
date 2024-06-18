@@ -11,7 +11,7 @@
                         <div class="btn-group" role="group" aria-label="Actions">
                             <a href="{{ route('grade-detail.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
                             <a href="{{ route('grade-detail.create') }}" class="btn btn-primary"><i
-                                    class="fas fa-plus me-1"></i>Add New</a>
+                                    class="fas fa-plus me-1"></i> New</a>
                         </div>
                     </div>
                 @endif
@@ -60,7 +60,7 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr class="text-center">
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Grade</th>
                         <th>Student</th>
                         <th>Value</th>
@@ -71,7 +71,7 @@
                     @foreach ($gradeDetails as $index => $gradeDetail)
                         <tr>
                             <td class="text-center">{{ $index + 1 }}</td>
-                            <td class="text-center">
+                            <td>
                                 {{ optional($gradeDetail->grade->taskType)->name ?? '' }} -
                                 {{ optional($gradeDetail->grade->teacherClassroomRelationship->teacherHomeroomRelationship->classroom)->classroomType->name ?? '' }}
                                 -

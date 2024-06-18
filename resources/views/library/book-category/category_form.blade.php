@@ -6,11 +6,11 @@
 <h5>{{ isset($category) ? 'Edit' : 'Add' }} Category</h5>
 <br>
 @if(isset($category))
-<form method="POST" action="{{ route('book-category.update', $category->id) }}" autocomplete="off" enctype="multipart/form-data">
+<form method="POST" action="{{ route('book-category.update', $category->id) }}" autocomplete="off">
     @csrf
     @method('PUT')
 @else
-<form method="POST" action="{{ route('book-category.store') }}" autocomplete="off" enctype="multipart/form-data">
+<form method="POST" action="{{ route('book-category.store') }}" autocomplete="off">
 @endif
     @csrf
     <div class="row">
@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label for="name">Name <span class="login-danger">*</span></label>
                 <input type="text" name="name" id="name" class="form-control" 
-                value="{{ isset($category) ? $category->name : old('name') }}" required>
+                value="{{ isset($category) ? $category->name : old('name') }}" required autofocus>
             </div>
         </div>
         <div class="col-12 col-sm-12">

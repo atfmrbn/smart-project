@@ -21,7 +21,7 @@
         <div class="col-12 col-sm-6">
             <div class="form-group local-forms">
                 <label for="student_teacher_homeroom_id">Student Teacher Homeroom <span class="login-danger">*</span></label>
-                <select name="student_teacher_homeroom_id" id="student_teacher_homeroom_id" class="form-control data-select-2 @error('student_teacher_homeroom_id') is-invalid @enderror">
+                <select name="student_teacher_homeroom_id" id="student_teacher_homeroom_id" class="form-control data-select-2 @error('student_teacher_homeroom_id') is-invalid @enderror" autofocus>
                     <option value="">Select Student Teacher Homeroom</option>
                     @foreach ($studentTeacherHomeroomRelationships as $studentTeacherHomeroomRelationship) 
                         <option value="{{ $studentTeacherHomeroomRelationship->id }}" {{ isset($attendance) && $attendance && $attendance->student_teacher_homeroom_id === $studentTeacherHomeroomRelationship->id ? 'selected' : '' }}>

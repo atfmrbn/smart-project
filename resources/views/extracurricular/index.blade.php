@@ -30,7 +30,7 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr class="text-center">
-                            <th width="5%">No.</th>
+                            <th width="5%">#</th>
                             <th>Name</th>
                             <th>Description</th>
                             <th width="10%">Action</th>
