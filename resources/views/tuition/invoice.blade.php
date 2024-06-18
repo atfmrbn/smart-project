@@ -38,6 +38,9 @@
                 </tr>
             </tbody>
         </table>
+        <br><br>
+        <a href="{{ URL::to('tuition') }}" class="btn btn-outline-secondary">Back</a>
+
     </div>
 </div>
 
