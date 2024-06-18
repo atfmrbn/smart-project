@@ -29,42 +29,53 @@
         </thead>
         <tbody>
             @foreach ($tuitions as $index => $tuition)
-            <tr class="align-middle">
-                <td class="text-center">{{ $index + 1 }}</td>
-                <td>
-                    {{ $tuition->studentTeacherHomeroomRelationship->student->identity_number }} - {{ $tuition->studentTeacherHomeroomRelationship->student->name }}
-                </td>
-                {{-- <td>{{ $tuition->classroom_name }} - {{ $tuition->identity_number }}  - {{ $tuition->name }}</td> --}}
-                <td>{{ DateFormat($tuition->tuition_date, "DD MMMM Y") }}</td>
-                <td class="text-center">
-                    @if ($tuition->status == 'Paid')
-                        <span class="badge badge-success">Paid</span>
-                    @else
-                        <span class="badge badge-warning">Unpaid</span>
-                    @endif
-                </td>
-                <td class="text-center">
-                    <div class="d-flex justify-content-center align-items-center">
-                        @if(auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
-                        <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
-                            <i class="fas fa-edit"></i>Edit
-                        </a>
-                        <form method="POST" action="{{ URL::to('tuition/' . $tuition->id) }}">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Anda yakin mau menghapus tuition {{ $tuition->name }} ?')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                        @elseif(auth()->user()->role === 'Student')
-                        <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
-                            <i class="fas fa-money-bill-wave"></i> Pay
-                        </a>
-                        @endif
-                    </div>
-                </td>
-            </tr>
+                @if(auth()->user()->role === 'Student' && $tuition->studentTeacherHomeroomRelationship->student->id === auth()->user()->id)
+                    <tr class="align-middle">
+                        <td class="text-center">{{ $index + 1 }}</td>
+                        <td>{{ $tuition->studentTeacherHomeroomRelationship->student->identity_number }} - {{ $tuition->studentTeacherHomeroomRelationship->student->name }}</td>
+                        <td>{{ DateFormat($tuition->tuition_date, "DD MMMM Y") }}</td>
+                        <td class="text-center">
+                            @if ($tuition->status == 'Paid')
+                                <span class="badge badge-success">Paid</span>
+                            @else
+                                <span class="badge badge-warning">Unpaid</span>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center align-items-center">
+                                @if ($tuition->status === 'Paid')
+                                    <a href="{{ URL::to('invoice/' . $tuition->id) }}" title="Invoice" class="btn btn-sm btn-outline-warning me-2">
+                                        <i class="fas fa-receipt"></i> 
+                                    </a>
+                                @else
+                                    <a href="{{ route('tuition.edit', $tuition->id) }}" title="Pay Off" class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="fas fa-money-bill-wave"></i> 
+                                    </a>
+                                @endif
+
+                                @if(auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
+                                    <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <form method="POST" action="{{ URL::to('tuition/' . $tuition->id) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Anda yakin mau menghapus tuition {{ $tuition->name }} ?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                @endif
             @endforeach
+
+            @if(auth()->user()->role === 'Student' && $tuitions->isEmpty())
+                <tr>
+                    <td colspan="5" class="text-center">Belom ada tagihan</td>
+                </tr>
+            @endif
         </tbody>
     </table>
 </div>
