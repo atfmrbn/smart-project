@@ -85,7 +85,7 @@ class TuitionController extends Controller
         // $now = Carbon::now();
 
         $data = [
-            'title' => 'Edit Borrowing Books',
+            'title' => 'Tuition Detail',
             'tuition' => $tuition,
             'students' => $students,
             'tuitionTypes' => $tuitionTypes,
