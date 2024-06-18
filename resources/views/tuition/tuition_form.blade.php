@@ -110,7 +110,11 @@
                 <input type="text" id="description" name="description" class="form-control" value="{{ isset($tuition) ? $tuition->description : old('description') }}" {{ isset($tuitionDetail) ? 'disabled' : '' }} placeholder="Add description">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Add Tuition</button>
+        @if($tuition->status !== 'Paid')
+            <button type="submit" class="btn btn-primary btn-block">Add Tuition</button>
+        @else
+            <button type="submit" class="btn btn-success btn-block" disabled>Paid</button>
+        @endif
     </form>
 
     <div class="col-md-12 mt-2 table-responsive">
@@ -164,12 +168,20 @@
             <input type="hidden" name="tuitionDetails[{{ $index }}][value]" value="{{ $tuitionDetail->value }}">
             @endforeach
             <input type="hidden" name="total" value="{{ $total }}">
+            @if($status !== 'Paid')
             <div class="text-end mt-3">
-                <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-dollar-sign"></i> Pay Off</button>
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-dollar-sign"></i> Pay Off
+                </button>
             </div>
+            @else
+            <div class="text-end mt-3">
+                <button type="button" class="btn btn-sm btn-success" disabled>
+                    <i class="fas fa-check"></i> Paid
+                </button>
+            </div>
+            @endif
         </form>
-
-
     </div>
 
 
