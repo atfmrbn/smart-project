@@ -203,7 +203,7 @@
                     </li>
                 @endif
 
-                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher', 'Student', 'Parent']))
+                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Student']))
                     <li class="menu-title">
                         <span>Management</span>
                     </li>
@@ -247,7 +247,7 @@
                         </li>
                     @endif
 
-                    @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Student', 'Parent', 'Teacher']))
+                    @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Student']))
                         <li
                             class="nav-item {{ request()->is('tuition') ? 'active' : '' }} || {{ request()->is('tuition/create') ? 'active' : '' }} || {{ request()->is('tuition/*/edit') ? 'active' : '' }}">
                             <a href="{{ URL::to('/tuition') }}"><i class="fas fa-money-bill-wave"></i> <span>
