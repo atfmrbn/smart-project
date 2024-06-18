@@ -89,6 +89,7 @@ class TuitionController extends Controller
             'tuition' => $tuition,
             'students' => $students,
             'tuitionTypes' => $tuitionTypes,
+            'status' => $tuition->status,
             // 'canBorrow' => $tuition->checkout_date == $now->toDateString()
         ];
 
