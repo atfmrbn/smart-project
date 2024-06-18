@@ -34,7 +34,9 @@
                 @foreach ($teacherClassroomRelationships as $teacherClassroomRelationship)
                 <option value="{{ $teacherClassroomRelationship->id }}" {{ request('teacher_classroom_relationship_id') == $teacherClassroomRelationship->id ? 'selected' : '' }}>
                     {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }} -
-                    {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ $teacherClassroomRelationship->teacherSubjectRelationship->teacher->name }}-{{ $teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
+                    {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }} - 
+                    {{-- {{ $teacherClassroomRelationship->teacherSubjectRelationship->teacher? $teacherClassroomRelationship->teacherSubjectRelationship->teacher->name : ""}}-
+                    {{ $teacherClassroomRelationship->teacherSubjectRelationship->subject? $teacherClassroomRelationship->teacherSubjectRelationship->subject->name : ""}} --}}
                 </option>
                 @endforeach
             </select>

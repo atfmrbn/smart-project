@@ -6,10 +6,10 @@
         </div>
     @endif
     @if (isset($user))
-    <form method="POST" action="{{ URL::to('user/' . $user->id) }}" autocomplete="off" enctype="multipart/form-data">
+    <form method="POST" action="{{ URL::to('user/' . $user->id) }}" autocomplete="off">
         @method('PUT')
 @else
-    <form method="POST" action="{{ URL::to('user') }}" autocomplete="off" enctype="multipart/form-data">
+    <form method="POST" action="{{ URL::to('user') }}" autocomplete="off">
 @endif
     @csrf
     <div class="row">
@@ -21,7 +21,7 @@
                 <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
                 <input type="text" id="identity_number" name="identity_number"
                     class="form-control @error('identity_number')is-invalid @enderror"
-                    value="{{ isset($user) ? $user->identity_number : old('identity_number') }}">
+                    value="{{ isset($user) ? $user->identity_number : old('identity_number') }}" autofocus>
                 @error('identity_number')
                     <div class="invalid-feedback">
                         {{ $message }}

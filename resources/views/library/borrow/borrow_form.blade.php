@@ -26,7 +26,7 @@
 </div>
 <br>
 @if(isset($borrow))
-<form method="POST" action="{{ route('book-borrow.update', $borrow->id) }}" autocomplete="off" enctype="multipart/form-data">
+<form method="POST" action="{{ route('book-borrow.update', $borrow->id) }}" autocomplete="off">
     @method('PUT')
     @csrf
 @else

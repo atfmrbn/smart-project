@@ -13,9 +13,9 @@ class GradeController extends Controller
     public function index(Request $request)
     {
         $taskTypes = TaskType::all();
-        $teacherClassroomRelationships = TeacherClassroomRelationship::all();
+        $teacherClassroomRelationships = TeacherClassroomRelationship::with(['teacherHomeroomRelationship','teacherSubjectRelationship.teacher','teacherSubjectRelationship.subject'])->get();
 
-        $gradesQuery = Grade::with(['taskType', 'teacherClassroomRelationship.teacherHomeroomRelationship.teacher']);
+        $gradesQuery = Grade::with(['taskType', 'teacherClassroomRelationship.teacherHomeroomRelationship']);
 
         if ($request->filled('task_type_id')) {
             $gradesQuery->where('task_type_id', $request->task_type_id);

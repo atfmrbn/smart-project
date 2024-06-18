@@ -50,14 +50,14 @@ class BookController extends Controller
             'isbn' => 'required',
             'status' => 'required',
             'description' => 'required',
-            'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024',
+            // 'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024',
         ]);
 
-        if($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('img', 'public');
-        } else {
-            $data['image'] = null;
-        }
+        // if($request->hasFile('image')) {
+        //     $data['image'] = $request->file('image')->store('img', 'public');
+        // } else {
+        //     $data['image'] = null;
+        // }
 
         Book::create($data);
 

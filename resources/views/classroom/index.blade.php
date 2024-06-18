@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('container')
-    {{-- @if (session()->has('successMessage'))
+    @if (session()->has('successMessage'))
     <div class="alert alert-success">
         {{ session("successMessage") }}
     </div>
@@ -10,17 +10,19 @@
     <div class="alert alert-danger">
         {{ session("errorMessage") }}
     </div>
-@endif --}}
+@endif
     <div class="col-auto text-end float-end ms-auto download-grp">
-        <a href="{{ URL::to('classroom/create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus" aria-hidden="true"></i>Add New</a>
+        <a href="{{ URL::to('classroom/create') }}" class="btn btn-primary mb-3"><i class="fas fa-plus" ></i> New</a>
     </div>
+    {{-- <div class="col-12"> --}}
+        <h4 class="form-title">{{ $title }}</h4>
+    {{-- </div> --}}
     <div class="table-responsive mt-5">
-        <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <table id="example" class="table table-striped table-bordered table-responsive">
             <thead>
                 <tr>
-                    <th width="5%">No.</th>
-                    <th class="text-center">Classroom Type ID</th>
+                    <th width="5%">#</th>
+                    {{-- <th class="text-center">Classroom Type ID</th> --}}
                     <th>Classroom Type Name</th>
                     <th>Name</th>
                     <th width="10%">Action</th>
@@ -30,7 +32,7 @@
                 @foreach ($classrooms as $index => $classroom)
                     <tr>
                         <td class="align-middle">{{ $index + 1 }}</td>
-                        <td class="align-middle text-center">{{ $classroom->classroom_type_id }}</td>
+                        {{-- <td class="align-middle text-center">{{ $classroom->classroom_type_id }}</td> --}}
                         <td class="align-middle">{{ $classroom->classroomType->name }}</td>
                         <td class="align-middle">{{ $classroom->name }}</td>
                         <td>
@@ -43,8 +45,9 @@
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-sm btn-outline-danger me-2"
-                                        onclick="return confirm('Anda yakin mau menghapus data ini {{ $classroom->name }} ?')"><i
-                                            class="fas fa-trash"></i></button>
+                                        onclick="return confirm('Anda yakin mau menghapus kelas {{ $classroom->name }} ?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </form>
                             </div>
                         </td>

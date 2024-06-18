@@ -8,8 +8,7 @@
             <div class="col-auto text-end float-end ms-auto download-grp">
                 <a href="{{ route('teacher-homeroom.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
                 @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
-                    <a href="{{ route('teacher-homeroom.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
-                    Add New</a>
+                    <a href="{{ route('teacher-homeroom.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
                 @endif
             </div>
         </div>
@@ -19,7 +18,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead class="teacher-homeroom-thread">
                 <tr class="text-center">
-                    <th>Id</th>
+                    <th>#</th>
                     <th>Teacher</th>
                     <th>Classroom</th>
                     <th>Curriculum</th>

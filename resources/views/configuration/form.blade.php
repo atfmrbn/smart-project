@@ -6,7 +6,7 @@
         </div>
     @endif
     @if (isset($configuration))
-        <form method="POST" action="{{ URL::to('configuration/' . $configuration->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('configuration/' . $configuration->id) }}" autocomplete="off">
             @method('put')
         @else
             <form method="POST" action="{{ URL::to('configuration') }}" autocomplete="off">
@@ -20,7 +20,7 @@
             <div class="form-group local-forms">
                 <label for="name">Name <span class="login-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control @error('name')is-invalid @enderror"
-                    value="{{ isset($configuration) ? $configuration->name : old('name') }}">
+                    value="{{ isset($configuration) ? $configuration->name : old('name') }}" autofocus>
                 @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -67,7 +67,7 @@
         </div>
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
-                <label for="book_penalty">Penalty <span class="login-danger">*</span></label>
+                <label for="book_penalty">Book Penalty <span class="login-danger">*</span></label>
                 <input type="book_penalty" id="book_penalty" name="book_penalty" class="form-control @error('book_penalty')is-invalid @enderror"
                     value="{{ isset($configuration) ? $configuration->book_penalty : old('book_penalty') }}">
                 @error('book_penalty')

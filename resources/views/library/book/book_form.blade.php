@@ -18,7 +18,7 @@
             <div class="form-group local-forms">
                 <label for="title">Book Name <span class="login-danger">*</span></label>
                 <input type="text" name="title" id="title" class="form-control" 
-                value="{{ isset($book) ? $book->title : old('name') }}" >
+                value="{{ isset($book) ? $book->title : old('name') }}" autofocus>
             </div>
         </div>
 
@@ -88,13 +88,13 @@
             </div>
         </div>
         
-        <div class="col-12 col-sm-12">
+        {{-- <div class="col-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="image">Image</label>
                 <input type="file" name="image" id="image" class="form-control" 
                 value="{{ isset($book) ? $book->image : old('image') }}">
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-12">
             <div class="student-submit">

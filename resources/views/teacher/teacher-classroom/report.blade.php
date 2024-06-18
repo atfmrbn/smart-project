@@ -28,7 +28,7 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
+                <th>#</th>
                 <th>Classroom</th>
                 <th>Teacher Subject</th>
             </tr>

@@ -195,18 +195,18 @@
                             value="{{ $tuitionDetail->value }}">
                     @endforeach
                     <input type="hidden" name="total" value="{{ $total }}">
-                    @if ($status !== 'Paid')
+                    @if(auth()->user()->role === 'Student' && $status !== 'Paid')
                         <div class="text-end mt-3">
                             <button type="submit" class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-dollar-sign"></i> Pay Off
                             </button>
                         </div>
-                    @else
+                    {{-- @endif
                         <div class="text-end mt-3">
                             <button type="button" class="btn btn-sm btn-success" disabled>
                                 <i class="fas fa-check"></i> Paid
                             </button>
-                        </div>
+                        </div> --}}
                     @endif
                 </form>
             </div>

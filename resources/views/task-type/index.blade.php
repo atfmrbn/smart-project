@@ -19,7 +19,7 @@
             <h3 class="page-title">{{ $title }}</h3>
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
-            <a href="{{ route('task-type.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+            <a href="{{ route('task-type.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
         </div>
     </div>
 </div>
@@ -28,9 +28,9 @@
     <table id="example" class="table table-bordered table-striped">
         <thead>
             <tr class="text-center">
-                <th>#</th>
+                <th style="width: 10%">#</th>
                 <th>Name</th>
-                <th>Actions</th>
+                <th style="width: 35%">Actions</th>
             </tr>
         </thead>
         <tbody>

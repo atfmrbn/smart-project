@@ -18,7 +18,7 @@
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ route('curriculum.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+                <a href="{{ route('curriculum.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
             </div>
         </div>
     </div>

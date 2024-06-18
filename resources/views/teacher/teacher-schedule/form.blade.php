@@ -8,10 +8,10 @@
 @endif
 
 @if (isset($teacherSchedule))
-    <form method="POST" action="{{ route('teacher-schedule.update', $teacherSchedule->id) }}" autocomplete="off" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('teacher-schedule.update', $teacherSchedule->id) }}" autocomplete="off">
     @method('PUT')
 @else
-    <form method="POST" action="{{ route('teacher-schedule.store') }}" autocomplete="off" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('teacher-schedule.store') }}" autocomplete="off">
 @endif
     @csrf
 
@@ -20,7 +20,7 @@
             <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
 
-        <div class="col-12">
+        <div class="col-md-6 col-sm-12">
             <div class="form-group local-forms">
                 <label for="teacher_classroom_relationship_id">Teacher Classroom <span class="login-danger">*</span></label>
                 <select name="teacher_classroom_relationship_id" id="teacher_classroom_relationship_id" class="form-control data-select-2 @error('teacher_homeroom_relationship_id') is-invalid @enderror" value="7">
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-4">
+        <div class="col-md-6 col-sm-12">
             <div class="form-group local-forms">
                 <label for="schedule_day">Teacher Schedule Day <span class="login-danger">*</span></label>
                 <select name="schedule_day" id="schedule_day" class="form-control data-select-2 @error('schedule_day') is-invalid @enderror">
@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-4">
+        <div class="col-md-6 col-sm-12">
             <div class="form-group local-forms">
                 <label for="schedule_time_start">Teacher Schedule Time Start <span class="login-danger">*</span></label>
                 <input class="form-control @error('schedule_time_start') is-invalid @enderror" type="time" name="schedule_time_start" value="{{ isset($teacherSchedule) ? DateFormat($teacherSchedule->schedule_time_start, "HH:mm") : '' }}" />
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-4">
+        <div class="col-md-6 col-sm-12">
             <div class="form-group local-forms">
                 <label for="schedule_time_end">Teacher Schedule Time End <span class="login-danger">*</span></label>
                 <input class="form-control @error('schedule_time_end') is-invalid @enderror" type="time" name="schedule_time_end" value="{{ isset($teacherSchedule) ? DateFormat($teacherSchedule->schedule_time_end, "HH:mm") : '' }}" />
