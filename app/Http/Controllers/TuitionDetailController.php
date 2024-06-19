@@ -151,11 +151,11 @@ class TuitionDetailController extends Controller
         $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
 
         if ($hashed == $request->signature_key) {
-            if ($request->transaction_status == 'capture'  || $request->transaction_status == 'settlement') {
+            if ($request->transaction_status == 'capture' || $request->transaction_status == 'settlement') {
                 $tuition = Tuition::find($request->order_id);
                 if ($tuition) {
                     $tuition->update(['status' => 'Paid']);
-                    return $this->invoice($tuition->id);
+                    // return $this->invoice($tuition->id);
                 } else {
                     dd("Tuition with ID {$request->order_id} not found.");
                 }
@@ -167,13 +167,11 @@ class TuitionDetailController extends Controller
         }
     }
 
-    
-
     public function invoice($id)
     {
         // Pastikan tuition ditemukan dan memuat relasi tuitionDetails
         $tuition = Tuition::with('tuitionDetails')->find($id);
-
+        // dd($id);
         if (!$tuition) {
             // Jika tuition tidak ditemukan, tampilkan pesan atau redirect ke halaman lain
             return redirect()->back()->withErrors('Transaksi tidak ditemukan.');
