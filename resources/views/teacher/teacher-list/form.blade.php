@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('container')
-    
+
     <form method="POST" action="{{ isset($teacher) ? route('teacher.update', $teacher->id) : route('teacher.store') }}"
         autocomplete="off" enctype="multipart/form-data">
         @csrf

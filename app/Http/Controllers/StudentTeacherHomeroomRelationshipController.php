@@ -73,7 +73,7 @@ class StudentTeacherHomeroomRelationshipController extends Controller
 
         StudentTeacherHomeroomRelationship::create($data);
 
-        return redirect()->route('student-teacher-homeroom.index')->with('success', 'Add data successfully.');
+        return redirect()->route('student-teacher-homeroom.index')->with('successMessage', 'Add data successfully.');
     }
 
     /**
@@ -127,9 +127,9 @@ class StudentTeacherHomeroomRelationshipController extends Controller
 
             $studentTeacherHomeroomRelationship->update($data);
 
-            return redirect()->route('student-teacher-homeroom.index')->with('success', 'Data successfully updated');
+            return redirect()->route('student-teacher-homeroom.index')->with('successMessage', 'Data successfully updated');
         } catch (\Throwable $th) {
-            return redirect()->route('student-teacher-homeroom.edit', $id)->with('error', $th->getMessage());
+            return redirect()->route('student-teacher-homeroom.edit', $id)->with('errorMessage', $th->getMessage());
         }
     }
 
@@ -142,7 +142,7 @@ class StudentTeacherHomeroomRelationshipController extends Controller
             $studentTeacherHomeroomRelationship = StudentTeacherHomeroomRelationship::findOrFail($id);
             $studentTeacherHomeroomRelationship->delete();
 
-            return redirect()->route('student-teacher-homeroom.index')->with('success', 'Data successfully deleted');
+            return redirect()->route('student-teacher-homeroom.index')->with('successMessage', 'Data successfully deleted');
         } catch (\Throwable $th) {
             return redirect()->route('student-teacher-homeroom.index')->with('error', $th->getMessage());
         }
