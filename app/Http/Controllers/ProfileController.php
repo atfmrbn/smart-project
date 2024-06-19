@@ -9,11 +9,27 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+
+        $data = [
+            "title" => "Profile",
+            "user" => $user,
+        ];
+        return view('profile.index', $data);
+    }
+    
     public function editProfile()
     {
         $user = Auth::user();
 
-        return view('profile.edit-profile', ['user' => $user, 'title' => 'Edit Profile']);
+        $data = [
+            "title" => "Edit Profile",
+            "user" => $user,
+        ];
+
+        return view('profile.edit-profile', $data);
     }
 
     /**
@@ -21,40 +37,55 @@ class ProfileController extends Controller
      */
     public function updateProfile(Request $request)
     {
-        $user = Auth::user();
-        $data = $request->validate([
+        $request->validate([
+            'identity_number' => 'required',
             'name' => 'required',
-            'username' => 'required|alpha_num|unique:users,username,' . $user->id,
-            'email' => 'required|unique:users,email,' . $user->id,
-            'gender' => 'required',
-            'born_date' => 'required',
+            'username' => 'required',
+            'email' => 'required|email',
+            'gender' => 'required|in:male,female',
+            'born_date' => 'required|date',
             'phone' => 'required',
-            'nik' => 'required|unique:users,nik,' . $user->id,
+            'nik' => 'required',
             'address' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'password' => 'nullable|min:6|confirmed',
+            'image' => 'nullable|image|max:2048',
         ]);
-    
+
+        $user = Auth::user();
+        $user->identity_number = $request->identity_number;
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->gender = $request->gender;
+        $user->born_date = $request->born_date;
+        $user->phone = $request->phone;
+        $user->nik = $request->nik;
+        $user->address = $request->address;
+
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time().'.'.$image->extension();
-            $image->move(public_path('images'), $imageName);
-    
-            // Hapus gambar lama jika ada
-            if ($user->image) {
-                Storage::delete('images/'.$user->image);
-            }
-    
-            $data['image'] = $imageName;
+            $filePath = $request->file('image')->store('images', 'public');
+            $user->image = $filePath;
         }
-    
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
-        }
-    
-        $user->update($data);
-    
-        return redirect()->route('profile.edit-profile')->with('success', 'Profile updated successfully.');
-    }    
+
+        $user->save();
+
+        return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
+    }
+  
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('profile.index')->with('successPassword', 'Password updated successfully.');
+    }
+
 }
 

@@ -72,10 +72,9 @@
               </a>
               <div class="dropdown-menu">
                   <div class="user-header">
-                      <a class="dropdown-item" href="{{ URL::to('profile.edit-profile') }}">My Profile</a>
+                      <a class="dropdown-item" href="{{ URL::to('/profile') }}">My Profile</a>
                       {{-- <a class="dropdown-item" href="inbox.html">Inbox</a>
                       <a class="dropdown-item" href="login.html">Logout</a> --}}
-                  </div>
               </div>
           </li>
         </ul>
