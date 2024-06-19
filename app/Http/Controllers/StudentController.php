@@ -44,26 +44,41 @@ class StudentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'identity_number' => 'required',
-            'name' => 'required',
-            'username' => 'required|alpha_num|unique:users',
-            'email' => 'required',
-            'password' => 'required|min:3',
-            'gender' => 'required',
-            'born_date'=> 'required',
-            'phone'=> 'required',
-            'nik'=> 'required',
-            'address'=> 'required',
-            'role' => 'required',
-        ]);
+{
+    $data = $request->validate([
+        'identity_number' => 'required',
+        'name' => 'required',
+        'username' => 'required|alpha_num|unique:users',
+        'email' => 'required|email',
+        'password' => 'required|min:3',
+        'gender' => 'required',
+        'born_date'=> 'required|date',
+        'phone'=> 'required|numeric',
+        'nik'=> 'required|numeric',
+        'address'=> 'required',
+        'role' => 'required',
+        'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024',
+    ]);
+    $data['password'] = Hash::make($data["password"]);
+    // dd($data);
 
-        // $data['password'] = Hash::make($data["password"]);
-        User::create($data);
 
-        return redirect('student/student-list')->with("successMessage", "Add data sukses");
+    if ($request->hasFile('image')) {
+        try {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $data['image'] = $imageName;
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors('Error uploading image: ' . $e->getMessage());
+        }
     }
+
+    User::create($data);
+
+    return redirect('student/student-list')->with("successMessage", "Add data sukses");
+}
+
 
     /**
      * Display the specified resource.
@@ -114,16 +129,36 @@ class StudentController extends Controller
             'nik'=> 'required|unique:users,nik,' . $id,
             'address'=> 'required',
             'role' => 'required',
+            'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024',
         ]);
+
         try {
             $student = User::find($id);
-            
-            // if($request->password){
-            //     $data['password'] = Hash::make($data["password"]);
-            // }else {
-            //     $data['password'] = $student->password;
-            // }
 
+            if ($request->hasFile('image')) {
+                // Hapus gambar lama jika ada
+                if ($student->image && file_exists(public_path('images/' . $student->image))) {
+                    unlink(public_path('images/' . $student->image));
+                }
+
+                // Upload gambar baru
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images'), $imageName);
+                $data['image'] = $imageName;
+            } else {
+                // Tetapkan kembali gambar lama jika tidak ada gambar baru yang diunggah
+                $data['image'] = $student->image;
+            }
+
+            // Ubah password hanya jika disediakan
+            if($request->filled('password')){
+                $data['password'] = Hash::make($request->password);
+            } else {
+                unset($data['password']); // Hapus password dari data jika tidak ada perubahan
+            }
+            // dd($data);
+            // Update data student
             $student->update($data);
 
             return redirect('student/student-list')->with("successMessage", "Edit data sukses");
@@ -132,6 +167,7 @@ class StudentController extends Controller
         }
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -139,6 +175,13 @@ class StudentController extends Controller
     {
         try {
             $student = User::where('id', $id)->where('role', 'Student')->first();
+            if ($student->image) {
+                $imagePath = public_path('images') . '/' . $student->image;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
             $student->delete();
             return redirect('student/student-list')->with("successMessage", "Delete data sukses");
         } catch (\Throwable $th){

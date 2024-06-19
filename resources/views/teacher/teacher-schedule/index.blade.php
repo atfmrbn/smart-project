@@ -79,7 +79,7 @@
                     <td>{{ $teacherSchedule->teacherClassroomRelationship->teacherSubjectRelationship->teacher->name }} -
                         {{ $teacherSchedule->teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
                     </td>
-                    <td>{{ $teacherSchedule->schedule_day }}
+                    <td class="text-end">{{ $teacherSchedule->schedule_day }}
                         {{ \Carbon\Carbon::parse($teacherSchedule->schedule_time_start)->format('H:i') }} -
                         {{ \Carbon\Carbon::parse($teacherSchedule->schedule_time_end)->format('H:i') }}
                     </td>

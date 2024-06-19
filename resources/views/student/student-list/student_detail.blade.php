@@ -43,7 +43,8 @@
                                 class="form-control" value="{{ $student->identity_number }}" readonly>
                         </div>
                         <div class="form-group local-forms">
-                            <label><strong>Student Name:</strong></label>
+
+                            <label><strong>Name:</strong></label>
                             <input type="text" id="name" name="name" class="form-control"
                                 value="{{ $student->name }}" readonly>
                         </div>
