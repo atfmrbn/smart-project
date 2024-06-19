@@ -54,9 +54,8 @@
                 @foreach ($teacher_subjects as $index => $teacher_subject)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
-                        <td>{{ $teacher_subject->teacher->name }}</td>
-                        <td class="text-center">{{ $teacher_subject->teacher->name }} -
-                            {{ $teacher_subject->subject->name }}</td>
+                        <td class="text-center">{{ $teacher_subject->teacher->name }}</td>
+                        <td class="text-center">{{ $teacher_subject->subject->name }}</td>
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 <a href="{{ route('teacher-subject.edit', $teacher_subject->id) }}"
