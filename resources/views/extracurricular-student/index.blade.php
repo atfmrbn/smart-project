@@ -1,5 +1,24 @@
 @extends('layouts.main')
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Parent')
+                <li class="breadcrumb-item"><a href="{{ route('parent.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session()->has('successMessage'))
         <div class="alert alert-success">
             {{ session('successMessage') }}

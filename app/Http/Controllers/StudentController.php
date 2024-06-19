@@ -91,7 +91,7 @@ class StudentController extends Controller
             return redirect('student/student-list')->with("errorMessage", "Data tidak ditemukan");
         }
         $data = [
-            "title" => "Edit User",
+            "title" => "Edit Student",
             "student" => $student,
         ];
 

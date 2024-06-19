@@ -120,7 +120,7 @@ class ParentController extends Controller
         }
 
         $data = [
-            "title" => "Detail User",
+            "title" => "Detail Parent",
             "parent" => $parent,
         ];
 
