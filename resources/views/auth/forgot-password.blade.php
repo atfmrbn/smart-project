@@ -182,7 +182,7 @@
                     <label>Email <span class="login-danger">*</span></label>
                     <input type="email" id="email" name="email"
                         class="form-control @error('email') is-invalid @enderror"
-                        placeholder="Enter email">
+                        placeholder="Enter email" autofocus>
                     <span class="profile-views"><i class="fas fa-envelope"></i></span>
                     @error('email')
                         <div class="invalid-feedback">
