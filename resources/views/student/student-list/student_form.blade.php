@@ -1,26 +1,50 @@
 @extends('layouts.main')
 @section('container')
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+
+            @elseif (auth()->user()->role == 'Parent')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('/student/student-list') }}">Students</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
+
     @if (isset($student))
-        <form method="POST" action="{{ URL::to('student/student-list/' . $student->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('student/student-list/' . $student->id) }}" autocomplete="off"
+            enctype="multipart/form-data">
             @method('put')
-        @else
-            <form method="POST" action="{{ URL::to('student/student-list') }}" autocomplete="off">
+
+    @else
+        <form method="POST" action="{{ URL::to('student/student-list') }}" autocomplete="off" enctype="multipart/form-data">
     @endif
     @csrf
     <div class="row">
         <div class="col-12">
             <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
-                <input type="text" id="identity_number" name="identity_number" class="form-control @error('identity_number')is-invalid @enderror"
-                    value="{{ isset($student) ? $student->identity_number : old('identity_number') }}">
+                <input type="text" id="identity_number" name="identity_number"
+                    class="form-control @error('identity_number')is-invalid @enderror"
+                    value="{{ isset($student) ? $student->identity_number : old('identity_number') }}" autofocus>
                 @error('identity_number')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -28,7 +52,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="name">Student Name <span class="login-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control @error('name')is-invalid @enderror"
@@ -41,7 +65,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="username">Username <span class="login-danger">*</span></label>
                 <input type="text" id="username" name="username"
@@ -54,7 +78,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="password">Password <span class="login-danger">*</span></label>
                 <input type="password" id="password" name="password"
@@ -67,7 +91,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="email">Email <span class="login-danger">*</span></label>
                 <input type="email" id="email" name="email" class="form-control @error('email')is-invalid @enderror"
@@ -79,10 +103,10 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="gender">Gender <span class="login-danger">*</span></label>
-                <select class="form-control select2" name="gender" id="gender" required>
+                <select class="form-control data-select-2" name="gender" id="gender" required>
                     <option selected disabled>Select Gender</option>
                     <option value="Laki-laki"
                         {{ isset($student) ? ($student->gender === 'Laki-laki' ? ' selected' : '') : '' }}>Male</option>
@@ -91,7 +115,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="born_date">Date of Birth <span class="login-danger">*</span></label>
                 <input type="date" id="born_date" name="born_date"
@@ -104,10 +128,11 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="phone">Phone Number <span class="login-danger">*</span></label>
-                <input type="text" id="phone" name="phone" class="form-control @error('phone')is-invalid @enderror"
+                <input type="text" id="phone" name="phone"
+                    class="form-control @error('phone')is-invalid @enderror"
                     value="{{ isset($student) ? $student->phone : old('phone') }}">
                 @error('phone')
                     <div class="invalid-feedback">
@@ -116,7 +141,7 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="nik">NIK <span class="login-danger">*</span></label>
                 <input type="number" min="0" id="nik" name="nik"
@@ -129,13 +154,28 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-12">
+
+        <div class="col-md-6 col-sm-12">
+
             <div class="form-group local-forms">
                 <label for="address">Address <span class="login-danger">*</span></label>
                 <input type="text" id="address" name="address"
                     class="form-control @error('address')is-invalid @enderror"
                     value="{{ isset($student) ? $student->address : old('address') }}">
                 @error('address')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group local-forms">
+                <label for="image">Profile Image</label>
+                <input type="file" id="image" name="image" class="form-control @error('image')is-invalid @enderror">
+
+                @error('image')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -155,7 +195,7 @@
             </div>
         </div>
     </div>
-    </form>
+</form>
     <script>
         document.getElementById('phone').addEventListener('input', function(e) {
             this.value = this.value.replace(/[^+\d]/g, '');

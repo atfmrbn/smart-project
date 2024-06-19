@@ -1,5 +1,24 @@
 @extends('layouts.main')
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Parent')
+                <li class="breadcrumb-item"><a href="{{ route('parent.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
@@ -8,15 +27,27 @@
             <div class="col-auto text-end float-end ms-auto download-grp">
                 @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
                     <a href="{{ URL::to('student/student-teacher-homeroom/create') }}" class="btn btn-primary"><i
-                            class="fas fa-plus"></i>Add New</a>
+                        class="fas fa-plus"></i> New
+                    </a>
                 @endif
             </div>
+            @if (session()->has('successMessage'))
+                <div class="alert alert-success">
+                    {{ session('successMessage') }}
+                </div>
+            @endif
+
+            @if (session()->has('errorMessage'))
+                <div class="alert alert-danger">
+                    {{ session('errorMessage') }}
+                </div>
+            @endif
         </div>
     </div>
 
     <form id="filterForm" method="GET" action="{{ route('student-teacher-homeroom.index') }}" class="mb-4">
         <div class="row mb-3">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <select name="classroom" id="classroom" class="form-select">
                     <option value="" {{ request('classroom') == '' ? 'selected' : '' }}>All Classroom</option>
                     @foreach ($classrooms as $classroom)

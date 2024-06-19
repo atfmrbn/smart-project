@@ -17,8 +17,7 @@
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                <a href="{{ route('user.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+                <a href="{{ route('user.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
             </div>
         </div>
     </div>
@@ -50,7 +49,7 @@
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->gender }}</td>
-                        <td>{{ $user->born_date }}</td>
+                        <td>{{ DateFormat($user->born_date, 'DD MMMM Y') }}</td>
                         <td>{{ $user->phone }}</td>
                         <td>{{ $user->nik }}</td>
                         <td>{{ $user->address }}</td>

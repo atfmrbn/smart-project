@@ -1,5 +1,20 @@
 @extends('layouts.main')
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session()->has('successMessage'))
         <div class="alert alert-success">
             {{ session('successMessage') }}
@@ -18,7 +33,7 @@
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ URL::to('subject/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+                <a href="{{ URL::to('subject/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
             </div>
         </div>
     </div>
@@ -36,7 +51,7 @@
             </thead>
             <tbody>
                 @foreach ($subjects as $index => $subject)
-                    <tr class="text-center">
+                    <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $subject->classroomType->name }}</td>
                         <td>{{ $subject->name }}</td>

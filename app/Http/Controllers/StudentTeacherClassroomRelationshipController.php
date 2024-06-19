@@ -17,7 +17,7 @@ class StudentTeacherClassroomRelationshipController extends Controller
         ->get();
         
         $data = [
-            "title" => "Student, Teacher Classroom",
+            "title" => "Student Teacher Classrooms",
             "student_teacher_classrooms" => $student_teacher_classrooms
         ];
 

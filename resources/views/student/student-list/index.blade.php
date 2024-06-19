@@ -1,5 +1,23 @@
 @extends('layouts.main')
 @section('container')
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Parent')
+                <li class="breadcrumb-item"><a href="{{ route('parent.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session()->has('successMessage'))
         <div class="alert alert-success">
             {{ session('successMessage') }}
@@ -18,10 +36,12 @@
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ route('student.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                <a href="{{ route('student.download') }}" class="btn btn-outline-primary me-2"><i
+                        class="fas fa-download"></i> Download</a>
                 @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
                     <a href="{{ URL::to('student/student-list/create') }}" class="btn btn-primary"><i
-                            class="fas fa-plus"></i>Add New</a>
+                        class="fas fa-plus"></i> New
+                    </a>
                 @endif
             </div>
         </div>

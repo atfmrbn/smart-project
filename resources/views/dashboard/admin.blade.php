@@ -2,6 +2,15 @@
 @section('title', $title)
 @section('container')
     <div class="container mt-5">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" style="background-color: transparent; border: none;">
+                @if (Auth::user()->role == 'Admin')
+                    <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Admin Dashboard</li>
+                @endif
+            </ol>
+        </nav>
         <div class="card shadow-sm">
             <div class="card-header">
                 @if (Auth::user()->role == 'Admin')
@@ -37,7 +46,8 @@
                                         <i class="fas fa-user fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('/teacher/teacher-list') }}" class="small-box-footer text-white mt-2 {{ request()->is('teacher/teacher-list') ? 'active' : '' }} }}">More
+                                <a href="{{ URL::to('/teacher/teacher-list') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('teacher/teacher-list') ? 'active' : '' }} }}">More
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -54,7 +64,8 @@
                                         <i class="fas fa-user fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('/student/student-list') }}" class="small-box-footer text-white mt-2 {{ request()->is('student/student-list') ? 'active' : '' }}">More
+                                <a href="{{ URL::to('/student/student-list') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('student/student-list') ? 'active' : '' }}">More
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -71,7 +82,8 @@
                                         <i class="fas fa-user fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('/parent/parent-list') }}" class="small-box-footer text-white mt-2 {{ request()->is('parent/parent-list') ? 'active' : '' }}">More
+                                <a href="{{ URL::to('/parent/parent-list') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('parent/parent-list') ? 'active' : '' }}">More
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -88,7 +100,8 @@
                                         <i class="fas fa-user fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('librarian/librarian-list') }}" class="small-box-footer text-white mt-2 {{ request()->is('librarian/librarian-list') ? 'active' : '' }}">More
+                                <a href="{{ URL::to('librarian/librarian-list') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('librarian/librarian-list') ? 'active' : '' }}">More
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -105,7 +118,8 @@
                                         <i class="fas fa-chalkboard-teacher fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('classroom/') }}" class="small-box-footer text-white mt-2 {{ request()->is('classroom') ? 'active' : '' }}">More
+                                <a href="{{ URL::to('classroom/') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('classroom') ? 'active' : '' }}">More
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -122,7 +136,8 @@
                                         <i class="fas fa-book fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('/subject') }}" class="small-box-footer text-white mt-2 {{ request()->is('subject') ? 'active' : '' }}">More
+                                <a href="{{ URL::to('/subject') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('subject') ? 'active' : '' }}">More
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -139,7 +154,8 @@
                                         <i class="fas fa-school fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('/curriculum') }}" class="small-box-footer text-white mt-2 {{ request()->is('curriculum') ? 'active' : '' }}">More
+                                <a href="{{ URL::to('/curriculum') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('curriculum') ? 'active' : '' }}">More
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>

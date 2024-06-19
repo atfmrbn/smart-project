@@ -6,10 +6,12 @@
         <div class="col">
             <h3 class="page-title">{{ $title }}</h3>
         </div>
+        @if(auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
         <div class="col-auto text-end float-end ms-auto download-grp">
             {{-- <a href="{{ URL::to('tuition-download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a> --}}
             <a href="{{ URL::to('tuition/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
         </div>
+        @endif
     </div>
 </div>
 
@@ -41,10 +43,11 @@
                         <span class="badge badge-warning">Unpaid</span>
                     @endif
                 </td>
-                <td class=" text-center">
-                    <div class="d-flex justify-content-center align-items-center">
+                <td class="text-center">
+                <div class="d-flex justify-content-center align-items-center">
+                    @if(auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
                         <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
-                            <i class="fas fa-edit"></i>Edit
+                            <i class="fas fa-edit"></i> 
                         </a>
                         <form method="POST" action="{{ URL::to('tuition/' . $tuition->id) }}">
                             @csrf
@@ -53,8 +56,19 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
-                    </div>
-                </td>
+                    @elseif(auth()->user()->role === 'Student' && $tuition->studentTeacherHomeroomRelationship->student->id === auth()->user()->id)
+                        @if ($tuition->status === 'Paid')
+                            <a href="{{ URL::to('invoice/' . $tuition->id) }}" title="Invoice" class="btn btn-sm btn-outline-warning me-2">
+                                <i class="fas fa-receipt"></i> 
+                            </a>
+                        @else
+                            <a href="{{ route('tuition.edit', $tuition->id) }}" title="Pay Off" class="btn btn-sm btn-outline-primary me-2">
+                                <i class="fas fa-money-bill-wave"></i> 
+                            </a>
+                        @endif
+                    @endif
+                </div>
+            </td>
 
             </tr>
             @endforeach

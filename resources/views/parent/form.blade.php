@@ -1,16 +1,34 @@
 @extends('layouts.main')
 @section('title', $title)
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('/parent/parent-list') }}">Parents</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
     @if (isset($parent))
-        <form method="POST" action="{{ URL::to('parent/parent-list/' . $parent->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('parent/parent-list/' . $parent->id) }}" autocomplete="off"
+            enctype="multipart/form-data">
             @method('put')
         @else
-            <form method="POST" action="{{ URL::to('parent/parent-list') }}" autocomplete="off" enctype="multipart/form-data">
+            <form method="POST" action="{{ URL::to('parent/parent-list') }}" autocomplete="off"
+                enctype="multipart/form-data">
     @endif
     @csrf
     <div class="row">
@@ -20,7 +38,8 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
-                <input type="text" id="identity_number" name="identity_number" class="form-control @error('identity_number')is-invalid @enderror"
+                <input type="text" id="identity_number" name="identity_number"
+                    class="form-control @error('identity_number')is-invalid @enderror"
                     value="{{ isset($parent) ? $parent->identity_number : old('identity_number') }}" autofocus>
                 @error('identity_number')
                     <div class="invalid-feedback">
@@ -83,7 +102,7 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="gender">Gender <span class="login-danger">*</span></label>
-                <select class="form-control select2" name="gender" id="gender" required>
+                <select class="form-control data-select-2" name="gender" id="gender" required>
                     <option selected disabled>Select Gender</option>
                     <option value="Laki-laki"
                         {{ isset($parent) ? ($parent->gender === 'Laki-laki' ? ' selected' : '') : '' }}>Male</option>
@@ -108,7 +127,8 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="phone">Phone Number <span class="login-danger">*</span></label>
-                <input type="text" id="phone" name="phone" class="form-control @error('phone')is-invalid @enderror"
+                <input type="text" id="phone" name="phone"
+                    class="form-control @error('phone')is-invalid @enderror"
                     value="{{ isset($parent) ? $parent->phone : old('phone') }}">
                 @error('phone')
                     <div class="invalid-feedback">
@@ -145,8 +165,8 @@
         </div>
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
-                <label for="students">Select Child</label>
-                <select name="students[]" class="form-control data-select-2" id="students" multiple>
+                <label for="students">Select Child <span class="login-danger">*</span></label>
+                <select class="form-control data-select-2" name="students[]" id="students" multiple>
                     @foreach ($students as $student)
                         <option value="{{ $student->id }}"
                             {{ isset($parent) && $parent->students->contains($student->id) ? 'selected' : '' }}>
@@ -157,20 +177,11 @@
             </div>
         </div>
 
-        {{-- <div class="col-12 col-sm-4">
-            <div class="form-group local-forms">
-                <label for="students">Select Child</label>
-                <select name="students[]" class="form-control data-select-2" id="students" >
-                    @foreach ($students as $student)
-                        <option value="{{ $student->id }}">{{ $student->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div> --}}
         <div class="col-12 col-sm-8">
             <div class="form-group local-forms">
                 <label for="image">Profile Image</label>
-                <input type="file" id="image" name="image" class="form-control @error('image')is-invalid @enderror">
+                <input type="file" id="image" name="image"
+                    class="form-control @error('image')is-invalid @enderror">
                 @error('image')
                     <div class="invalid-feedback">
                         {{ $message }}

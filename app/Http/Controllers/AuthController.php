@@ -151,6 +151,4 @@ class AuthController extends Controller
         return redirect()->route('login')->with('successMessage', 'Password berhasil direset.');
     }
 
-
-
 }

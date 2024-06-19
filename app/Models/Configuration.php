@@ -18,6 +18,6 @@ class Configuration extends Model
         'email',
         'book_penalty',
     ];
-    protected $guarded = [];
+    
     public $timestamps = false;
 }

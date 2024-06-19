@@ -52,9 +52,19 @@ class TeacherController extends Controller
             'nik' => 'required|unique:users,nik',
             'address' => 'required',
             'role' => 'required',
+            'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024',
         ]);
 
         $data['password'] = Hash::make($data['password']);
+
+        // Upload image if provided
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $data['image'] = $imageName;
+        }
+
         User::create($data);
 
         return redirect()->route('teacher.index')->with('successMessage', 'Add data sukses');
@@ -108,6 +118,7 @@ class TeacherController extends Controller
             'nik' => 'required|unique:users,nik,' . $id,
             'address' => 'required',
             'role' => 'required',
+            'image' => 'nullable|mimes:jpg,png,jpeg,gif|max:1024',
         ]);
 
         try {
@@ -117,6 +128,14 @@ class TeacherController extends Controller
                 $data['password'] = Hash::make($data["password"]);
             } else {
                 $data['password'] = $teacher->password;
+            }
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images'), $imageName);
+                $teacher->image = $imageName;
+                $teacher->save();
             }
 
             $teacher->update($data);
@@ -134,6 +153,12 @@ class TeacherController extends Controller
     {
         try {
             $teacher = User::where('id', $id)->where('role', 'Teacher')->firstOrFail();
+            if ($teacher->image) {
+                $imagePath = public_path('images') . '/' . $teacher->image;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
             $teacher->delete();
             return redirect()->route('teacher.index')->with('successMessage', 'Delete data sukses');
         } catch (\Throwable $th) {

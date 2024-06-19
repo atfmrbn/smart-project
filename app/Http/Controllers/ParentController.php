@@ -111,18 +111,6 @@ class ParentController extends Controller
     /**
      * Display the specified resource.
      */
-    // public function show(string $id)
-    // {
-    //     $parent = User::where('id', $id)->where('role', 'Parent')->first();
-
-    //     $data = [
-    //         'title' => 'Parent Detail',
-    //         'parent'=> $parent,
-    //     ];
-
-    //     return view('parent.detail', $data);
-
-    // }
     public function show($id)
     {
         $parent = User::with('students')->where('id', $id)->where('role', 'Parent')->first();
@@ -132,7 +120,7 @@ class ParentController extends Controller
         }
 
         $data = [
-            "title" => "Detail User",
+            "title" => "Detail Parent",
             "parent" => $parent,
         ];
 
@@ -252,6 +240,14 @@ class ParentController extends Controller
             // Set parent_id to null for all students associated with this parent
             User::where('parent_id', $parent->id)->update(['parent_id' => null]);
 
+            // Hapus gambar jika ada
+            if ($parent->image) {
+                $imagePath = public_path('images') . '/' . $parent->image;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
             // Delete the parent
             $parent->delete();
 
@@ -263,5 +259,6 @@ class ParentController extends Controller
             DB::rollBack();
             return redirect()->back()->withErrors('Error: ' . $e->getMessage());
         }
+
     }
 }
