@@ -42,7 +42,7 @@ class GradeController extends Controller
     {
         $taskTypes = TaskType::all();
         $teacherClassroomRelationships = TeacherClassroomRelationship::all();
-        $title = 'Add Grades';
+        $title = 'Add Grade';
 
         return view('teacher.grade.form', compact('taskTypes', 'teacherClassroomRelationships', 'title'));
     }
