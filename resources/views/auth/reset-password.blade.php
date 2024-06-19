@@ -183,7 +183,7 @@
                     <label>Password Baru <span class="login-danger">*</span></label>
                     <input type="password" id="password" name="password"
                         class="form-control @error('password') is-invalid @enderror"
-                        placeholder="Enter password">
+                        placeholder="Enter password" autofocus>
                     <span class="profile-views"><i class="fas fa-envelope"></i></span>
                     @error('password')
                         <div class="invalid-feedback">

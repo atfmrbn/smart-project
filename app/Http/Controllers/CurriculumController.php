@@ -29,7 +29,7 @@ class CurriculumController extends Controller
     public function create()
     {
         $data = [
-            "title" => "Add Curriculums",
+            "title" => "Add Curriculum",
         ];
 
         return view('curriculum.form', $data);
@@ -40,15 +40,10 @@ class CurriculumController extends Controller
      */
     public function store(Request $request)
     {
-        $messages = [
-            'year.required' => 'Tolong diisi',
-            'description.required' => 'Tolong diisi',
-        ];
-
         $data = $request->validate([
             'year' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-        ], $messages);
+        ]);
 
         Curriculum::create($data);
 
@@ -96,15 +91,11 @@ class CurriculumController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $messages = [
-            'year.required' => 'Tolong diisi',
-            'description.required' => 'Tolong diisi',
-        ];
 
         $data = $request->validate([
             'year' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-        ], $messages);
+        ]);
 
         $curriculum = Curriculum::findOrFail($id); // Mengambil instance model Curriculum berdasarkan $id
 

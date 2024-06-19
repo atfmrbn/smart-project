@@ -1,15 +1,32 @@
 @extends('layouts.main')
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Librarian')
+                <li class="breadcrumb-item"><a href="{{ route('librarian.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('librarian/librarian-list') }}">Librarians</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
     @if (isset($librarian))
-        <form method="POST" action="{{ route('librarian.update', $librarian->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('librarian.update', $librarian->id) }}" autocomplete="off"
+            enctype="multipart/form-data">
             @method('put')
-    @else
-        <form method="POST" action="{{ route('librarian.store') }}" autocomplete="off">
+        @else
+            <form method="POST" action="{{ route('librarian.store') }}" autocomplete="off">
     @endif
     @csrf
     <div class="row">
@@ -19,7 +36,8 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
-                <input type="text" id="identity_number" name="identity_number" class="form-control @error('identity_number')is-invalid @enderror"
+                <input type="text" id="identity_number" name="identity_number"
+                    class="form-control @error('identity_number')is-invalid @enderror"
                     value="{{ isset($librarian) ? $librarian->identity_number : old('identity_number') }}">
                 @error('identity_number')
                     <div class="invalid-feedback">
@@ -67,7 +85,8 @@
                     </div>
                 @enderror
             </div>
-        </div>
+            
+        </div>
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="email">Email <span class="login-danger">*</span></label>
@@ -86,9 +105,11 @@
                 <select class="form-control select2" name="gender" id="gender" required>
                     <option selected disabled>Select Gender</option>
                     <option value="Laki-laki"
-                        {{ isset($librarian) ? ($librarian->gender === 'Laki-laki' ? ' selected' : '') : '' }}>Male</option>
+                        {{ isset($librarian) ? ($librarian->gender === 'Laki-laki' ? ' selected' : '') : '' }}>Male
+                    </option>
                     <option value="Perempuan"
-                        {{ isset($librarian) ? ($librarian->gender === 'Perempuan' ? ' selected' : '') : '' }}>Female</option>
+                        {{ isset($librarian) ? ($librarian->gender === 'Perempuan' ? ' selected' : '') : '' }}>Female
+                    </option>
                 </select>
             </div>
         </div>
@@ -108,7 +129,8 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="phone">Phone Number <span class="login-danger">*</span></label>
-                <input type="text" id="phone" name="phone" class="form-control @error('phone')is-invalid @enderror"
+                <input type="text" id="phone" name="phone"
+                    class="form-control @error('phone')is-invalid @enderror"
                     value="{{ isset($librarian) ? $librarian->phone : old('phone') }}">
                 @error('phone')
                     <div class="invalid-feedback">

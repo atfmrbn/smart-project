@@ -119,17 +119,20 @@
                             @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher', 'Student']))
                                 <li>
                                     <a href="{{ URL::to('/teacher/teacher-homeroom') }}"
-                                        class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/add') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/*/edit') ? 'active' : '' }}">Teacher Homeroom
+                                        class="{{ request()->is('teacher/teacher-homeroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/add') ? 'active' : '' }} || {{ request()->is('teacher/teacher-homeroom/*/edit') ? 'active' : '' }}">Teacher
+                                        Homeroom
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ URL::to('/teacher/teacher-classroom') }}"
-                                        class="{{ request()->is('teacher/teacher-classroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-classroom/create') ? 'active' : '' }} || {{ request()->is('teacher/teacher-classroom/*/edit') ? 'active' : '' }}">Teacher Classroom
+                                        class="{{ request()->is('teacher/teacher-classroom') ? 'active' : '' }} || {{ request()->is('teacher/teacher-classroom/create') ? 'active' : '' }} || {{ request()->is('teacher/teacher-classroom/*/edit') ? 'active' : '' }}">Teacher
+                                        Classroom
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ URL::to('/teacher/teacher-schedule') }}"
-                                        class="{{ request()->is('teacher/teacher-schedule') ? 'active' : '' }} || {{ request()->is('teacher/teacher-schedule/create') ? 'active' : '' }} || {{ request()->is('teacher/teacher-schedule/*/edit') ? 'active' : '' }}">Teacher Schedule
+                                        class="{{ request()->is('teacher/teacher-schedule') ? 'active' : '' }} || {{ request()->is('teacher/teacher-schedule/create') ? 'active' : '' }} || {{ request()->is('teacher/teacher-schedule/*/edit') ? 'active' : '' }}">Teacher
+                                        Schedule
                                     </a>
                                 </li>
                             @endif
@@ -137,18 +140,29 @@
                             @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher']))
                                 <li>
                                     <a href="{{ URL::to('/teacher/teacher-subject') }}"
-                                        class="{{ request()->is('teacher/teacher-subject') ? 'active' : '' }} || {{ request()->is('teacher/teacher-subject/create') ? 'active' : '' }} || {{ request()->is('teacher/teacher-subject/*/edit') ? 'active' : '' }}">Teacher Subject</a>
+                                        class="{{ request()->is('teacher/teacher-subject') || request()->is('teacher/teacher-subject/create') || request()->is('teacher/teacher-subject/*/edit') ? 'active' : '' }}">
+                                        Teacher Subject
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ URL::to('/task-type') }}"
+                                        class="{{ request()->is('task-type') || request()->is('task-type/create') ? 'active' : '' }}">
+                                        Task Type
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="{{ URL::to('/teacher/grade') }}"
-                                        class="{{ request()->is('teacher/grade') ? 'active' : '' }}">Grade</a>
+                                        class="{{ request()->is('teacher/grade') ? 'active' : '' }}">
+                                        Grade
+                                    </a>
                                 </li>
                             @endif
 
                             @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher', 'Student']))
                                 <li>
                                     <a href="{{ URL::to('/teacher/grade-detail') }}"
-                                        class="{{ request()->is('teacher/grade-detail') ? 'active' : '' }} || {{ request()->is('teacher/grade-detail/create') ? 'active' : '' }} || {{ request()->is('teacher/grade-detail/*/edit') ? 'active' : '' }}">Grade Detail</a>
+                                        class="{{ request()->is('teacher/grade-detail') ? 'active' : '' }} || {{ request()->is('teacher/grade-detail/create') ? 'active' : '' }} || {{ request()->is('teacher/grade-detail/*/edit') ? 'active' : '' }}">Grade
+                                        Detail</a>
                                 </li>
                             @endif
                         </ul>
@@ -175,9 +189,10 @@
                 @endif
 
                 @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Librarian', 'Student', 'Teacher']))
-                    <li class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
+                    <li
+                        class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
                         <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span
-                            class="menu-arrow"></span>
+                                class="menu-arrow"></span>
                         </a>
                         <ul>
                             @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Librarian', 'Student', 'Teacher']))
@@ -212,15 +227,17 @@
                                     class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="{{ URL::to('classroom/') }}"
-                                        class="{{ request()->is('classroom') ? 'active' : '' }} || {{ request()->is('classroom/create') ? 'active' : '' }} || {{ request()->is('classroom/') ? 'active' : '' }}">Classroom List</a>
+                                        class="{{ request()->is('classroom') ? 'active' : '' }} || {{ request()->is('classroom/create') ? 'active' : '' }} || {{ request()->is('classroom/') ? 'active' : '' }}">Classroom
+                                        List</a>
                                 </li>
                                 <li><a href="{{ URL::to('classroom/classroom-type/') }}"
-                                    class="{{ request()->is('classroom/classroom-type') ? 'active' : '' }} || {{ request()->is('classroom/classroom-type/create') ? 'active' : '' }} || {{ request()->is('classroom/classroom-type/*') ? 'active' : '' }}">Classroom Type</a>
+                                        class="{{ request()->is('classroom/classroom-type') ? 'active' : '' }} || {{ request()->is('classroom/classroom-type/create') ? 'active' : '' }} || {{ request()->is('classroom/classroom-type/*') ? 'active' : '' }}">Classroom
+                                        Type</a>
                                 </li>
                                 <li><a href="{{ URL::to('/subject') }}"
-                                    class="{{ request()->is('subject') ? 'active' : '' }} || {{ request()->is('subject/create') ? 'active' : '' }} || {{ request()->is('subject/*/edit') ? 'active' : '' }} || {{ request()->is('subject/*') ? 'active' : '' }}">Subject</a>
+                                        class="{{ request()->is('subject') ? 'active' : '' }} || {{ request()->is('subject/create') ? 'active' : '' }} || {{ request()->is('subject/*/edit') ? 'active' : '' }} || {{ request()->is('subject/*') ? 'active' : '' }}">Subject</a>
                                 </li>
-                                        
+
                                 @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher']))
                                     <li><a href="{{ URL::to('attendance') }}"
                                             class="{{ request()->is('attendance') ? 'active' : '' }}">Attendances</a>
@@ -230,15 +247,13 @@
                         </li>
                     @endif
 
-                    @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
+                    @if (in_array(auth()->user()->role, ['Super Admin']))
                         <li class="nav-item {{ request()->is('curriculum') ? 'active' : '' }}">
                             <a href="{{ URL::to('/curriculum') }}"><i class="fas fa-school"></i> <span>
                                     Curriculums</span></a>
                         </li>
-                        <li class="nav-item {{ request()->is('task-type') ? 'active' : '' }}">
-                            <a href="{{ URL::to('/task-type') }}"><i class="fas fa-tags"></i> <span> Task
-                                    Type</span></a>
-                        </li>
+                    @endif
+                    @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
                         <li
                             class="nav-item {{ request()->is('tuition-type') ? 'active' : '' }} || {{ request()->is('tuition-type/create') ? 'active' : '' }} || {{ request()->is('tuition-type/*/edit') ? 'active' : '' }}">
                             <a href="{{ URL::to('/tuition-type') }}"><i class="fas fa-file-invoice-dollar"></i>
@@ -254,7 +269,7 @@
                         </li>
                     @endif
 
-                    @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
+                    @if (in_array(auth()->user()->role, ['Super Admin']))
                         <li class="nav-item {{ request()->is('configuration') ? 'active' : '' }}">
                             <a href="{{ URL::to('/configuration') }}"><i class="fas fa-cog"></i> <span>
                                     Configuration</span></a>
@@ -262,22 +277,22 @@
                     @endif
                 @endif
 
-            @if (auth()->user()->role == 'Super Admin')
-                <li class="menu-title"><span>Others</span></li>
-                {{-- <li class="submenu {{ request()->is('user') || request()->is('forgot-password') || request()->is('error-404') ? 'active' : '' }}">
+                @if (auth()->user()->role == 'Super Admin')
+                    <li class="menu-title"><span>Others</span></li>
+                    {{-- <li class="submenu {{ request()->is('user') || request()->is('forgot-password') || request()->is('error-404') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
                     <ul> --}}
-                <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
-                    <a href="{{ URL::to('/user') }}"><i class="fas fa-users"></i> <span> Users</span></a>
-                </li>
-                {{-- <li><a href="forgot-password.html" class="{{ request()->is('forgot-password') ? 'active' : '' }}">Forgot Password</a></li>
+                    <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
+                        <a href="{{ URL::to('/user') }}"><i class="fas fa-users"></i> <span> Users</span></a>
+                    </li>
+                    {{-- <li><a href="forgot-password.html" class="{{ request()->is('forgot-password') ? 'active' : '' }}">Forgot Password</a></li>
                         <li><a href="error-404.html" class="{{ request()->is('error-404') ? 'active' : '' }}">Error Page</a></li>
                     </ul>
                 </li> --}}
-            @endif
-            <li class="nav-item">
-                <a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i><span> Logout</span></a>
-            </li>
+                @endif
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i><span> Logout</span></a>
+                </li>
             </ul>
         </div>
     </div>

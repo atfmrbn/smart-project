@@ -1,6 +1,29 @@
 @extends('layouts.main')
 @section('container')
-    
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('/teacher/teacher-list') }}">Teachers</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <form method="POST" action="{{ isset($teacher) ? route('teacher.update', $teacher->id) : route('teacher.store') }}"
         autocomplete="off" enctype="multipart/form-data">
         @csrf
@@ -24,7 +47,7 @@
                     @enderror
                 </div>
             </div>
-            
+
             <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="name">Teacher Name <span class="login-danger">*</span></label>
@@ -144,7 +167,8 @@
             <div class="col-md-6 col-sm-12">
                 <div class="form-group local-forms">
                     <label for="image">Profile Image</label>
-                    <input type="file" id="image" name="image" class="form-control @error('image')is-invalid @enderror">
+                    <input type="file" id="image" name="image"
+                        class="form-control @error('image')is-invalid @enderror">
                     @error('image')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -155,8 +179,7 @@
             <div class="col-12 col-sm-4" style="display: none;">
                 <div class="form-group local-forms">
                     <label for="role">Role <span class="login-danger">*</span></label>
-                    <input type="text" class="form-control" name="role" id="role" value="Teacher"
-                        required>
+                    <input type="text" class="form-control" name="role" id="role" value="Teacher" required>
                 </div>
             </div>
             <div class="col-12">

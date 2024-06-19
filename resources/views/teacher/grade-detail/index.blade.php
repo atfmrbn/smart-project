@@ -1,5 +1,22 @@
 @extends('layouts.main')
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+    
     <div class="container-fluid">
         <div class="page-header">
             <div class="row align-items-center">
@@ -9,7 +26,8 @@
                 @if (Auth::user()->role == 'Teacher')
                     <div class="col-auto text-end float-end ms-auto download-grp">
                         <div class="btn-group" role="group" aria-label="Actions">
-                            <a href="{{ route('grade-detail.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                            <a href="{{ route('grade-detail.download') }}" class="btn btn-outline-primary me-2"><i
+                                    class="fas fa-download"></i> Download</a>
                             <a href="{{ route('grade-detail.create') }}" class="btn btn-primary"><i
                                     class="fas fa-plus me-1"></i> New</a>
                         </div>

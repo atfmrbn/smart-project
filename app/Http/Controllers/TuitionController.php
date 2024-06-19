@@ -42,7 +42,7 @@ class TuitionController extends Controller
 
 
         $data = [
-            'title' => 'Tuition',
+            'title' => 'Add Tuition',
             'tuitions' => $tuitions,
             'students' => $students
         ];

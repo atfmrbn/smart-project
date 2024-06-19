@@ -14,7 +14,7 @@ class TaskTypeController extends Controller
     {
         $taskTypes = TaskType::all();
         $data = [
-            "title" => "Task Type",
+            "title" => "Task Types",
             "taskTypes" => $taskTypes
         ];
 
@@ -54,7 +54,7 @@ class TaskTypeController extends Controller
     {
         $taskType = TaskType::findOrFail($id);
         $data = [
-            "title" => "Task Type Detail",
+            "title" => "Detail Task Type",
             "taskType" => $taskType
     ];
 
