@@ -6,24 +6,27 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GradeController;
-use App\Http\Controllers\GradeDetailController;
 use App\Http\Controllers\ParentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\TaskTypeController;
 use App\Http\Controllers\TuitionController;
-use App\Http\Controllers\TuitionTypeController;
+use App\Http\Controllers\TaskTypeController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LibrarianController;
+use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BookReturnController;
 use App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\GradeDetailController;
+use App\Http\Controllers\TuitionTypeController;
 use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BorrowingBookController;
 use App\Http\Controllers\ClassroomTypeController;
 use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\TuitionDetailController;
 use App\Http\Controllers\ExtracurricularController;
 use App\Http\Controllers\TeacherScheduleController;
 use App\Http\Controllers\BookBorrowDetailController;
@@ -33,8 +36,6 @@ use App\Http\Controllers\TeacherClassroomRelationshipController;
 use App\Http\Controllers\StudentExtracurricularRelationshipController;
 use App\Http\Controllers\StudentTeacherHomeroomRelationshipController;
 use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
-use App\Http\Controllers\SocialiteController;
-use App\Http\Controllers\TuitionDetailController;
 
     Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
     Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
@@ -179,7 +180,11 @@ use App\Http\Controllers\TuitionDetailController;
     Route::get('grade-detail/download', [GradeDetailController::class, 'download'])->name('grade-detail.download');
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
+    Route::get('/user', [UserController::class, 'editProfile'])->name('user.edit-profile');
+    Route::post('/user', [UserController::class, 'updateProfile'])->name('profile.update');
+
     Route::resource('attendance', AttendanceController::class);
+    Route::get('attendance/download', [AttendanceController::class, 'download'])->name('attendance.download');
 
     // Route::get('parents/create', [ParentController::class, 'create'])->name('parents.create');
     // Route::post('parents', [ParentController::class, 'store'])->name('parents.store');
@@ -191,6 +196,9 @@ use App\Http\Controllers\TuitionDetailController;
     // Route::get('/tuition/{tuition}/payoff', [TuitionDetailController::class, 'Payoff'])->name('tuition.payoff');
     Route::post('/tuition/{id}/payoff', [TuitionDetailController::class, 'payOff'])->name('tuition.payoff');
     Route::get('/invoice/{id}', [TuitionDetailController::class, 'invoice'])->name('invoice.show');
+
+    Route::get('/profile/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit-profile')->middleware('auth');
+    Route::post('/profile/update-profile', [ProfileController::class, 'updateProfile'])->name('profile.update-profile')->middleware('auth');    
 
     // Route::get('/tuition/{id}/paymidtrans', [TuitionDetailController::class, 'payMidtrans'])->name('tuition.paymidtrans');
 

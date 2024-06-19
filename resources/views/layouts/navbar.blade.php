@@ -37,7 +37,7 @@
             </a>
           </li>
 
-          <li class="nav-item new-user-menus">
+          {{-- <li class="nav-item new-user-menus">
             <a href="#" class="nav-link" aria-expanded="false">
                 <span class="user-img">
                     <img class="rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" width="31">
@@ -60,8 +60,25 @@
                 <a class="dropdown-item" href="#">My Profile</a>
                 <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
             </div> --}}
-        </li>
-
-
+            <li class="nav-item dropdown has-arrow new-user-menus">
+              <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                  <span class="user-img">
+                      <img class="rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" width="31">
+                      <div class="user-text">
+                          <h6>{{ Auth::user()->name }}</h6>
+                          <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
+                      </div>
+                  </span>
+              </a>
+              <div class="dropdown-menu">
+                  <div class="user-header">
+                      <a class="dropdown-item" href="{{ URL::to('profile.edit-profile') }}">My Profile</a>
+                      {{-- <a class="dropdown-item" href="inbox.html">Inbox</a>
+                      <a class="dropdown-item" href="login.html">Logout</a> --}}
+                  </div>
+              </div>
+          </li>
         </ul>
-      </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+</div>

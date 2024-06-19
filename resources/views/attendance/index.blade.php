@@ -25,6 +25,10 @@
         <div class="alert alert-danger">
             {{ session('errorMessage') }}
         </div>
+        
+        <div class="col-auto text-end float-end ms-auto download-grp">
+            <a href="{{ URL::to('attendance/download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+            <a href="{{ URL::to('attendance/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
     @endif
 
     <div class="page-header">
