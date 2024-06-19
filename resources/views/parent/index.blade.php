@@ -3,7 +3,7 @@
 
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
             @if (auth()->user()->role == 'Admin')
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             @elseif (auth()->user()->role == 'Super Admin')
@@ -20,14 +20,17 @@
             <div class="col">
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
+
             <div class="col-auto text-end float-end ms-auto download-grp">
                 @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
+
                     <a href="{{ URL::to('parent/parent-list/create') }}" class="btn btn-primary"><i
                         class="fas fa-plus"></i> New
                     </a>
                 @endif
             </div>
         </div>
+        
         @if (session()->has('successMessage'))
             <div class="alert alert-success">
                 {{ session('successMessage') }}

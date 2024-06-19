@@ -1,4 +1,4 @@
-@extends('layouts.main')
+{{-- @extends('layouts.main')
 @section('container')
     <div class="page-header">
         <div class="row align-items-center">
@@ -41,4 +41,4 @@
             </tbody>
         </table>
     </div>
-@endsection
+@endsection --}}

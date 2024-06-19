@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <!-- Breadcrumbs -->
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" style="background-color: transparent; border: none;">
                 @if (Auth::user()->role == 'Student')
                     <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Student Dashboard</li>

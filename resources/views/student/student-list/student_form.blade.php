@@ -2,7 +2,7 @@
 @section('container')
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
             @if (auth()->user()->role == 'Admin')
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             @elseif (auth()->user()->role == 'Super Admin')
@@ -11,6 +11,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
             @elseif (auth()->user()->role == 'Teacher')
                 <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+
             @elseif (auth()->user()->role == 'Parent')
                 <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
             @endif
@@ -26,8 +27,10 @@
     @endif
 
     @if (isset($student))
-        <form method="POST" action="{{ URL::to('student/student-list/' . $student->id) }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('student/student-list/' . $student->id) }}" autocomplete="off"
+            enctype="multipart/form-data">
             @method('put')
+
     @else
         <form method="POST" action="{{ URL::to('student/student-list') }}" autocomplete="off" enctype="multipart/form-data">
     @endif
@@ -78,7 +81,8 @@
         <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="password">Password <span class="login-danger">*</span></label>
-                <input type="password" id="password" name="password" class="form-control @error('password')is-invalid @enderror"
+                <input type="password" id="password" name="password"
+                    class="form-control @error('password')is-invalid @enderror"
                     value="{{ isset($student) ? $student->password : old('password') }}">
                 @error('password')
                     <div class="invalid-feedback">
@@ -127,7 +131,8 @@
         <div class="col-md-4 col-sm-12">
             <div class="form-group local-forms">
                 <label for="phone">Phone Number <span class="login-danger">*</span></label>
-                <input type="text" id="phone" name="phone" class="form-control @error('phone')is-invalid @enderror"
+                <input type="text" id="phone" name="phone"
+                    class="form-control @error('phone')is-invalid @enderror"
                     value="{{ isset($student) ? $student->phone : old('phone') }}">
                 @error('phone')
                     <div class="invalid-feedback">
@@ -149,7 +154,9 @@
                 @enderror
             </div>
         </div>
+
         <div class="col-md-6 col-sm-12">
+
             <div class="form-group local-forms">
                 <label for="address">Address <span class="login-danger">*</span></label>
                 <input type="text" id="address" name="address"
@@ -167,6 +174,7 @@
             <div class="form-group local-forms">
                 <label for="image">Profile Image</label>
                 <input type="file" id="image" name="image" class="form-control @error('image')is-invalid @enderror">
+
                 @error('image')
                     <div class="invalid-feedback">
                         {{ $message }}

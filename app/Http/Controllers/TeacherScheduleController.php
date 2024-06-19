@@ -22,7 +22,7 @@ class TeacherScheduleController extends Controller
         }
 
         $data = [
-            "title" => "Teacher Schedule",
+            "title" => "Teacher Schedules",
             "teacherSchedules" => $teacherSchedules->get(),
             "teacherClassroomRelationships" => $this->getTeacherClassroomRelationships(),
         ];

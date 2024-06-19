@@ -4,7 +4,7 @@
 
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
             @if (auth()->user()->role == 'Admin')
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             @elseif (auth()->user()->role == 'Super Admin')
@@ -27,7 +27,6 @@
             enctype="multipart/form-data">
             @method('put')
         @else
-        
             <form method="POST" action="{{ URL::to('parent/parent-list') }}" autocomplete="off"
                 enctype="multipart/form-data">
     @endif
@@ -128,7 +127,8 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="phone">Phone Number <span class="login-danger">*</span></label>
-                <input type="text" id="phone" name="phone" class="form-control @error('phone')is-invalid @enderror"
+                <input type="text" id="phone" name="phone"
+                    class="form-control @error('phone')is-invalid @enderror"
                     value="{{ isset($parent) ? $parent->phone : old('phone') }}">
                 @error('phone')
                     <div class="invalid-feedback">

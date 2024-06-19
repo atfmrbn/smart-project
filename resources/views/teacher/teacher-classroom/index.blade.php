@@ -1,12 +1,30 @@
 @extends('layouts.main')
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ route('teacher-classroom.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                <a href="{{ route('teacher-classroom.download') }}" class="btn btn-outline-primary me-2"><i
+                        class="fas fa-download"></i> Download</a>
                 @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin' || auth()->user()->role === 'Teacher')
                     <a href="{{ URL::to('teacher/teacher-classroom/create') }}" class="btn btn-primary"><i
                             class="fas fa-plus"></i> New</a>
@@ -21,7 +39,8 @@
                 <select name="classroom" id="classroom" class="form-select">
                     <option value="" {{ request('classroom') == '' ? 'selected' : '' }}>All Classes</option>
                     @foreach ($classrooms as $classroom)
-                        <option value="{{ $classroom->id }}" {{ request('classroom') == $classroom->id ? 'selected' : '' }}>
+                        <option value="{{ $classroom->id }}"
+                            {{ request('classroom') == $classroom->id ? 'selected' : '' }}>
                             {{ $classroom->classroomType->name }} - {{ $classroom->name }}
                         </option>
                     @endforeach

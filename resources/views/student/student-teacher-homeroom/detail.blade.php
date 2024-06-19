@@ -2,7 +2,7 @@
 @section('container')
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
             @if (auth()->user()->role == 'Admin')
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             @elseif (auth()->user()->role == 'Super Admin')
@@ -15,7 +15,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('parent.dashboard') }}">Dashboard</a></li>
             @endif
             <li class="breadcrumb-item"><a href="{{ URL::to('/student/student-teacher-homeroom') }}">Student Teacher
-                    Homeroom</a></li>
+                    Homerooms</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
         </ol>
     </nav>

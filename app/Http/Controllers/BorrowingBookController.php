@@ -44,7 +44,7 @@ class BorrowingBookController extends Controller
         ->get();
 
         $data = [
-            'title' => 'Check Out a Book',
+            'title' => 'Add Borrowing Book',
             'borrows' => $borrows,
             'students' => $students
         ];
