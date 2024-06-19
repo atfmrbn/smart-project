@@ -1,5 +1,25 @@
 @extends('layouts.main')
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Parent')
+                <li class="breadcrumb-item"><a href="{{ route('parent.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('/student/student-list') }}">Students</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+    
     <div class="row">
         <div class="col-12">
             <h5 class="form-title"><span>{{ $title }}</span></h5>
@@ -14,7 +34,8 @@
         <div class="col-12">
             <div class="form-group local-forms">
                 <label for="name">Student Name <span class="login-danger">*</span></label>
-                <input type="text" id="name" name="name" class="form-control" value="{{ $student->name }}" readonly>
+                <input type="text" id="name" name="name" class="form-control" value="{{ $student->name }}"
+                    readonly>
             </div>
         </div>
         <div class="col-12">
@@ -41,7 +62,7 @@
         <div class="col-12">
             <div class="form-group local-forms">
                 <label for="born_date">Date of Birth <span class="login-danger">*</span></label>
-                <input type="date" id="born_date" name="born_date" class="form-control" value="{{ $student->born_date }}"
+                <input id="born_date" name="born_date" class="form-control" value="{{ DateFormat($student->born_date, 'DD MMMM Y') }}"
                     readonly>
             </div>
         </div>
@@ -73,5 +94,4 @@
         </div>
     </div>
     </form>
-
 @endsection
