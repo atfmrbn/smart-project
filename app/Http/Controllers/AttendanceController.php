@@ -19,7 +19,7 @@ class AttendanceController extends Controller
 
 
         $data = [
-            'title' => 'Attendance',
+            'title' => 'Attendances',
             'attendances' => $attendances,
         ];
 
@@ -87,7 +87,7 @@ class AttendanceController extends Controller
         $studentTeacherHomeroomRelationships = StudentTeacherHomeroomRelationship::all();
 
         return view('attendance.form', [
-            'title' => 'Edit Student Teacher Homeroom',
+            'title' => 'Edit Attendance',
             'attendance' => $attendance,
             'studentTeacherHomeroomRelationships' => $studentTeacherHomeroomRelationships,
         ]);

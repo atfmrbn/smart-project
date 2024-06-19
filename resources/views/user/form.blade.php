@@ -1,16 +1,27 @@
 @extends('layouts.main')
 @section('container')
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('/user') }}">Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
     @if (isset($user))
-    <form method="POST" action="{{ URL::to('user/' . $user->id) }}" autocomplete="off">
-        @method('PUT')
-@else
-    <form method="POST" action="{{ URL::to('user') }}" autocomplete="off">
-@endif
+        <form method="POST" action="{{ URL::to('user/' . $user->id) }}" autocomplete="off">
+            @method('PUT')
+        @else
+            <form method="POST" action="{{ URL::to('user') }}" autocomplete="off">
+    @endif
     @csrf
     <div class="row">
         <div class="col-12">

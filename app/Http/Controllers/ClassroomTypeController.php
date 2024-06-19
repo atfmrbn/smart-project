@@ -34,7 +34,7 @@ class ClassroomTypeController extends Controller
     public function create()
     {
         $data = [
-            'title' => 'Add Classroom Types'
+            'title' => 'Add Classroom Type'
         ];
 
         return view('classroom/classroom-type.classroom_type_form', $data);
