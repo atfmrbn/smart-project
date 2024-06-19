@@ -7,9 +7,9 @@
             @if (auth()->user()->role == 'Admin')
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             @elseif (auth()->user()->role == 'Super Admin')
-                <li class="breadcrumb-item"><a href="{{ route('superadmin.dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
             @endif
-            <li class="breadcrumb-item"><a href="{{ URL::to('/task-type') }}">Task Type</a></li>
+            <li class="breadcrumb-item"><a href="{{ URL::to('/task-type') }}">Task Types</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
         </ol>
     </nav>

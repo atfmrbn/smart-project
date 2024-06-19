@@ -1,6 +1,21 @@
 @extends('layouts.main')
 @section('container')
 
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Student')
+                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('/tuition') }}">Tuitions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session()->has('successMessage'))
         <div class="alert alert-success">
             {{ session('successMessage') }}
@@ -18,7 +33,7 @@
             <div class="col-12">
                 <h5>{{ isset($tuition) ? 'Edit' : 'Add' }} Tuition</h5>
             </div>
-            
+
             <div class="col-auto text-end float-end ms-auto download-grp">
                 {{-- <a href="{{ URL::to('tuition-detail-download/' . $tuition->id) }}" class="btn btn-primary mb-3"><i class="fas fa-download"></i> Download</a> --}}
             </div>
@@ -36,6 +51,9 @@
     @csrf
     @if (auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
         <div class="row">
+            <div class="col-12">
+                <h5 class="form-title"><span>{{ $title }}</span></h5>
+            </div>
             <div class="col-12 col-sm-6">
                 <div class="form-group local-forms">
                     <label for="student_teacher_homeroom_relationship_id">Student <span
@@ -78,7 +96,7 @@
         <hr class="mt-4">
         <div class="row align-items-center mt-5">
             <div class="col">
-                <h5>Tuition Details</h5>
+                <h5>{{ $title }}</h5>
             </div>
         </div>
 
@@ -141,7 +159,8 @@
                             <th style="text-align: center">Tuition Type</th>
                             <th style="text-align: center">Description</th>
                             <th style="text-align: center">Bill (Rp.)</th>
-                            @if ($tuition->status !== 'Paid') {{-- Cek apakah status bukan 'Paid' --}}
+                            @if ($tuition->status !== 'Paid')
+                                {{-- Cek apakah status bukan 'Paid' --}}
                                 <th style="width: 10%; text-align: center">Action</th>
                             @endif
                         </tr>
@@ -157,14 +176,17 @@
                                     {{ NumberFormat($tuitionDetail->value) }}
                                     @php $total += $tuitionDetail->value; @endphp
                                 </td>
-                                @if ($tuition->status !== 'Paid') {{-- Cek apakah status bukan 'Paid' --}}
+                                @if ($tuition->status !== 'Paid')
+                                    {{-- Cek apakah status bukan 'Paid' --}}
                                     <td class="align-middle">
                                         @if (auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
                                             <div class="text-center d-flex justify-content-center">
-                                                <form method="POST" action="{{ route('tuition-detail.destroy', $tuitionDetail->id) }}">
+                                                <form method="POST"
+                                                    action="{{ route('tuition-detail.destroy', $tuitionDetail->id) }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger ms-2" title="Delete"
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger ms-2"
+                                                        title="Delete"
                                                         onclick="return confirm('Anda yakin mau menghapus tagihan {{ $tuitionDetail->tuitionType->name }}?')">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
@@ -178,7 +200,8 @@
                         <tr>
                             <td colspan="3" class="text-center"><strong>Total</strong></td>
                             <td class="text-end"><strong>{{ NumberFormat($total) }}</strong></td>
-                            @if ($tuition->status !== 'Paid') {{-- Cek apakah status bukan 'Paid' --}}
+                            @if ($tuition->status !== 'Paid')
+                                {{-- Cek apakah status bukan 'Paid' --}}
                                 <td colspan="2"></td>
                             @endif
                         </tr>
@@ -196,13 +219,13 @@
                             value="{{ $tuitionDetail->value }}">
                     @endforeach
                     <input type="hidden" name="total" value="{{ $total }}">
-                    @if(auth()->user()->role === 'Student' && $status !== 'Paid')
+                    @if (auth()->user()->role === 'Student' && $status !== 'Paid')
                         <div class="text-end mt-3">
                             <button type="submit" class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-dollar-sign"></i> Pay Off
                             </button>
                         </div>
-                    {{-- @endif
+                        {{-- @endif
                         <div class="text-end mt-3">
                             <button type="button" class="btn btn-sm btn-success" disabled>
                                 <i class="fas fa-check"></i> Paid

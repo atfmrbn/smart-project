@@ -32,7 +32,7 @@ class SubjectController extends Controller
         $classroom_types = ClassroomType::all();
 
         $data = [
-            'title' => 'Add Subjects',
+            'title' => 'Add Subject',
             'classroom_types' => $classroom_types,
         ];
 
@@ -63,7 +63,7 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
 
         $data = [
-            'title' => 'Subject Detail',
+            'title' => 'Detail Subject',
             'subject' => $subject
         ];
 

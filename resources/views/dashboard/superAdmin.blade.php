@@ -3,6 +3,15 @@
 @section('container')
 
 <div class="container mt-5">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (Auth::user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Super Admin Dashboard</li>
+            @endif
+        </ol>
+    </nav>
     <div class="card shadow-sm">
         <div class="card-header">
             @if (Auth::user()->role == 'superAdmin')

@@ -1,5 +1,17 @@
 @extends('layouts.main')
 @section('container')
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('/configuration') }}">Configuration</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -68,7 +80,8 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="book_penalty">Book Penalty <span class="login-danger">*</span></label>
-                <input type="book_penalty" id="book_penalty" name="book_penalty" class="form-control @error('book_penalty')is-invalid @enderror"
+                <input type="book_penalty" id="book_penalty" name="book_penalty"
+                    class="form-control @error('book_penalty')is-invalid @enderror"
                     value="{{ isset($configuration) ? $configuration->book_penalty : old('book_penalty') }}">
                 @error('book_penalty')
                     <div class="invalid-feedback">
@@ -77,7 +90,7 @@
                 @enderror
             </div>
         </div>
-        
+
         <div class="col-12">
             <div class="configuration-submit">
                 <button type="submit" class="btn btn-primary">Submit</button>

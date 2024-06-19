@@ -1,11 +1,26 @@
 @extends('layouts.main')
 @section('container')
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Admin')
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+            @elseif (auth()->user()->role == 'Teacher')
+                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('classroom/') }}">Classrooms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
+
     @if (isset($classroom))
         <form method="POST" action="{{ URL::to('classroom/' . $classroom->id) }}" autocomplete="off"
             enctype="multipart/form-data">
             @method('put')
         @else
-            <form method="POST" action="{{ URL::to('classroom') }}" autocomplete="off" >
+            <form method="POST" action="{{ URL::to('classroom') }}" autocomplete="off">
     @endif
     @csrf
     <div class="row">
@@ -38,12 +53,12 @@
             </div>
         </div>
 
-            <div class="col-12">
-                <div class="student-submit">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{ URL::to('classroom/') }}" class="btn btn-secondary">Back</a>
-                </div>
+        <div class="col-12">
+            <div class="student-submit">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ URL::to('classroom/') }}" class="btn btn-secondary">Back</a>
             </div>
+        </div>
         </form>
     </div>
 @endsection
