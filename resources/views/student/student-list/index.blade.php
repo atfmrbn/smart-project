@@ -50,7 +50,7 @@
     <div class="table-responsive">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead class="student-thread">
-                <tr class="align-middle">
+                <tr class="text-center">
                     <th>#</th>
                     <th>Identity Number</th>
                     <th>Name</th>

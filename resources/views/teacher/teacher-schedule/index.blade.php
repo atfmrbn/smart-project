@@ -72,14 +72,14 @@
             @foreach ($teacherSchedules as $index => $teacherSchedule)
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
-                    <td>{{ $teacherSchedule->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }}
+                    <td class="text-center">{{ $teacherSchedule->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }}
                         -
                         {{ $teacherSchedule->teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }}
                     </td>
-                    <td>{{ $teacherSchedule->teacherClassroomRelationship->teacherSubjectRelationship->teacher->name }} -
+                    <td class="text-center">{{ $teacherSchedule->teacherClassroomRelationship->teacherSubjectRelationship->teacher->name }} -
                         {{ $teacherSchedule->teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
                     </td>
-                    <td class="text-end">{{ $teacherSchedule->schedule_day }}
+                    <td class="text-center">{{ $teacherSchedule->schedule_day }}
                         {{ \Carbon\Carbon::parse($teacherSchedule->schedule_time_start)->format('H:i') }} -
                         {{ \Carbon\Carbon::parse($teacherSchedule->schedule_time_end)->format('H:i') }}
                     </td>

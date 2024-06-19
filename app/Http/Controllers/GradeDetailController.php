@@ -13,31 +13,39 @@ class GradeDetailController extends Controller
 {
     public function index(Request $request)
     {
-        $grades = Grade::all();
-        $students = User::where('role', 'student')->get();
+    $grades = Grade::with(['taskType', 'teacherClassroomRelationship.teacherHomeroomRelationship.classroom.classroomType', 'teacherClassroomRelationship.teacherSubjectRelationship.teacher', 'teacherClassroomRelationship.teacherSubjectRelationship.subject'])->get();
+    $students = User::where('role', 'student')->get();
 
-        $gradeDetailsQuery = GradeDetail::with(['grade', 'student']);
+    // Sort grades alphabetically by task type name
+    $grades = $grades->sortBy(function ($grade) {
+        return $grade->taskType->name ?? '';
+    });
 
-        if ($request->filled('grade_id')) {
-            $gradeDetailsQuery->whereHas('grade', function ($query) use ($request) {
-                $query->where('id', $request->grade_id);
-            });
-        }
+    // Sort students alphabetically by name
+    $students = $students->sortBy('name');
 
-        if ($request->filled('student_id')) {
-            $gradeDetailsQuery->where('student_id', $request->student_id);
-        }
+    $gradeDetailsQuery = GradeDetail::with(['grade', 'student']);
 
-        $gradeDetails = $gradeDetailsQuery->get();
+    if ($request->filled('grade_id')) {
+        $gradeDetailsQuery->whereHas('grade', function ($query) use ($request) {
+            $query->where('id', $request->grade_id);
+        });
+    }
 
-        $data = [
-            'title' => 'Grade Details',
-            'gradeDetails' => $gradeDetails,
-            'grades' => $grades,
-            'students' => $students,
-        ];
+    if ($request->filled('student_id')) {
+        $gradeDetailsQuery->where('student_id', $request->student_id);
+    }
 
-        return view('teacher.grade-detail.index', $data);
+    $gradeDetails = $gradeDetailsQuery->get();
+
+    $data = [
+        'title' => 'Grade Details',
+        'gradeDetails' => $gradeDetails,
+        'grades' => $grades,
+        'students' => $students,
+    ];
+
+    return view('teacher.grade-detail.index', $data);
     }
 
     public function create()

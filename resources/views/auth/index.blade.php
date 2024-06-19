@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>{{ $title }}</title> 
+    <title>{{ $title }}</title>
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
@@ -201,13 +201,15 @@
                 <button class="btn btn-primary btn-block" type="submit">Login</button>
             </div>
         </form>
-        <div class="form-group mt-4">
-            <a href="{{ route('redirect') }}" class="btn btn-light btn-block"> 
-            <img width="24" height="24" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
-                Login with Google
+
+        <div class="login-or">
+            <span >Login with Google</span>
+        <div class="social-login">
+            <a href="{{ route('redirect') }}">
+                <i class="fab fa-google-plus-g"></i>
             </a>
         </div>
-            
+
     </div>
 </div>
 
