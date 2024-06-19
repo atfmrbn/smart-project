@@ -1,18 +1,28 @@
 @extends('layouts.main')
 @section('container')
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
+            @if (auth()->user()->role == 'Super Admin')
+                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+            @endif
+            <li class="breadcrumb-item"><a href="{{ URL::to('/curriculum') }}">Curriculums</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+        </ol>
+    </nav>
 
-@if (session('success'))
+    @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
-    
-@if(isset($curriculum))
-<form method="POST" action="{{ URL::to('curriculum/' . $curriculum->id) }}">
-    @method('put')
-@else
-<form method="POST" action="{{ URL::to('curriculum') }}">
-@endif
+
+    @if (isset($curriculum))
+        <form method="POST" action="{{ URL::to('curriculum/' . $curriculum->id) }}">
+            @method('put')
+        @else
+            <form method="POST" action="{{ URL::to('curriculum') }}">
+    @endif
     @csrf
     <div class="row">
         <div class="col-12">
@@ -21,7 +31,8 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="year">Year <span class="login-danger">*</span></label>
-                <input type="text" id="year" name="year" class="form-control @error('year')is-invalid @enderror" value="{{ isset($curriculum) ? $curriculum->year : old('year')}}">
+                <input type="text" id="year" name="year" class="form-control @error('year')is-invalid @enderror"
+                    value="{{ isset($curriculum) ? $curriculum->year : old('year') }}">
                 @error('year')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -30,7 +41,9 @@
             </div>
             <div class="form-group local-forms">
                 <label for="description">Description <span class="login-danger">*</span></label>
-                <input type="text" id="description" name="description" class="form-control @error('description')is-invalid @enderror" value="{{ isset($curriculum) ? $curriculum->description : old('description')}}">
+                <input type="text" id="description" name="description"
+                    class="form-control @error('description')is-invalid @enderror"
+                    value="{{ isset($curriculum) ? $curriculum->description : old('description') }}">
                 @error('description')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -49,10 +62,8 @@
                 @enderror
             </div> --}}
             <button type="submit" class="btn btn-primary ">Submit</button>
-            <a href="{{ URL::to('curriculum/')  }}" class="btn  btn-secondary">Back</a>
+            <a href="{{ URL::to('curriculum/') }}" class="btn  btn-secondary">Back</a>
         </div>
     </div>
-</form>
-
-
+    </form>
 @endsection

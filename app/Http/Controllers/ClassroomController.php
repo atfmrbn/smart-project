@@ -30,7 +30,7 @@ class ClassroomController extends Controller
     {
         $classroom_types = ClassroomType::orderBy('name')->get();
         $data = [
-            "title" => "Tambah Ruang Kelas",
+            "title" => "Add Classroom",
             "classroom_types" => $classroom_types,
         ];
 
@@ -62,7 +62,7 @@ class ClassroomController extends Controller
     {
         $classroom = Classroom::find($id);
         $data = [
-            "title" => "Detail Ruang Kelas",
+            "title" => "Detail Classroom",
             "classroom" => $classroom,
         ];
 
@@ -82,7 +82,7 @@ class ClassroomController extends Controller
         $classroom_types = ClassroomType::orderBy('name')->get(); 
         
         $data = [
-            "title" => "Edit Ruang Kelas",
+            "title" => "Edit Classroom",
             "classroom" => $classroom,
             "classroom_types" => $classroom_types, 
         ];
