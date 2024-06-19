@@ -7,8 +7,21 @@
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
                 <a href="{{ route('teacher.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                <a href="{{ route('teacher.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+                <a href="{{ route('teacher.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
             </div>
+
+            @if (session()->has('successMessage'))
+                <div class="alert alert-success">
+                    {{ session('successMessage') }}
+                </div>
+            @endif
+
+            @if (session()->has('errorMessage'))
+                <div class="alert alert-danger">
+                    {{ session('errorMessage') }}
+                </div>
+            @endif
+
         </div>
     </div>
 

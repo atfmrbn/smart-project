@@ -19,7 +19,7 @@
             <h3 class="page-title">{{ $title }}</h3>
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
-            <a href="{{ URL::to('attendance/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            <a href="{{ URL::to('attendance/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
         </div>
     </div>
 </div>
@@ -27,7 +27,7 @@
 <div class="table-responsive">
     <table id="example" class="table table-bordered table-striped">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th>#</th>
                 <th>Student Teacher Homeroom</th>
                 <th>Attendance Date</th>
@@ -39,9 +39,9 @@
         <tbody>
             @foreach ($attendances as $index => $attendance)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $attendance->studentTeacherHomeroomRelationship->student->identity_number }} - {{ $attendance->studentTeacherHomeroomRelationship->student->name }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} - {{ optional($attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher)->identity_number }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}</td>
-                    <td>{{ date('d-m-Y', strtotime($attendance->attendance_date)) }}</td>
+                    <td class="text-center">{{ $index + 1 }}</td>
+                    <td>{{ $attendance->studentTeacherHomeroomRelationship->student->identity_number }} - {{ $attendance->studentTeacherHomeroomRelationship->student->name }} - {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->classroom->name }} -  {{ $attendance->studentTeacherHomeroomRelationship->teacherHomeroomRelationship->teacher->name }}</td>
+                    <td>{{ DateFormat($attendance->attendance_date, 'DD MMMM Y') }}</td>
                     <td>{{ $attendance->note }}</td>
                     <td>{{ $attendance->status }}</td>
                     <td class="align-middle text-center">

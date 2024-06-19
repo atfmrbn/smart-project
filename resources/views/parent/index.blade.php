@@ -1,29 +1,31 @@
 @extends('layouts.main')
-@section('title', $title)
 @section('container')
-    @if (session()->has('successMessage'))
-        <div class="alert alert-success">
-            {{ session('successMessage') }}
-        </div>
-    @endif
-
-    @if (session()->has('errorMessage'))
-        <div class="alert alert-danger">
-            {{ session('errorMessage') }}
-        </div>
-    @endif
+    
 
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
-            <div class="col-auto text-end float-end ms-auto download-grp">
 
-                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Teacher')
-                    <a href="{{ URL::to('parent/parent-list/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+            <div class="col-auto text-end float-end ms-auto download-grp">
+                @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' )
+                    <a href="{{ URL::to('parent/parent-list/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
                 @endif
             </div>
+            
+            @if (session()->has('successMessage'))
+                <div class="alert alert-success">
+                    {{ session('successMessage') }}
+                </div>
+            @endif
+
+            @if (session()->has('errorMessage'))
+                <div class="alert alert-danger">
+                    {{ session('errorMessage') }}
+                </div>
+            @endif
+
         </div>
     </div>
 

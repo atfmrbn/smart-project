@@ -18,7 +18,7 @@
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ URL::to('subject/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+                <a href="{{ URL::to('subject/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
             </thead>
             <tbody>
                 @foreach ($subjects as $index => $subject)
-                    <tr class="text-center">
+                    <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $subject->classroomType->name }}</td>
                         <td>{{ $subject->name }}</td>

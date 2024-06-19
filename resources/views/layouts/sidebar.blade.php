@@ -212,13 +212,14 @@
                                     class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="{{ URL::to('classroom/') }}"
-                                        class="{{ request()->is('classroom') ? 'active' : '' }} || {{ request()->is('classroom/create') ? 'active' : '' }} || {{ request()->is('classroom/*/edit') ? 'active' : '' }}">Classroom List</a>
+                                        class="{{ request()->is('classroom') ? 'active' : '' }} || {{ request()->is('classroom/create') ? 'active' : '' }} || {{ request()->is('classroom/') ? 'active' : '' }}">Classroom List</a>
                                 </li>
                                 <li><a href="{{ URL::to('classroom/classroom-type/') }}"
-                                        class="{{ request()->is('classroom/classroom-type') ? 'active' : '' }}">Classroom
-                                        Type</a></li>
+                                    class="{{ request()->is('classroom/classroom-type') ? 'active' : '' }} || {{ request()->is('classroom/classroom-type/create') ? 'active' : '' }} || {{ request()->is('classroom/classroom-type/*') ? 'active' : '' }}">Classroom Type</a>
+                                </li>
                                 <li><a href="{{ URL::to('/subject') }}"
-                                        class="{{ request()->is('subject') ? 'active' : '' }}">Subject</a></li>
+                                    class="{{ request()->is('subject') ? 'active' : '' }} || {{ request()->is('subject/create') ? 'active' : '' }} || {{ request()->is('subject/*/edit') ? 'active' : '' }} || {{ request()->is('subject/*') ? 'active' : '' }}">Subject</a>
+                                </li>
                                         
                                 @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher']))
                                     <li><a href="{{ URL::to('attendance') }}"

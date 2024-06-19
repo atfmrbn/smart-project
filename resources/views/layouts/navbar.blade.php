@@ -1,8 +1,23 @@
 <div class="header">
         <div class="header-left">
-          <a href="{{ URL::to('/') }}" class="logo">
+          <a href="
+            @if(Auth::user()->role == 'Super Admin')
+              {{ URL::to('dashboard/superAdmin') }}
+            @elseif(Auth::user()->role == 'Admin')
+              {{ URL::to('dashboard/admin') }}
+            @elseif(Auth::user()->role == 'Student')
+              {{ URL::to('dashboard/student') }}
+            @elseif(Auth::user()->role == 'Teacher')
+              {{ URL::to('dashboard/teacher') }}
+            @else
+              {{ URL::to('dashboard/parent') }}
+            @endif
+          " class="logo">
             <img src="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png" alt="Logo" />
           </a>
+          {{-- <a href="{{ URL::to('/') }}" class="logo">
+            <img src="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png" alt="Logo" />
+          </a> --}}
         </div>
 
         <div class="menu-toggle">
@@ -25,7 +40,7 @@
           <li class="nav-item new-user-menus">
             <a href="#" class="nav-link" aria-expanded="false">
                 <span class="user-img">
-                    {{-- <img class="rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" width="31"> --}}
+                    <img class="rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" width="31">
                     <div class="user-text">
                         <h6>{{ Auth::user()->name }}</h6>
                         <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
