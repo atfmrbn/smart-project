@@ -3,14 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Book;
 use App\Models\Tuition;
-use App\Models\BorrowingBookDetail;
-use App\Models\TeacherHomeroomRelationship;
 use App\Models\TuitionType;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class TuitionController extends Controller
 {
@@ -19,9 +14,17 @@ class TuitionController extends Controller
      */
     public function index()
     {
-        $tuitions = Tuition::with(['studentTeacherHomeroomRelationship.student'])->get();
-        // dd( $tuitions);
-        
+        $user = Auth()->user();
+        $tuitionsQuery = Tuition::with(['studentTeacherHomeroomRelationship.student']);
+
+        if ($user->role == 'Student') {
+            $tuitionsQuery->whereHas('studentTeacherHomeroomRelationship', function($query) use ($user) {
+                $query->where('student_id', $user->id);
+            });
+        }
+
+        $tuitions = $tuitionsQuery->orderBy('tuition_date', 'desc')->get();
+
         $data = [
             'title' => 'Tuitions',
             'tuitions' => $tuitions,
@@ -29,6 +32,7 @@ class TuitionController extends Controller
 
         return view('tuition.index', $data);
     }
+
 
     /**
      * Show the form for creating a new resource.

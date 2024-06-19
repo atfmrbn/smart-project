@@ -22,7 +22,6 @@
             </div>
             @if (auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
                 <div class="col-auto text-end float-end ms-auto download-grp">
-                    {{-- <a href="{{ URL::to('tuition-download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a> --}}
                     <a href="{{ URL::to('tuition/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
                 </div>
             @endif
@@ -37,7 +36,6 @@
                     <th class="text-center">Student</th>
                     <th class="text-center">Tuition Date</th>
                     <th class="text-center">Status</th>
-                    {{-- <th class="text-center">Penalty</th> --}}
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -49,7 +47,6 @@
                             {{ $tuition->studentTeacherHomeroomRelationship->student->identity_number }} -
                             {{ $tuition->studentTeacherHomeroomRelationship->student->name }}
                         </td>
-                        {{-- <td>{{ $tuition->classroom_name }} - {{ $tuition->identity_number }}  - {{ $tuition->name }}</td> --}}
                         <td>{{ DateFormat($tuition->tuition_date, 'DD MMMM Y') }}</td>
                         <td class="text-center">
                             @if ($tuition->status == 'Paid')
@@ -61,11 +58,10 @@
                         <td class="text-center">
                             <div class="d-flex justify-content-center align-items-center">
                                 @if (auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
-                                    <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit"
-                                        class="btn btn-sm btn-outline-primary me-2">
+                                    <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form method="POST" action="{{ URL::to('tuition/' . $tuition->id) }}">
+                                    <form method="POST" action="{{ route('tuition.destroy', $tuition->id) }}">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete"
@@ -73,23 +69,19 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
-                                @elseif(auth()->user()->role === 'Student' &&
-                                        $tuition->studentTeacherHomeroomRelationship->student->id === auth()->user()->id)
+                                @elseif(auth()->user()->role === 'Student' && $tuition->studentTeacherHomeroomRelationship->student->id === auth()->user()->id)
                                     @if ($tuition->status === 'Paid')
-                                        <a href="{{ URL::to('invoice/' . $tuition->id) }}" title="Invoice"
-                                            class="btn btn-sm btn-outline-warning me-2">
+                                        <a href="{{ URL::to('invoice/' . $tuition->id) }}" title="Invoice" class="btn btn-sm btn-outline-warning me-2">
                                             <i class="fas fa-receipt"></i>
                                         </a>
                                     @else
-                                        <a href="{{ route('tuition.edit', $tuition->id) }}" title="Pay Off"
-                                            class="btn btn-sm btn-outline-primary me-2">
+                                        <a href="{{ route('tuition.edit', $tuition->id) }}" title="Pay Off" class="btn btn-sm btn-outline-primary me-2">
                                             <i class="fas fa-money-bill-wave"></i>
                                         </a>
                                     @endif
                                 @endif
                             </div>
                         </td>
-
                     </tr>
                 @endforeach
             </tbody>
