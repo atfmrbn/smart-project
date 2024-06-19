@@ -25,69 +25,72 @@
         <div class="col-12">
             <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
-                <input type="number" min="0" id="identity_number" name="identity_number" class="form-control"
-                    value="{{ $student->identity_number }}" readonly>
+        <div class="row">
+            <div class="col-md-3 text-center mb-5">
+                @if ($student->image)
+                    <img src="{{ asset('images/' . $student->image) }}" alt="Profile Image" class="img-thumbnail"
+                        style="max-width: 200px;">
+                @else
+                    <p>No image available</p>
+                @endif
+            </div>
+
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group local-forms">
+                            <label><strong>Identity Number:</strong></label>
+                            <input type="number" min="0" id="identity_number" name="identity_number"
+                                class="form-control" value="{{ $student->identity_number }}" readonly>
+                        </div>
+                        <div class="form-group local-forms">
+                            <label><strong>Name:</strong></label>
+                            <input type="text" id="name" name="name" class="form-control"
+                                value="{{ $student->name }}" readonly>
+                        </div>
+                        <div class="form-group local-forms">
+                            <label><strong>Username:</strong></label>
+                            <input type="text" id="username" name="username" class="form-control"
+                                value="{{ $student->username }}" readonly>
+                        </div>
+                        <div class="form-group local-forms">
+                            <label><strong>Email:</strong></label>
+                            <input type="email" id="email" name="email" class="form-control"
+                                value="{{ $student->email }}" readonly>
+                        </div>
+                        <div class="form-group local-forms">
+                            <label><strong>Gender:</strong></label>
+                            <input type="text" id="gender" name="gender" class="form-control"
+                                value="{{ $student->gender }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group local-forms">
+                            <label><strong>Date of Birth:</strong></label>
+                            <input id="born_date" name="born_date" class="form-control"
+                                value="{{ DateFormat($student->born_date, 'DD MMMM Y') }}" readonly>
+                        </div>
+                        <div class="form-group local-forms">
+                            <label><strong>Phone Number:</strong></label>
+                            <input type="text" id="phone" name="phone" class="form-control"
+                                value="{{ $student->phone }}" readonly>
+                        </div>
+                        <div class="form-group local-forms">
+                            <label><strong>NIK:</strong></label>
+                            <input type="number" min="0" id="nik" name="nik" class="form-control"
+                                value="{{ $student->nik }}" readonly>
+                        </div>
+                        <div class="form-group local-forms">
+                            <label><strong>Address:</strong></label>
+                            <input type="text" id="address" name="address" class="form-control"
+                                value="{{ $student->address }}" readonly>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="name">Student Name <span class="login-danger">*</span></label>
-                <input type="text" id="name" name="name" class="form-control" value="{{ $student->name }}"
-                    readonly>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="username">Username <span class="login-danger">*</span></label>
-                <input type="text" id="username" name="username" class="form-control" value="{{ $student->username }}"
-                    readonly>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="email">Email <span class="login-danger">*</span></label>
-                <input type="email" id="email" name="email" class="form-control" value="{{ $student->email }}"
-                    readonly>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="gender">Gender <span class="login-danger">*</span></label>
-                <input type="text" id="gender" name="gender" class="form-control" value="{{ $student->gender }}"
-                    readonly>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="born_date">Date of Birth <span class="login-danger">*</span></label>
-                <input id="born_date" name="born_date" class="form-control" value="{{ DateFormat($student->born_date, 'DD MMMM Y') }}"
-                    readonly>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="phone">Phone Number <span class="login-danger">*</span></label>
-                <input type="text" id="phone" name="phone" class="form-control" value="{{ $student->phone }}"
-                    readonly>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="nik">NIK <span class="login-danger">*</span></label>
-                <input type="number" min="0" id="nik" name="nik" class="form-control"
-                    value="{{ $student->nik }}" readonly>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="form-group local-forms">
-                <label for="address">Address <span class="login-danger">*</span></label>
-                <input type="text" id="address" name="address" class="form-control" value="{{ $student->address }}"
-                    readonly>
-            </div>
-            <div class="card-footer text-right">
+        <div class="card-footer text-right">
+            <div class="student-submit">
                 <a href="{{ URL::to('student/student-list') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>

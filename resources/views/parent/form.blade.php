@@ -177,16 +177,6 @@
             </div>
         </div>
 
-        {{-- <div class="col-12 col-sm-4">
-            <div class="form-group local-forms">
-                <label for="students">Select Child</label>
-                <select name="students[]" class="form-control data-select-2" id="students" >
-                    @foreach ($students as $student)
-                        <option value="{{ $student->id }}">{{ $student->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div> --}}
         <div class="col-12 col-sm-8">
             <div class="form-group local-forms">
                 <label for="image">Profile Image</label>

@@ -15,9 +15,10 @@
 
     <div class="row align-items-center">
         @if (isset($tuition) && (auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin'))
-            <div class="col">
+            <div class="col-12">
                 <h5>{{ isset($tuition) ? 'Edit' : 'Add' }} Tuition</h5>
             </div>
+            
             <div class="col-auto text-end float-end ms-auto download-grp">
                 {{-- <a href="{{ URL::to('tuition-detail-download/' . $tuition->id) }}" class="btn btn-primary mb-3"><i class="fas fa-download"></i> Download</a> --}}
             </div>

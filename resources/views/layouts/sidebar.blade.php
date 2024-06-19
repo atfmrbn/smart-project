@@ -137,12 +137,23 @@
                             @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher']))
                                 <li>
                                     <a href="{{ URL::to('/teacher/teacher-subject') }}"
-                                        class="{{ request()->is('teacher/teacher-subject') ? 'active' : '' }} || {{ request()->is('teacher/teacher-subject/create') ? 'active' : '' }} || {{ request()->is('teacher/teacher-subject/*/edit') ? 'active' : '' }}">Teacher Subject</a>
+                                        class="{{ request()->is('teacher/teacher-subject') || request()->is('teacher/teacher-subject/create') || request()->is('teacher/teacher-subject/*/edit') ? 'active' : '' }}">
+                                        Teacher Subject
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ URL::to('/task-type') }}"
+                                        class="{{ request()->is('task-type') || request()->is('task-type/create') ? 'active' : '' }}">
+                                        Task Type
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="{{ URL::to('/teacher/grade') }}"
-                                        class="{{ request()->is('teacher/grade') ? 'active' : '' }}">Grade</a>
+                                        class="{{ request()->is('teacher/grade') ? 'active' : '' }}">
+                                        Grade
+                                    </a>
                                 </li>
+
                             @endif
 
                             @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher', 'Student']))
@@ -235,10 +246,7 @@
                             <a href="{{ URL::to('/curriculum') }}"><i class="fas fa-school"></i> <span>
                                     Curriculums</span></a>
                         </li>
-                        <li class="nav-item {{ request()->is('task-type') ? 'active' : '' }}">
-                            <a href="{{ URL::to('/task-type') }}"><i class="fas fa-tags"></i> <span> Task
-                                    Type</span></a>
-                        </li>
+                        
                         <li
                             class="nav-item {{ request()->is('tuition-type') ? 'active' : '' }} || {{ request()->is('tuition-type/create') ? 'active' : '' }} || {{ request()->is('tuition-type/*/edit') ? 'active' : '' }}">
                             <a href="{{ URL::to('/tuition-type') }}"><i class="fas fa-file-invoice-dollar"></i>
