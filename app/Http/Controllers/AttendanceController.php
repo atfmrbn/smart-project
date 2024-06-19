@@ -132,4 +132,20 @@ class AttendanceController extends Controller
             return redirect()->route('attendance.index')->with('error', $th->getMessage());
         }
     }
+
+    public function download()
+    {
+        $attendances = Attendance::with('studentTeacherHomeroomRelationship.teacherHomeroomRelationship.teacher')
+        ->get();
+
+        $data = [
+            'title' => 'Attendance',
+            'attendances' => $attendances,
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('attendance.report', $data);
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->download('attendance.pdf');
+    }
 }
