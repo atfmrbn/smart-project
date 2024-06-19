@@ -18,7 +18,7 @@
         <div class="col-12">
             <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-md-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="classroom_type_id">Classroom Type <span class="login-danger">*</span></label>
                 <select name="classroom_type_id" id="classroom_type_id" class="form-control data-select-2">
@@ -32,7 +32,9 @@
                     {{ $message }}
                 </div>
                 @enderror
-            </div>            
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12">      
             <div class="form-group local-forms">
                 <label for="name">Name <span class="login-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control  
@@ -44,6 +46,8 @@
                 </div>
                 @enderror
             </div>
+        </div>
+        <div class="col-md-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="description">Description <span class="login-danger">*</span></label>
                 <input type="text" id="description" name="description" class="form-control  

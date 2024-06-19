@@ -10,7 +10,7 @@
         <form method="POST" action="{{ URL::to('parent/parent-list/' . $parent->id) }}" autocomplete="off" enctype="multipart/form-data">
             @method('put')
         @else
-            <form method="POST" action="{{ URL::to('parent/parent-list') }}" autocomplete="off" enctype="multipart/form-data">
+        <form method="POST" action="{{ URL::to('parent/parent-list') }}" autocomplete="off" enctype="multipart/form-data">
     @endif
     @csrf
     <div class="row">

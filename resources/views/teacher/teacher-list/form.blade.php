@@ -1,10 +1,6 @@
 @extends('layouts.main')
 @section('container')
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    
     <form method="POST" action="{{ isset($teacher) ? route('teacher.update', $teacher->id) : route('teacher.store') }}"
         autocomplete="off" enctype="multipart/form-data">
         @csrf
@@ -15,7 +11,7 @@
             <div class="col-12">
                 <h5 class="form-title"><span>{{ $title }}</span></h5>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="identity_number">Identity Number <span class="login-danger">*</span></label>
                     <input type="text" id="identity_number" name="identity_number"
@@ -29,7 +25,7 @@
                 </div>
             </div>
             
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="name">Teacher Name <span class="login-danger">*</span></label>
                     <input type="text" id="name" name="name"
@@ -42,7 +38,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="username">Username <span class="login-danger">*</span></label>
                     <input type="text" id="username" name="username"
@@ -55,7 +51,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="password">Password <span class="login-danger">*</span></label>
                     <input type="password" id="password" name="password"
@@ -67,7 +63,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="email">Email <span class="login-danger">*</span></label>
                     <input type="email" id="email" name="email"
@@ -80,7 +76,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="gender">Gender <span class="login-danger">*</span></label>
                     <select class="form-control select" name="gender" id="gender" required>
@@ -92,7 +88,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="born_date">Date of Birth <span class="login-danger">*</span></label>
                     <input type="date" id="born_date" name="born_date"
@@ -105,7 +101,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="phone">Phone Number <span class="login-danger">*</span></label>
                     <input type="text" id="phone" name="phone"
@@ -118,7 +114,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="form-group local-forms">
                     <label for="nik">NIK <span class="login-danger">*</span></label>
                     <input type="number" min="0" id="nik" name="nik"
@@ -131,7 +127,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-12 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="form-group local-forms">
                     <label for="address">Address <span class="login-danger">*</span></label>
                     <input type="text" id="address" name="address"
@@ -144,20 +140,32 @@
                     @enderror
 
                 </div>
-                <div class="col-12 col-sm-4" style="display: none;">
-                    <div class="form-group local-forms">
-                        <label for="role">Role <span class="login-danger">*</span></label>
-                        <input type="text" class="form-control" name="role" id="role" value="Teacher"
-                            required>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="teacher-submit">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ route('teacher.index') }}" class="btn btn-secondary">Back</a>
-                    </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group local-forms">
+                    <label for="image">Profile Image</label>
+                    <input type="file" id="image" name="image" class="form-control @error('image')is-invalid @enderror">
+                    @error('image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
             </div>
+            <div class="col-12 col-sm-4" style="display: none;">
+                <div class="form-group local-forms">
+                    <label for="role">Role <span class="login-danger">*</span></label>
+                    <input type="text" class="form-control" name="role" id="role" value="Teacher"
+                        required>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="teacher-submit">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="{{ route('teacher.index') }}" class="btn btn-secondary">Back</a>
+                </div>
+            </div>
+        </div>
     </form>
     <script>
         document.getElementById('phone').addEventListener('input', function(e) {

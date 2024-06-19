@@ -6,7 +6,7 @@
 <div class="container mt-5">
     <div class="card shadow-sm">
         <div class="card-header">
-            <h3 class="mb-0">Welcome to Parent Dashboard, {{ Auth::user()->name }}!</h3>
+            <h3 class="mb-0">Welcome {{ Auth::user()->name }}!</h3>
         </div>
         <div class="card-body">
             <div class="row mt-4">

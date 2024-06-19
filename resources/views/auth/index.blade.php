@@ -201,15 +201,13 @@
                 <button class="btn btn-primary btn-block" type="submit">Login</button>
             </div>
         </form>
-
-        <div class="login-or">
-            <span >Login with Google</span>
-        <div class="social-login">
-            <a href="{{ route('redirect') }}">
-                <i class="fab fa-google-plus-g"></i> 
+        <div class="form-group mt-4">
+            <a href="{{ route('redirect') }}" class="btn btn-light btn-block"> 
+            <img width="24" height="24" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                Login with Google
             </a>
         </div>
-        </div>
+            
     </div>
 </div>
 
