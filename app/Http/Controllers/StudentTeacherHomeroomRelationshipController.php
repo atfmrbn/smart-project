@@ -36,7 +36,7 @@ class StudentTeacherHomeroomRelationshipController extends Controller
         $classrooms = Classroom::all();
 
         $data = [
-            'title' => 'Student Teacher Homeroom',
+            'title' => 'Student Teacher Homerooms',
             'studentTeacherHomeroomRelationships' => $studentTeacherHomeroomRelationships,
             'classrooms' => $classrooms,
         ];

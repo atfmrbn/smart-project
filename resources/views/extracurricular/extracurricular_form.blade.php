@@ -2,7 +2,7 @@
 @section('container')
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="background-color: transparent; border: none;">
             @if (auth()->user()->role == 'Admin')
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             @elseif (auth()->user()->role == 'Super Admin')
