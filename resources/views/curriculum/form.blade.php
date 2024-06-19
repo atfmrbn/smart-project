@@ -21,24 +21,20 @@
         <div class="col-12 col-sm-4">
             <div class="form-group local-forms">
                 <label for="year">Year <span class="login-danger">*</span></label>
-                <input type="text" id="year" name="year" class="form-control  
-                @error('year')is-invalid @enderror" value="{{ isset($curriculum)? 
-                $curriculum->year : old('year')}}">
+                <input type="text" id="year" name="year" class="form-control @error('year')is-invalid @enderror" value="{{ isset($curriculum) ? $curriculum->year : old('year')}}">
                 @error('year')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                 @enderror
             </div>
             <div class="form-group local-forms">
                 <label for="description">Description <span class="login-danger">*</span></label>
-                <input type="text" id="description" name="description" class="form-control  
-                @error('description')is-invalid @enderror" value="{{ isset($curriculum)? 
-                $curriculum->description : old('description')}}">
+                <input type="text" id="description" name="description" class="form-control @error('description')is-invalid @enderror" value="{{ isset($curriculum) ? $curriculum->description : old('description')}}">
                 @error('description')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                 @enderror
             </div>
             {{-- <div class="form-group local-forms">

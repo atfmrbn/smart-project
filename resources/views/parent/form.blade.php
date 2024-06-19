@@ -27,6 +27,7 @@
             enctype="multipart/form-data">
             @method('put')
         @else
+        
             <form method="POST" action="{{ URL::to('parent/parent-list') }}" autocomplete="off"
                 enctype="multipart/form-data">
     @endif

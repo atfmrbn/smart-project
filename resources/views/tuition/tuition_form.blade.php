@@ -83,51 +83,53 @@
 
         <div class="row">
             @if (auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
-                <form action="{{ route('tuition-detail.store') }}" method="POST" autocomplete="off" class="mt-4">
-                    @csrf
-                    <div class="col-12">
-                        <div class="form-group local-forms">
-                            <label for="value">Tuition Type <span class="login-danger">*</span></label>
-                            <input type="hidden" name="tuition_id" value="{{ $tuition->id }}">
-                            <select name="tuition_type_id" id="tuition_type_id" class="form-control data-select-2">
-                                <option value="">Select Tuition Type</option>
-                                @foreach ($tuitionTypes as $tuitionType)
-                                    <option value="{{ $tuitionType->id }}">
-                                        {{ $tuitionType->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                @if ($tuition->status !== 'Paid')
+                    <form action="{{ route('tuition-detail.store') }}" method="POST" autocomplete="off" class="mt-4">
+                        @csrf
+                        <div class="col-12">
+                            <div class="form-group local-forms">
+                                <label for="value">Tuition Type <span class="login-danger">*</span></label>
+                                <input type="hidden" name="tuition_id" value="{{ $tuition->id }}">
+                                <select name="tuition_type_id" id="tuition_type_id" class="form-control data-select-2">
+                                    <option value="">Select Tuition Type</option>
+                                    @foreach ($tuitionTypes as $tuitionType)
+                                        <option value="{{ $tuitionType->id }}">
+                                            {{ $tuitionType->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-12">
-                        <div class="form-group local-forms">
-                            <label for="value">Bill <span class="login-danger">*</span></label>
-                            <input type="text" id="value" name="value"
-                                class="form-control @error('value') is-invalid @enderror"
-                                value="{{ isset($tuition) ? $tuition->value : old('value') }}">
-                            @error('value')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                        <div class="col-12">
+                            <div class="form-group local-forms">
+                                <label for="value">Bill <span class="login-danger">*</span></label>
+                                <input type="text" id="value" name="value"
+                                    class="form-control @error('value') is-invalid @enderror"
+                                    value="{{ isset($tuition) ? $tuition->value : old('value') }}">
+                                @error('value')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-12 col-sm-12">
-                        <div class="form-group local-forms">
-                            <label for="description">Description <span class="login-danger">*</span></label>
-                            <input type="text" id="description" name="description" class="form-control"
-                                value="{{ isset($tuition) ? $tuition->description : old('description') }}"
-                                {{ isset($tuitionDetail) ? 'disabled' : '' }} placeholder="Add description">
+                        <div class="col-12 col-sm-12">
+                            <div class="form-group local-forms">
+                                <label for="description">Description <span class="login-danger">*</span></label>
+                                <input type="text" id="description" name="description" class="form-control"
+                                    value="{{ isset($tuition) ? $tuition->description : old('description') }}"
+                                    {{ isset($tuitionDetail) ? 'disabled' : '' }} placeholder="Add description">
+                            </div>
                         </div>
-                    </div>
-                    @if ($tuition->status !== 'Paid')
-                        <button type="submit" class="btn btn-primary btn-block">Add Tuition</button>
-                    @else
-                        <button type="submit" class="btn btn-success btn-block" disabled>Paid</button>
-                    @endif
-                </form>
+                        @if ($tuition->status !== 'Paid')
+                            <button type="submit" class="btn btn-primary btn-block">Add Tuition</button>
+                        @else
+                            <button type="submit" class="btn btn-success btn-block" disabled>Paid</button>
+                        @endif
+                    </form>
+                @endif
             @endif
 
             <div class="col-md-12 mt-2 table-responsive">
@@ -138,7 +140,9 @@
                             <th style="text-align: center">Tuition Type</th>
                             <th style="text-align: center">Description</th>
                             <th style="text-align: center">Bill (Rp.)</th>
-                            <th style="width: 10%; text-align: center">Action</th>
+                            @if ($tuition->status !== 'Paid') {{-- Cek apakah status bukan 'Paid' --}}
+                                <th style="width: 10%; text-align: center">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -152,31 +156,34 @@
                                     {{ NumberFormat($tuitionDetail->value) }}
                                     @php $total += $tuitionDetail->value; @endphp
                                 </td>
-                                <td class="align-middle">
-                                    @if (auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
-                                        <div class="text-center d-flex justify-content-center">
-                                            <form method="POST"
-                                                action="{{ route('tuition-detail.destroy', $tuitionDetail->id) }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-outline-danger ms-2"
-                                                    title="Delete"
-                                                    onclick="return confirm('Anda yakin mau menghapus tagihan {{ $tuitionDetail->tuitionType->name }}?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    @endif
-                                </td>
+                                @if ($tuition->status !== 'Paid') {{-- Cek apakah status bukan 'Paid' --}}
+                                    <td class="align-middle">
+                                        @if (auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
+                                            <div class="text-center d-flex justify-content-center">
+                                                <form method="POST" action="{{ route('tuition-detail.destroy', $tuitionDetail->id) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger ms-2" title="Delete"
+                                                        onclick="return confirm('Anda yakin mau menghapus tagihan {{ $tuitionDetail->tuitionType->name }}?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         <tr>
                             <td colspan="3" class="text-center"><strong>Total</strong></td>
                             <td class="text-end"><strong>{{ NumberFormat($total) }}</strong></td>
-                            <td colspan="2"></td>
+                            @if ($tuition->status !== 'Paid') {{-- Cek apakah status bukan 'Paid' --}}
+                                <td colspan="2"></td>
+                            @endif
                         </tr>
                     </tbody>
                 </table>
+
 
                 <!-- Pay Off Form -->
                 <form method="POST" action="{{ route('tuition.payoff', $tuition->id) }}">
@@ -188,18 +195,18 @@
                             value="{{ $tuitionDetail->value }}">
                     @endforeach
                     <input type="hidden" name="total" value="{{ $total }}">
-                    @if ($status !== 'Paid')
+                    @if(auth()->user()->role === 'Student' && $status !== 'Paid')
                         <div class="text-end mt-3">
                             <button type="submit" class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-dollar-sign"></i> Pay Off
                             </button>
                         </div>
-                    @else
+                    {{-- @endif
                         <div class="text-end mt-3">
                             <button type="button" class="btn btn-sm btn-success" disabled>
                                 <i class="fas fa-check"></i> Paid
                             </button>
-                        </div>
+                        </div> --}}
                     @endif
                 </form>
             </div>

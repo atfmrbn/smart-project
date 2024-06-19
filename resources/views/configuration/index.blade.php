@@ -53,7 +53,7 @@
         </div>
         <div class="col-12 col-sm-4">
             <div class="form-group">
-                <label for="book_penalty">Penalty</label>
+                <label for="book_penalty">Book Penalty</label>
                 <input type="text" id="book_penalty" name="book_penalty" class="form-control" value="{{ $configuration->book_penalty }}" readonly>
             </div>
         </div>

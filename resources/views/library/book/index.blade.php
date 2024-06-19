@@ -21,8 +21,7 @@
         </div>
         @if(in_array(Auth::user()->role, ['Super Admin', 'Admin', 'Librarian']))
         <div class="col-auto text-end float-end ms-auto download-grp">
-            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-            <a href="{{ URL::to('book/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+            <a href="{{ URL::to('book/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
         </div>
         @endif
     </div>
@@ -31,15 +30,15 @@
 <div class="table-responsive">
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead class="student-thread">
-            <tr class="text-right">
-                <th>No</th>
+            <tr class="align-middle">
+                <th class="text-center">#</th>
                 <th>Title</th>
                 <th>Category</th>
                 <th>Author</th>
                 <th>Publisher</th>
                 <th>Description</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Action</th>
+                <th class="align-middle">Status</th>
+                <th class="align-middle">Action</th>
             </tr>
         </thead>
         <tbody>

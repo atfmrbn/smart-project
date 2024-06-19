@@ -9,7 +9,7 @@
                 <a href="{{ route('teacher-classroom.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
                 @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin' || auth()->user()->role === 'Teacher')
                     <a href="{{ URL::to('teacher/teacher-classroom/create') }}" class="btn btn-primary"><i
-                            class="fas fa-plus"></i>Add New</a>
+                            class="fas fa-plus"></i> New</a>
                 @endif
             </div>
         </div>
@@ -37,7 +37,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead class="teacher-classroom-thread">
                 <tr class="text-center">
-                    <th>Id</th>
+                    <th>#</th>
                     <th>Classroom</th>
                     <th>Teacher Subject</th>
                     <th>Action</th>

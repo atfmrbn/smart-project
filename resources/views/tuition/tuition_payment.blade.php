@@ -39,46 +39,36 @@
 </div>
 
 
-
 <script type="text/javascript">
-    document.getElementById('pay-button').onclick = function () {
-        snap.pay('{{ $snapToken }}');
-    };
-</script>
+  // For example trigger on button clicked, or any time you need
+  var payButton = document.getElementById('pay-button');
+  payButton.addEventListener('click', function () {
+    // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
 
-<script type="text/javascript">
-    var payButton = document.getElementById('pay-button');
-    payButton.addEventListener('click', function () {
-        // Trigger snap popup
-        window.snap.embed('{{ $snapToken }}', {
-            embedId: 'snap-container',
-            onSuccess: function (result) {
-                // alert("Pembayaran sukses!");
-                const url = "<?= URL::to('/invoice/$tuition->id') ?>";
-                // window.location.href = "<?= URL::to('/invoice/$tuition->id') ?>";
-                window.open(url,  '_self');  
-                console.log(result);
-                // const tuitionId = '{{ $tuition->id }}'; // Mengambil nilai ID dari Blade template
-                // const url = "/invoice/" + tuitionId; // Membuat URL berdasarkan ID tuition
 
-                // // Buka halaman invoice dengan ID tuition setelah pembayaran sukses
-                // window.open(url, '_self');  
-                // console.log(result);
-                
-            },
-            onPending: function (result) {
-                alert("Pembayaran sedang diproses!");
-                console.log(result);
-            },
-            onError: function (result) {
-                alert("Pembayaran gagal!");
-                console.log(result);
-            },
-            onClose: function () {
-                alert('Anda menutup popup tanpa menyelesaikan pembayaran');
-            }
-        });
-    });
+    window.snap.pay('{{$snapToken}}', {
+      onSuccess: function(result){
+        /* You may add your own implementation here */
+        alert("Pembayaran Sukses!"); 
+        const url = '{{ URL::to("/invoice/{$tuition->id}") }}';
+
+        // const url = '<?= URL::to('/tuition/payOffSuccess'); ?>';
+        window.open(url,  '_self');        
+      },
+      onPending: function(result){
+        /* You may add your own implementation here */
+        alert("Sedang menunggu pembayaran anda!"); console.log(result);
+      },
+      onError: function(result){
+        /* You may add your own implementation here */
+        alert("Pembayaran Gagal!"); console.log(result);
+      },
+      onClose: function(){
+        /* You may add your own implementation here */
+        alert('Anda menutup pop up tanpa melakukan pembayaran');
+      }
+    })
+  });
 </script>
 
 @endsection

@@ -20,7 +20,7 @@
             <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
 
-        <div class="col-12 col-sm-4">
+        <div class="col-md-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="teacher_id">Teacher <span class="login-danger">*</span></label>
                 <select name="teacher_id" id="teacher_id" class="form-control data-select-2">
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-sm-4">
+        <div class="col-md-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="classroom_id">Classroom <span class="login-danger">*</span></label>
                  <select name="classroom_id" id="classroom_id" class="form-control data-select-2">

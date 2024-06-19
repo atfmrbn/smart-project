@@ -49,7 +49,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th width="5%">No.</th>
+                    <th width="5%">#</th>
                     <th>Student Name</th>
                     <th>Extracurricular Name</th>
                     <th>Description</th>

@@ -17,11 +17,11 @@
         <div class="col-12">
             <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="name">Name of Classroom Types <span class="login-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control @error('name')is-invalid @enderror"
-                    value="{{ isset($classroom_type) ? $classroom_type->name : old('name') }}">
+                    value="{{ isset($classroom_type) ? $classroom_type->name : old('name') }}" autofocus>
                 @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -29,7 +29,8 @@
                 @enderror
             </div>
         </div>
-        <div class="col-12 col-sm-4">
+
+        <div class="col-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="description">Description <span class="login-danger">*</span></label>
                 <input type="text" id="description" name="description"

@@ -1,4 +1,5 @@
 @extends('layouts.main')
+
 @section('container')
 
     <!-- Breadcrumbs -->
@@ -86,12 +87,14 @@
                 <input type="text" id="address" name="address" class="form-control" value="{{ $student->address }}"
                     readonly>
             </div>
-        </div>
-        <div class="col-12">
-            <div class="student-submit">
-                <a href="{{ URL::to('student/student-list/') }}" class="btn btn-secondary">Back</a>
+            <div class="card-footer text-right">
+                <a href="{{ URL::to('student/student-list') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>
     </form>
 @endsection
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

@@ -65,7 +65,6 @@
                             <div class="d-flex justify-content-center">
                                 <a title="Lihat" href="{{ URL::to('extracurricular/' . $extracurricular->id) }}"
                                     class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-
                                 @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
                                     <a href="{{ URL::to('extracurricular/' . $extracurricular->id . '/edit') }}"
                                         class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>

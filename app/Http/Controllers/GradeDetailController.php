@@ -44,7 +44,7 @@ class GradeDetailController extends Controller
     {
         $grades = Grade::all();
         $students = User::where('role', 'student')->get();
-        $title = 'Add GradeDetail';
+        $title = 'Add Grade Detail';
 
         return view('teacher.grade-detail.form', compact('grades', 'students', 'title'));
     }

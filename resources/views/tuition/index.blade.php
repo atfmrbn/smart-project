@@ -44,10 +44,10 @@
                     @endif
                 </td>
                 <td class="text-center">
-                    <div class="d-flex justify-content-center align-items-center">
-                        @if(auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
+                <div class="d-flex justify-content-center align-items-center">
+                    @if(auth()->user()->role === 'Admin' || auth()->user()->role === 'Super Admin')
                         <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
-                            <i class="fas fa-edit"></i>Edit
+                            <i class="fas fa-edit"></i> 
                         </a>
                         <form method="POST" action="{{ URL::to('tuition/' . $tuition->id) }}">
                             @csrf
@@ -56,13 +56,20 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
-                        @elseif(auth()->user()->role === 'Student')
-                        <a href="{{ route('tuition.edit', $tuition->id) }}" title="Edit" class="btn btn-sm btn-outline-primary me-2">
-                            <i class="fas fa-money-bill-wave"></i> Pay
-                        </a>
+                    @elseif(auth()->user()->role === 'Student' && $tuition->studentTeacherHomeroomRelationship->student->id === auth()->user()->id)
+                        @if ($tuition->status === 'Paid')
+                            <a href="{{ URL::to('invoice/' . $tuition->id) }}" title="Invoice" class="btn btn-sm btn-outline-warning me-2">
+                                <i class="fas fa-receipt"></i> 
+                            </a>
+                        @else
+                            <a href="{{ route('tuition.edit', $tuition->id) }}" title="Pay Off" class="btn btn-sm btn-outline-primary me-2">
+                                <i class="fas fa-money-bill-wave"></i> 
+                            </a>
                         @endif
-                    </div>
-                </td>
+                    @endif
+                </div>
+            </td>
+
             </tr>
             @endforeach
         </tbody>

@@ -39,7 +39,8 @@
             <div class="col-auto text-end float-end ms-auto download-grp">
                 @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
                     <a href="{{ URL::to('student/student-teacher-homeroom/create') }}" class="btn btn-primary"><i
-                            class="fas fa-plus"></i>Add New</a>
+                        class="fas fa-plus"></i> New
+                    </a>
                 @endif
             </div>
         </div>
@@ -47,7 +48,7 @@
 
     <form id="filterForm" method="GET" action="{{ route('student-teacher-homeroom.index') }}" class="mb-4">
         <div class="row mb-3">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <select name="classroom" id="classroom" class="form-select">
                     <option value="" {{ request('classroom') == '' ? 'selected' : '' }}>All Classroom</option>
                     @foreach ($classrooms as $classroom)

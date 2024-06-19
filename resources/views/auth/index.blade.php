@@ -175,7 +175,7 @@
             <div class="form-group position-relative">
                 <label>Username <span class="login-danger">*</span></label>
                 <input type="text" id="username" name="username"
-                    class="form-control @error('username') is-invalid @enderror" placeholder="Enter username">
+                    class="form-control @error('username') is-invalid @enderror" placeholder="Enter username" autofocus>
                 <span class="profile-views"><i class="fas fa-user-circle"></i></span>
                 @error('username')
                     <div class="invalid-feedback">
@@ -194,28 +194,20 @@
                     </div>
                 @enderror
             </div>
-            <div class="forgotpass d-flex justify-content-between align-items-center">
-                <div class="remember-me">
-                    <label class="custom_check mb-0 d-inline-flex"> Remember me
-                        <input type="checkbox" name="remember">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
+            <div class="forgotpass d-flex justify-content-end">
                 <a href="{{ route('forgot-password') }}">Forgot Password?</a>
             </div>
             <div class="form-group mt-4">
                 <button class="btn btn-primary btn-block" type="submit">Login</button>
             </div>
         </form>
-
-        <div class="login-or">
-            <span >Login with Google</span>
-        <div class="social-login">
-            <a href="{{ route('redirect') }}">
-                <i class="fab fa-google-plus-g"></i> 
+        <div class="form-group mt-4">
+            <a href="{{ route('redirect') }}" class="btn btn-light btn-block"> 
+            <img width="24" height="24" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                Login with Google
             </a>
         </div>
-        </div>
+            
     </div>
 </div>
 

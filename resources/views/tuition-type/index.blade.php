@@ -20,7 +20,7 @@
         </div>
         <div class="col-auto text-end float-end ms-auto download-grp">
             {{-- <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a> --}}
-            <a href="{{ route('tuition-type.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+            <a href="{{ route('tuition-type.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
         </div>
     </div>
 </div>

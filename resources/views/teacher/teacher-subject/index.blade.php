@@ -7,16 +7,26 @@
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
                 <a href="{{ route('teacher-subject.download') }}" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                <a href="{{ route('teacher-subject.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>Add New</a>
+                <a href="{{ route('teacher-subject.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
             </div>
         </div>
     </div>
+@if(session()->has("successMessage"))
+    <div class="alert alert-success">
+        {{ session("successMessage") }}
+    </div>
+@endif
 
+@if(session()->has("errorMessage"))
+    <div class="alert alert-danger">
+        {{ session("errorMessage") }}
+    </div>
+@endif
     <div class="table-responsive">
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead class="teacher-subject-thread">
                 <tr class="text-center">
-                    <th>Id</th>
+                    <th>#</th>
                     <th>Teacher</th>
                     <th>Subject</th>
                     <th>Action</th>
@@ -26,8 +36,8 @@
                 @foreach ($teacher_subjects as $index => $teacher_subject)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
-                        <td class="text-center">{{ $teacher_subject->teacher->name }}</td>
-                        <td class="text-center">{{ $teacher_subject->subject->name }} -
+                        <td >{{ $teacher_subject->teacher->name }}</td>
+                        <td class="text-center">{{ $teacher_subject->teacher->name }} -
                             {{ $teacher_subject->subject->name }}</td>
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">

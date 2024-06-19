@@ -18,16 +18,14 @@
         <div class="col-12">
             <h5 class="form-title"><span>{{ $title }}</span></h5>
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-12 col-sm-12">
             <div class="form-group local-forms">
                 <label for="name">Name <span class="login-danger">*</span></label>
-                <input type="text" id="name" name="name" class="form-control  
-                @error('name')is-invalid @enderror" value="{{ isset($taskType)? 
-                $taskType->name : old('name')}}">
+                <input type="text" id="name" name="name" class="form-control @error('name')is-invalid @enderror" value="{{ isset($taskType) ? $taskType->name : old('name')}}" autofocus>
                 @error('name')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                 @enderror
             </div>
             <button type="submit" class="btn btn-primary ">Submit</button>

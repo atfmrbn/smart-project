@@ -40,7 +40,8 @@
                         class="fas fa-download"></i> Download</a>
                 @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
                     <a href="{{ URL::to('student/student-list/create') }}" class="btn btn-primary"><i
-                            class="fas fa-plus"></i>Add New</a>
+                        class="fas fa-plus"></i> New
+                    </a>
                 @endif
             </div>
         </div>
