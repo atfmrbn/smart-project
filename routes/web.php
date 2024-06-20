@@ -67,6 +67,11 @@ use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
     Route::get('/dashboard/student', [DashboardController::class, 'student'])->name('student.dashboard');
     Route::get('/dashboard/parent', [DashboardController::class, 'parent'])->name('parent.dashboard');
 
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('profile.edit-profile');
+    Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword']);
+
 
     Route::controller(BookCategoryController::class)->group(function () {
         Route::get('book-category/', 'index')->name('book-category.index');
@@ -196,9 +201,6 @@ use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
     // Route::get('/tuition/{tuition}/payoff', [TuitionDetailController::class, 'Payoff'])->name('tuition.payoff');
     Route::post('/tuition/{id}/payoff', [TuitionDetailController::class, 'payOff'])->name('tuition.payoff');
     Route::get('/invoice/{id}', [TuitionDetailController::class, 'invoice'])->name('invoice.show');
-
-    Route::get('/profile/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit-profile')->middleware('auth');
-    Route::post('/profile/update-profile', [ProfileController::class, 'updateProfile'])->name('profile.update-profile')->middleware('auth');    
 
     // Route::get('/tuition/{id}/paymidtrans', [TuitionDetailController::class, 'payMidtrans'])->name('tuition.paymidtrans');
 

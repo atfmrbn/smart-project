@@ -1,22 +1,22 @@
-@extends('layouts.app')
+@extends("layouts.main")
 
-@section('content')
+@section("container")
 <div class="container">
     <h1>Edit Profile</h1>
 
-    @if(session('successMessage'))
+    @if(session('success'))
         <div class="alert alert-success">
-            {{ session('successMessage') }}
+            {{ session('success') }}
         </div>
     @endif
 
-    @if(session('errorMessage'))
+    @if(session('error'))
         <div class="alert alert-danger">
-            {{ session('errorMessage') }}
+            {{ session('error') }}
         </div>
     @endif
 
-    <form action="{{ URL::to('profile.update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profile.update-profile') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="identity_number">Identity Number</label>
@@ -36,9 +36,12 @@
         </div>
         <div class="form-group">
             <label for="gender">Gender</label>
-            <select class="form-control" id="gender" name="gender" required>
-                <option value="male" {{ $user->gender == 'male' ? 'selected' : '' }}>Male</option>
-                <option value="female" {{ $user->gender == 'female' ? 'selected' : '' }}>Female</option>
+            <select class="form-control data-select" name="gender" id="gender" required>
+                <option selected disabled>Select Gender</option>
+                <option value="Laki-laki" {{ isset($user) ? ($user->gender === 'Laki-laki' ? ' selected' : '') : '' }}>
+                    Male</option>
+                <option value="Perempuan" {{ isset($user) ? ($user->gender === 'Perempuan' ? ' selected' : '') : '' }}>
+                    Female</option>
             </select>
         </div>
         <div class="form-group">
@@ -58,18 +61,18 @@
             <textarea class="form-control" id="address" name="address" required>{{ $user->address }}</textarea>
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
-            <small class="form-text text-muted">Leave blank to keep current password.</small>
-        </div>
-        <div class="form-group">
             <label for="image">Profile Image</label>
             <input type="file" class="form-control" id="image" name="image">
             @if($user->image)
                 <img src="{{ asset('storage/' . $user->image) }}" alt="Profile Image" width="100">
             @endif
         </div>
-        <button type="submit" class="btn btn-primary">Update Profile</button>
+        <div class="col-12">
+            <div class="user-submit">
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+                <a href="{{ URL::to('profile/') }}" class="btn btn-secondary">Back</a>
+            </div>
+        </div>
     </form>
 </div>
 @endsection
