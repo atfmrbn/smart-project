@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('title', $title)
 @section('container')
-    <div class="container mt-5">
+    {{-- <div class="container mt-5"> --}}
         <!-- Breadcrumbs -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background-color: transparent; border: none;">
@@ -11,7 +11,7 @@
                 @endif
             </ol>
         </nav>
-        <div class="card shadow-sm">
+        {{-- <div class="card shadow-sm"> --}}
             <div class="card-header">
                 @if (Auth::user()->role == 'Student')
                     <h3 class="mb-0">Welcome to your Student Dashboard, {{ Auth::user()->name }}!</h3>
@@ -220,8 +220,8 @@
 
                 @endif
             </div>
-        </div>
-    </div>
+        {{-- </div> --}}
+    {{-- </div> --}}
 
     <!-- Modal -->
     <div class="modal fade" id="extracurricularModal" tabindex="-1" role="dialog"

@@ -9,7 +9,8 @@
     <div class="row mt-3">
         <div class="col-md-12 text-center">
             @if($user->image)
-                <img src="{{ asset('storage/' . $user->image) }}" alt="Profile Image" class="img-fluid rounded-circle mb-3">
+                <img class="rounded" src="{{ asset('images/' . Auth::user()->image) }}" width="300">
+                {{-- <img src="{{ asset('storage/' . $user->image) }}" alt="Profile Image" class="img-fluid rounded-circle mb-3"> --}}
             @else
                 <img src="{{ asset('images/default.png') }}" alt="Default Profile Image" class="img-fluid rounded-circle mb-3">
             @endif
