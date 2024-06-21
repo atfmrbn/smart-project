@@ -142,24 +142,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
-                        <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <strong class="card-title">Curriculums</strong>
-                                        <h3 class="card-text text-white">{{ $curriculumCount }}</h3>
-                                    </div>
-                                    <div>
-                                        <i class="fas fa-school fa-2x"></i>
-                                    </div>
-                                </div>
-                                <a href="{{ URL::to('/curriculum') }}"
-                                    class="small-box-footer text-white mt-2 {{ request()->is('curriculum') ? 'active' : '' }}">More
-                                    info <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 @if (Auth::user()->role == 'Admin')

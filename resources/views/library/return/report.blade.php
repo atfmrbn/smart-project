@@ -55,24 +55,39 @@
                     <td>{{ $filter->classroom_name }} - ({{ $filter->identity_number }}) - {{ $filter->name }}</td>
                     <td>{{ $filter->description }}</td>
                     <td>{{ DateFormat($filter->checkout_date, "DD MMMM Y") }} <br> s/d {{ DateFormat($filter->due_date, "DD MMMM Y") }}</td>
-                    <td>
+                    <td class="text-center">
                         @if($filter->status == 'borrowing')
                             <span class="badge bg-warning">{{ $filter->status }}</span>
                         @elseif($filter->status == 'returned')
                             <span class="badge bg-success">{{ $filter->status }}</span>
                         @endif
                     </td>
-                    <td>
+                    <td class="text-end">
+                        {{-- @if ($filter->status == 'borrowing')
+                            @php
+                                $dueDate = \Carbon\Carbon::parse($filter->due_date);
+                                $today = \Carbon\Carbon::now();
+                                $penaltyRate = $configuration->book_penalty; // Ambil nilai dari controller
+                                $penaltyAmount = $today->greaterThan($dueDate) ? $today->diffInDays($dueDate) * $penaltyRate : 0;
+                            @endphp
+                            @if ($penaltyAmount > 0)
+                                {{ NumberFormat($penaltyAmount) }}
+                            @else
+                                0
+                            @endif
+                        @else
+                            0
+                        @endif --}}
                         @if($filter->status == 'borrowing')
                             @php
                                 $dueDate = \Carbon\Carbon::parse($filter->due_date);
                                 $today = \Carbon\Carbon::now();
                                 $penalty = $today->diffInDays($dueDate); 
-                                $penaltyRate = 1000;
+                                $penaltyRate = 2000;
                                 $penaltyAmount = $penalty * $penaltyRate; 
                             @endphp
                             @if ($penalty > 0)
-                                {{ $penaltyAmount }} 
+                                {{ NumberFormat($penaltyAmount) }} 
                             @else
                                 0
                             @endif

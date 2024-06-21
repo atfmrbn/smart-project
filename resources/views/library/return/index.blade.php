@@ -1,61 +1,59 @@
 @extends('layouts.main')
-@section('title', $title)
 @section('container')
 
-    <!-- Breadcrumbs -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" style="background-color: transparent; border: none;">
-            @if (auth()->user()->role == 'Admin')
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-            @elseif (auth()->user()->role == 'Super Admin')
-                <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
-            @elseif (auth()->user()->role == 'Student')
-                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
-            @elseif (auth()->user()->role == 'Teacher')
-                <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
-            @elseif (auth()->user()->role == 'Librarian')
-                <li class="breadcrumb-item"><a href="{{ route('librarian.dashboard') }}">Dashboard</a></li>
-            @endif
-            <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
-        </ol>
-    </nav>
-
-    @if (session()->has('successMessage'))
-        <div class="alert alert-success">
-            {{ session('successMessage') }}
-        </div>
-    @endif
-
-    @if (session()->has('errorMessage'))
-        <div class="alert alert-danger">
-            {{ session('errorMessage') }}
-        </div>
-    @endif
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" style="background-color: transparent; border: none;">
+                @if (auth()->user()->role == 'Admin')
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                @elseif (auth()->user()->role == 'Super Admin')
+                    <li class="breadcrumb-item"><a href="{{ route('superAdmin.dashboard') }}">Dashboard</a></li>
+                @elseif (auth()->user()->role == 'Student')
+                    <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+                @elseif (auth()->user()->role == 'Teacher')
+                    <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+                @elseif (auth()->user()->role == 'Librarian')
+                    <li class="breadcrumb-item"><a href="{{ route('librarian.dashboard') }}">Dashboard</a></li>
+                @endif
+                <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+            </ol>
+        </nav>
 
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col mb-5">
                 <h3 class="page-title">{{ $title }}</h3>
+                <div class="col-auto text-end float-end ms-auto download-grp">
+                    <a href="{{ URL::to('book-return/download?startDate=' . $startDate . '&endDate=' . $endDate . '&status=' . $status) }}"
+                        class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                </div>
             </div>
 
-            <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ URL::to('book-return/download?startDate=' . $startDate . '&endDate=' . $endDate . '&status=' . $status) }}"
-                    class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-            </div>
+
+            @if (session()->has('successMessage'))
+                <div class="alert alert-success">
+                    {{ session('successMessage') }}
+                </div>
+            @endif
+
+            @if (session()->has('errorMessage'))
+                <div class="alert alert-danger">
+                    {{ session('errorMessage') }}
+                </div>
+            @endif
 
             <form id="filterForm" action="{{ URL::to('book-return') }}" method="GET">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label for="startDate">From:</label>
                             <input type="date" id="startDate" name="startDate" class="form-control"
                                 value="{{ request('startDate', \Carbon\Carbon::now()->startOfMonth()->toDateString()) }}"
                                 onchange="this.form.submit()">
-
                         </div>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label for="endDate">To:</label>
                             <input type="date" id="endDate" name="endDate" class="form-control"
@@ -64,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-md-2 col-sm-12">
                         <div class="form-group">
                             <label for="status">Status:</label>
                             <select id="status" name="status" class="form-control" onchange="this.form.submit()">
@@ -113,7 +111,23 @@
                             @endif
                         </td>
                         <td class="text-end">
-                            @if ($filter->status == 'borrowing')
+                            @if($filter->status == 'borrowing')
+                                @php
+                                    $dueDate = \Carbon\Carbon::parse($filter->due_date);
+                                    $today = \Carbon\Carbon::now();
+                                    $penalty = $today->diffInDays($dueDate); 
+                                    $penaltyRate = 2000;
+                                    $penaltyAmount = $penalty * $penaltyRate; 
+                                @endphp
+                                @if ($penalty > 0)
+                                    {{ NumberFormat($penaltyAmount) }} 
+                                @else
+                                    0
+                                @endif
+                            @else
+                                0
+                            @endif
+                            {{-- @if ($filter->status == 'borrowing')
                                 @php
                                     $dueDate = \Carbon\Carbon::parse($filter->due_date);
                                     $today = \Carbon\Carbon::now();
@@ -123,13 +137,13 @@
                                         : 0;
                                 @endphp
                                 @if ($penaltyAmount > 0)
-                                    {{ number_format($penaltyAmount) }}
+                                    {{ NumberFormat($penaltyAmount) }}
                                 @else
                                     0
                                 @endif
                             @else
                                 0
-                            @endif
+                            @endif --}}
                         </td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center align-items-center">

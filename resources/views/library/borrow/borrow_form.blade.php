@@ -1,5 +1,4 @@
 @extends('layouts.main')
-{{-- @section('title', $title) --}}
 @section('container')
 
     <!-- Breadcrumbs -->
@@ -16,11 +15,23 @@
             @elseif (auth()->user()->role == 'Librarian')
                 <li class="breadcrumb-item"><a href="{{ route('librarian.dashboard') }}">Dashboard</a></li>
             @endif
-            <li class="breadcrumb-item"><a href="{{ URL::to('/book-borrow') }}">Book Categories</a></li>
+            <li class="breadcrumb-item"><a href="{{ URL::to('/book-borrow') }}">Borrowing Books</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
         </ol>
     </nav>
 
+    <div class="row align-items-center">
+        <div class="col-6">
+            <h5>{{ isset($borrow) ? 'Edit' : 'Add' }} Borrowing Book</h5>
+        </div>
+        @if (isset($borrow))
+            <div class="col-auto text-end float-end ms-auto download-grp">
+                <a href="{{ URL::to('book-borrow-detail-download/' . $borrow->id) }}" class="btn btn-primary mb-3"><i
+                    class="fas fa-download"></i> Download</a>
+            </div>
+        @endif
+    </div>
+    <br>
     @if (session()->has('successMessage'))
         <div class="alert alert-success">
             {{ session('successMessage') }}
@@ -32,19 +43,6 @@
             {{ session('errorMessage') }}
         </div>
     @endif
-
-    <div class="row align-items-center">
-        <div class="col">
-            <h5>{{ isset($borrow) ? 'Edit' : 'Add' }} Borrowing Book</h5>
-        </div>
-        @if (isset($borrow))
-            <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ URL::to('book-borrow-detail-download/' . $borrow->id) }}" class="btn btn-primary mb-3"><i
-                        class="fas fa-download"></i> Download</a>
-            </div>
-        @endif
-    </div>
-    <br>
     @if (isset($borrow))
         <form method="POST" action="{{ route('book-borrow.update', $borrow->id) }}" autocomplete="off">
             @method('PUT')
@@ -132,25 +130,28 @@
             @if ($canBorrow)
                 <form action="{{ route('book-borrow-detail.store') }}" method="POST" autocomplete="off" class="mt-4">
                     @csrf
-                    <input type="hidden" name="borrowing_book_id" value="{{ $borrow->id }}">
-                    <select name="book_id" id="book_id" class="form-control data-select-2">
-                        <option value="">ISBN - Cateogry - Title</option>
-                        @foreach ($books as $book)
-                            <option value="{{ $book->id }}">
-                                {{ $book->isbn }} - {{ $book->category->name }} - {{ $book->title }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="form-group local-forms">
+                        <input type="hidden" name="borrowing_book_id" value="{{ $borrow->id }}">
+                        <label for="student_id">Select Books <span class="login-danger">*</span></label>
+                        <select name="book_id" id="book_id" class="form-control data-select-2">
+                            <option value="">ISBN - Cateogry - Title</option>
+                            @foreach ($books as $book)
+                                <option value="{{ $book->id }}">
+                                    {{ $book->isbn }} - {{ $book->category->name }} - {{ $book->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block">Select</button>
                 </form>
             @endif
             {{-- </div> --}}
             {{-- </div> --}}
 
-            <div class="col-md-12 mt-2">
+            <div class="col-md-12 mt-2 table-responsive">
                 {{-- <table class="table table-bordered table-striped mt-2 table-responsive"> --}}
 
-                <table id="example" class="table table-responsive table-striped table-bordered">
+                <table id="example" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th style="width: 5%; text-align: center">No</th>
