@@ -22,6 +22,8 @@
             </div>
 
             <div class="col-auto text-end float-end ms-auto download-grp">
+                <a href="{{ route('parent.download') }}" class="btn btn-outline-primary me-2"><i
+                    class="fas fa-download"></i> Download</a>
                 @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
 
                     <a href="{{ URL::to('parent/parent-list/create') }}" class="btn btn-primary"><i
@@ -30,7 +32,7 @@
                 @endif
             </div>
         </div>
-        
+
         @if (session()->has('successMessage'))
             <div class="alert alert-success">
                 {{ session('successMessage') }}
