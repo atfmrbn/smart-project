@@ -25,7 +25,7 @@
             <div class="col-auto text-end float-end ms-auto download-grp">
                 <a href="{{ route('teacher-classroom.download') }}" class="btn btn-outline-primary me-2"><i
                         class="fas fa-download"></i> Download</a>
-                @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin' || auth()->user()->role === 'Teacher')
+                @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
                     <a href="{{ URL::to('teacher/teacher-classroom/create') }}" class="btn btn-primary"><i
                             class="fas fa-plus"></i> New</a>
                 @endif
@@ -59,7 +59,9 @@
                     <th>#</th>
                     <th>Classroom</th>
                     <th>Teacher Subject</th>
-                    <th>Action</th>
+                    @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                        <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -73,8 +75,8 @@
                         <td class="text-center">
                             {{ $teacher_classroom->TeacherSubjectRelationship->teacher->name }}-{{ $teacher_classroom->teacherSubjectRelationship->subject->name }}
                         </td>
-                        <td class="align-middle text-center">
-                            @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                        @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                            <td class="align-middle text-center">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <a href="{{ route('teacher-classroom.edit', $teacher_classroom->id) }}"
                                         class="btn btn-sm btn-outline-primary me-2" title="Edit"><i
@@ -88,12 +90,8 @@
                                                 class="fas fa-trash"></i></button>
                                     </form>
                                 </div>
-                            @else
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <span class="text-muted">No actions available</span>
-                                </div>
-                            @endif
-                        </td>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

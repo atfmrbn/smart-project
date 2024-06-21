@@ -41,7 +41,9 @@
                     <th>Teacher</th>
                     <th>Classroom</th>
                     <th>Curriculum</th>
-                    <th>Action</th>
+                    @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                        <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -52,8 +54,8 @@
                         <td class="text-center">{{ $teacher_homeroom->classroom->classroomType->name }} -
                             {{ $teacher_homeroom->classroom->name }}</td>
                         <td class="text-center">{{ $teacher_homeroom->curriculum->year }}</td>
-                        <td class="align-middle text-center">
-                            @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                        @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                            <td class="align-middle text-center">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <a href="{{ route('teacher-homeroom.edit', $teacher_homeroom->id) }}"
                                         class="btn btn-sm btn-outline-primary me-2">
@@ -70,12 +72,8 @@
                                         </button>
                                     </form>
                                 </div>
-                            @else
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <span class="text-muted">No actions available</span>
-                                </div>
-                            @endif
-                        </td>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

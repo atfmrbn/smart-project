@@ -91,7 +91,7 @@
                     </li>
                 @endif
 
-                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Teacher']))
+                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
                     <li class="submenu {{ request()->is('parent/*') ? 'active' : '' }}">
                         <a href="#"><i class="fas fa-user"></i> <span> Parents</span> <span
                                 class="menu-arrow"></span></a>

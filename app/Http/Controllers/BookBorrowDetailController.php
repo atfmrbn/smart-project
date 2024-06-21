@@ -62,16 +62,16 @@ class BookBorrowDetailController extends Controller
 
             BorrowingBookDetail::create($data);
             $message = 'Buku berhasil ditambahkan ke peminjaman.';
-            $messageType = 'success';
+            $messageType = 'successMessage';
         } catch (\Illuminate\Validation\ValidationException $e) {
             $message = $e->getMessage();
-            $messageType = 'error';
+            $messageType = 'errorMessage';
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             $message = $e->getMessage();
-            $messageType = 'error';
+            $messageType = 'errorMessage';
         } finally {
-            if ($messageType === 'success') {
+            if ($messageType === 'successMessage') {
                 return redirect('book-borrow/'.$data['borrowing_book_id'].'/edit')->with($messageType, $message);
             } else {
                 return redirect()->back()->with($messageType, $message)->withInput();
@@ -141,7 +141,7 @@ class BookBorrowDetailController extends Controller
             $borrowingBook->update(['status' => 'returned']);
         }
 
-        return redirect()->back()->with('successMessage', 'Book returned successfully with a penalty of ');
+        return redirect()->back()->with('successMessage', 'Book returned successfully');
     }
 
     public function download($id)

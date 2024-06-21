@@ -185,8 +185,8 @@ use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
     Route::get('grade-detail/download', [GradeDetailController::class, 'download'])->name('grade-detail.download');
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
-    Route::get('/user', [UserController::class, 'editProfile'])->name('user.edit-profile');
-    Route::post('/user', [UserController::class, 'updateProfile'])->name('profile.update');
+    // Route::get('/user', [UserController::class, 'editProfile'])->name('user.edit-profile');
+    // Route::post('/user', [UserController::class, 'updateProfile'])->name('profile.update');
 
     Route::resource('attendance', AttendanceController::class);
     Route::get('attendance/download', [AttendanceController::class, 'download'])->name('attendance.download');
