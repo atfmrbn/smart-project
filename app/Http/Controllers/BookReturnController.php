@@ -8,6 +8,7 @@ use App\Models\Configuration;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class BookReturnController extends Controller
 {
@@ -35,6 +36,8 @@ class BookReturnController extends Controller
             'status' => $status,
         ];
 
+        // dd($data);
+
         return view('library.return.index', $data);
     }
 
@@ -50,41 +53,6 @@ class BookReturnController extends Controller
         return view("library.return.return_form", $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $message = '';
@@ -112,6 +80,7 @@ class BookReturnController extends Controller
    
     public function downloadPdf(Request $request)
     {
+        $configuration = Configuration::first();
         $curriculumId = $this->defaultCurriculum->id;
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
@@ -123,10 +92,9 @@ class BookReturnController extends Controller
             $filters->where('status', $status);
         }
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report', compact('filters', 'startDate', 'endDate', 'status'))->setPaper('a4', 'landscape');
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadview('library.return.report', compact('filters', 'startDate', 'endDate', 'status', 'configuration'))->setPaper('a4', 'landscape');
 
         return $pdf->download('book-return-report.pdf');
     }
-
 
 }
