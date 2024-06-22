@@ -25,6 +25,8 @@
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
             <div class="col-auto text-end float-end ms-auto download-grp">
+                <a href="{{ route('student-teacher.download') }}" class="btn btn-outline-primary me-2"><i
+                    class="fas fa-download"></i> Download</a>
                 @if (auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin')
                     <a href="{{ URL::to('student/student-teacher-homeroom/create') }}" class="btn btn-primary"><i
                         class="fas fa-plus"></i> New

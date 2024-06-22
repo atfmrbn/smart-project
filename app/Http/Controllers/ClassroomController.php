@@ -78,15 +78,15 @@ class ClassroomController extends Controller
         if (!$classroom) {
             return redirect('classroom')->with("errorMessage", "Data tidak ditemukan");
         }
-        
-        $classroom_types = ClassroomType::orderBy('name')->get(); 
-        
+
+        $classroom_types = ClassroomType::orderBy('name')->get();
+
         $data = [
             "title" => "Edit Classroom",
             "classroom" => $classroom,
-            "classroom_types" => $classroom_types, 
+            "classroom_types" => $classroom_types,
         ];
-    
+
         return view('classroom.classroom_form', $data);
     }
 

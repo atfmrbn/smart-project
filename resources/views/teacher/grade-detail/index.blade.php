@@ -38,40 +38,48 @@
 
     <form id="filterForm" method="GET" action="{{ route('grade-detail.index') }}">
         <div class="row mb-3">
-            <div class="col-md-6">
-                <select name="grade_id" id="grade_id"
-                    class="form-control data-select-2 @error('grade_id') is-invalid @enderror">
-                    <option value="">All Grade</option>
-                    @foreach ($grades as $grade)
-                        <option value="{{ $grade->id }}" {{ request('grade_id') == $grade->id ? 'selected' : '' }}>
-                            {{ $grade->taskType->name ?? '' }} -
-                            {{ optional($grade->teacherClassroomRelationship->teacherHomeroomRelationship->classroom)->classroomType->name ?? '' }}
-                            -
-                            {{ optional($grade->teacherClassroomRelationship->teacherHomeroomRelationship->classroom)->name ?? '' }}
-                            -
-                            {{ optional($grade->teacherClassroomRelationship->teacherSubjectRelationship->teacher)->name ?? '' }}
-                            -
-                            {{ optional($grade->teacherClassroomRelationship->teacherSubjectRelationship->subject)->name ?? '' }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            @if ($userRole === 'Teacher' || $userRole === 'Student')
+                <div class="col-md-6">
+                    <select name="grade_id" id="grade_id"
+                        class="form-control data-select-2 @error('grade_id') is-invalid @enderror">
+                        <option value="">All Grade</option>
+                        @foreach ($grades as $grade)
+                            <option value="{{ $grade->id }}" {{ request('grade_id') == $grade->id ? 'selected' : '' }}>
+                                {{ $grade->taskType->name ?? '' }} -
+                                {{ optional($grade->teacherClassroomRelationship->teacherHomeroomRelationship->classroom)->classroomType->name ?? '' }}
+                                -
+                                {{ optional($grade->teacherClassroomRelationship->teacherHomeroomRelationship->classroom)->name ?? '' }}
+                                -
+                                {{ optional($grade->teacherClassroomRelationship->teacherSubjectRelationship->teacher)->name ?? '' }}
+                                -
+                                {{ optional($grade->teacherClassroomRelationship->teacherSubjectRelationship->subject)->name ?? '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+
+
             <div class="col-md-3">
-                <select name="student_id" id="student_id"
-                    class="form-control data-select-2 @error('student_id') is-invalid @enderror">
-                    <option value="">All Student</option>
-                    @foreach ($students as $student)
-                        <option value="{{ $student->id }}"
-                            {{ request('student_id') == $student->id ? 'selected' : '' }}>
-                            {{ $student->name }}
-                        </option>
-                    @endforeach
-                </select>
+                @if ($userRole === 'Teacher')
+                    <select name="student_id" id="student_id"
+                        class="form-control data-select-2 @error('student_id') is-invalid @enderror">
+                        <option value="">All Student</option>
+                        @foreach ($students as $student)
+                            <option value="{{ $student->id }}"
+                                {{ request('student_id') == $student->id ? 'selected' : '' }}>
+                                {{ $student->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                @endif
             </div>
+        </div>
+        @if (auth()->user()->role === 'Teacher' || auth()->user()->role === 'Student')
             <div class="col-md-2">
                 <button type="submit" class="btn btn-primary">Filter</button>
             </div>
-        </div>
+        @endif
     </form>
 
     <div class="table-responsive">
@@ -82,7 +90,9 @@
                     <th>Grade</th>
                     <th>Student</th>
                     <th>Value</th>
+                    @if (Auth::user()->role == 'Teacher')
                     <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -101,9 +111,9 @@
                         </td>
                         <td class="text-center">{{ optional($gradeDetail->student)->name }}</td>
                         <td class="text-center">{{ $gradeDetail->value }}</td>
+                        @if (Auth::user()->role == 'Teacher')
                         <td class="text-center">
                             <div class="btn-group" role="group" aria-label="Grade Detail Actions">
-                                @if (Auth::user()->role == 'Teacher')
                                     <a href="{{ route('grade-detail.edit', $gradeDetail->id) }}"
                                         class="btn btn-sm btn-outline-primary me-1">
                                         <i class="fas fa-edit"></i>
@@ -116,13 +126,13 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
-                                @else
+                                {{-- @else
                                     <div class="d-flex justify-content-center align-items-center">
                                         <span class="text-muted">No actions available</span>
-                                    </div>
-                                @endif
+                                    </div> --}}
                             </div>
                         </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

@@ -65,7 +65,9 @@
                 <th>Classroom</th>
                 <th>Teacher</th>
                 <th>Schedule</th>
-                <th>Action</th>
+                @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                    <th>Action</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -83,9 +85,9 @@
                         {{ \Carbon\Carbon::parse($teacherSchedule->schedule_time_start)->format('H:i') }} -
                         {{ \Carbon\Carbon::parse($teacherSchedule->schedule_time_end)->format('H:i') }}
                     </td>
-                    <td class="align-middle text-center">
-                        <div class="d-flex justify-content-center align-items-center">
-                            @if (in_array(Auth::user()->role, ['Super Admin', 'Admin']))
+                    @if (in_array(Auth::user()->role, ['Super Admin', 'Admin']))
+                        <td class="align-middle text-center">
+                            <div class="d-flex justify-content-center align-items-center">
                                 <a href="{{ route('teacher-schedule.edit', $teacherSchedule->id) }}"
                                     class="btn btn-sm btn-outline-primary me-2" title="Edit"><i
                                         class="fas fa-edit"></i></a>
@@ -97,14 +99,9 @@
                                         onclick="return confirm('Are you sure you want to delete this data?')"><i
                                             class="fas fa-trash"></i></button>
                                 </form>
-                            @else
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <span class="text-muted">No actions available</span>
-                                </div>
-                            @endif
-                        </div>
-
-                    </td>
+                            </div>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

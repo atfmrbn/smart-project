@@ -32,9 +32,11 @@
             <div class="col">
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
-            <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ URL::to('subject/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
-            </div>
+            @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                <div class="col-auto text-end float-end ms-auto download-grp">
+                    <a href="{{ URL::to('subject/create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> New</a>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -46,7 +48,9 @@
                     <th>Classroom Type</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Actions</th>
+                    @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                        <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -56,22 +60,24 @@
                         <td>{{ $subject->classroomType->name }}</td>
                         <td>{{ $subject->name }}</td>
                         <td>{{ $subject->description }}</td>
-                        <td class="align-middle text-center">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <a href="{{ URL::to('subject/' . $subject->id) }}"
-                                    class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                                <a href="{{ URL::to('subject/' . $subject->id . '/edit') }}"
-                                    class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
-                                <form action="{{ URL::to('subject/' . $subject->id) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger me-2"
-                                        onclick="return confirm('Anda yakin mau menghapus data ini {{ $subject->name }}?')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+                        @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                            <td class="align-middle text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="{{ URL::to('subject/' . $subject->id) }}"
+                                        class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ URL::to('subject/' . $subject->id . '/edit') }}"
+                                        class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
+                                    <form action="{{ URL::to('subject/' . $subject->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger me-2"
+                                            onclick="return confirm('Anda yakin mau menghapus data ini {{ $subject->name }}?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

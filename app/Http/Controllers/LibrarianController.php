@@ -131,4 +131,19 @@ class LibrarianController extends Controller
             return redirect()->route('librarian.index')->with('errorMessage', $th->getMessage());
         }
     }
+
+    public function download()
+    {
+        $librarians = User::where('role', 'Librarian')->get();
+
+        $data = [
+            'title' => 'Librarians List',
+            'librarians' => $librarians
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('librarian.report', $data);
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->download('List-Librarian.pdf');
+    }
 }

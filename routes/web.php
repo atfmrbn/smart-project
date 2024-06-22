@@ -116,6 +116,7 @@ use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
     });
 
     Route::resource('/parent/parent-list', ParentController::class);
+    Route::get('/parent-list/download', [ParentController::class, 'download'])->name('parent.download');
     Route::resource('/student/student-list', StudentController::class);
     Route::get('/student-list/download', [StudentController::class, 'download'])->name('student.download');
     Route::resource('/student/student-teacher-classroom', StudentTeacherClassroomRelationshipController::class);
@@ -158,6 +159,7 @@ use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
         Route::get('/librarian/librarian-list/{id}/edit', 'edit')->name('librarian.edit');
         Route::put('/librarian/librarian-list/{id}', 'update')->name('librarian.update');
         Route::delete('/librarian/librarian-list/{id}', 'destroy')->name('librarian.destroy');
+        Route::get('/librarian-list/download', [LibrarianController::class, 'download'])->name('librarian.download');
     });
 
     Route::controller(TeacherHomeroomRelationshipController::class)->group(function () {
@@ -185,12 +187,11 @@ use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
     Route::get('grade-detail/download', [GradeDetailController::class, 'download'])->name('grade-detail.download');
 
     Route::resource('/user', UserController::class)->middleware('checkRole:Super Admin');
-    Route::get('/user', [UserController::class, 'editProfile'])->name('user.edit-profile');
-    Route::post('/user', [UserController::class, 'updateProfile'])->name('profile.update');
+    // Route::get('/user', [UserController::class, 'editProfile'])->name('user.edit-profile');
+    // Route::post('/user', [UserController::class, 'updateProfile'])->name('profile.update');
 
     Route::resource('attendance', AttendanceController::class);
     Route::get('attendance/download', [AttendanceController::class, 'download'])->name('attendance.download');
-
     // Route::get('parents/create', [ParentController::class, 'create'])->name('parents.create');
     // Route::post('parents', [ParentController::class, 'store'])->name('parents.store');
     Route::get('dashboard', [DashboardController::class, 'parent'])->name('dashboard')->middleware('auth');

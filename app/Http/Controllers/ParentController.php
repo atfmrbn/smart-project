@@ -134,10 +134,10 @@ class ParentController extends Controller
     public function edit(string $id)
     {
         $students = User::where('role', 'student')->get();
-        
+
         // Cari data parent berdasarkan ID dan pastikan rolenya adalah 'Parent'
         $parent = User::with('students')->where('id', $id)->where('role', 'Parent')->first();
-        
+
         // Jika data parent tidak ditemukan, redirect ke halaman parent-list dengan pesan error
         if (!$parent) {
             return redirect('parent/parent-list')->with("errorMessage", "Data parent tidak ditemukan");
@@ -260,5 +260,20 @@ class ParentController extends Controller
             return redirect()->back()->withErrors('Error: ' . $e->getMessage());
         }
 
+    }
+
+    public function download()
+    {
+        $parents = User::where('role', 'Parent')->get();
+
+        $data = [
+            'title' => 'Parents List',
+            'parents' => $parents
+        ];
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('parent.report', $data);
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->download('List-Parent.pdf');
     }
 }

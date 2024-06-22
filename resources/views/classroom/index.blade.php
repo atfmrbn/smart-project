@@ -13,10 +13,11 @@
             <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
         </ol>
     </nav>
-
-    <div class="col-auto text-end float-end ms-auto download-grp">
-        <a href="{{ URL::to('classroom/create') }}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> New</a>
-    </div>
+    @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+        <div class="col-auto text-end float-end ms-auto download-grp">
+            <a href="{{ URL::to('classroom/create') }}" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> New</a>
+        </div>
+    @endif
     <div class="col-12">
         <h4 class="form-title">{{ $title }}</h4>
     </div>
@@ -41,7 +42,9 @@
                     {{-- <th class="text-center">Classroom Type ID</th> --}}
                     <th>Classroom Type Name</th>
                     <th>Name</th>
-                    <th width="10%">Action</th>
+                    @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                        <th width="10%">Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -51,22 +54,24 @@
                         {{-- <td class="align-middle text-center">{{ $classroom->classroom_type_id }}</td> --}}
                         <td class="align-middle">{{ $classroom->classroomType->name }}</td>
                         <td class="text-center">{{ $classroom->name }}</td>
-                        <td>
-                            <div class="d-flex">
-                                <a title="Lihat" href="{{ URL::to('classroom/' . $classroom->id) }}"
-                                    class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                                <a href="{{ URL::to('classroom/' . $classroom->id . '/edit') }}"
-                                    class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
-                                <form action="{{ URL::to('classroom/' . $classroom->id) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger me-2"
-                                        onclick="return confirm('Anda yakin mau menghapus kelas {{ $classroom->name }} ?')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+                        @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                            <td>
+                                <div class="d-flex">
+                                    <a title="Lihat" href="{{ URL::to('classroom/' . $classroom->id) }}"
+                                        class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ URL::to('classroom/' . $classroom->id . '/edit') }}"
+                                        class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i></a>
+                                    <form action="{{ URL::to('classroom/' . $classroom->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger me-2"
+                                            onclick="return confirm('Anda yakin mau menghapus kelas {{ $classroom->name }} ?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
