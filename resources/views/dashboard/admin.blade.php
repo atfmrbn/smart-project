@@ -19,6 +19,14 @@
             </div>
             <div class="card-body">
                 <div class="row">
+                    <div class="col-6">
+                        <canvas id="combinedChart1" class="equal-height"></canvas>
+                    </div>
+                    <div class="col-6">
+                        <div id='calendar' class="equal-height"></div>
+                    </div>
+                </div>
+                <div class="row mt-5">
                     <div class="col-lg-4 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
@@ -147,6 +155,24 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
+                                        <strong class="card-title">Tuition</strong>
+                                        <h3 class="card-text text-white">{{ $tuitionCount }}</h3>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-book fa-2x"></i>
+                                    </div>
+                                </div>
+                                <a href="{{ URL::to('/tuition') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('tuition') ? 'active' : '' }}">More
+                                    info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-4">
+                        <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
                                         <strong class="card-title">Curriculums</strong>
                                         <h3 class="card-text text-white">{{ $curriculumCount }}</h3>
                                     </div>
@@ -154,16 +180,17 @@
                                         <i class="fas fa-school fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('/curriculum') }}"
-                                    class="small-box-footer text-white mt-2 {{ request()->is('curriculum') ? 'active' : '' }}">More
+                                <a href="{{ URL::to('/years') }}"
+                                    class="small-box-footer text-white mt-2 {{ request()->is('years') ? 'active' : '' }}">More
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
                 @if (Auth::user()->role == 'Admin')
-                    <div class="table-responsive">
+                    <div class="table-responsive mt-5">
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
@@ -201,4 +228,128 @@
             </div>
         </div>
     </div>
+
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+
+    <style>
+        .equal-height {
+            height: 100%;
+            /* Adjust the height as needed */
+        }
+
+        .row.equal-height {
+            display: flex;
+            height: 600px;
+            /* Adjust this value as needed */
+        }
+
+        .col-6 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Align items vertically centered if needed */
+        }
+
+        .canvas-container,
+        #calendar {
+            flex: 1;
+        }
+    </style>
+    <script>
+        // Doughnut Chart for Teachers, Students, Librarian, and Parent
+        var ctx = document.getElementById('combinedChart1').getContext('2d');
+        var combinedChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Teachers', 'Students', 'Librarians', 'Parents'],
+                datasets: [{
+                    // label: 'Users',
+                    data: [{{ $teacherCount }}, {{ $studentCount }}, {{ $librarianCount }},
+                        {{ $parentCount }}
+                    ],
+                    backgroundColor: [
+                        'rgba(64, 154, 148, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(64, 154, 148, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        maintainAspectRatio: false,
+                        // max: 20 // Setting the upper limit of the y-axis to 20
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'none', // Posisi legenda di atas grafik
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += context.raw;
+                                return label;
+                            }
+                        }
+                    }
+                },
+            }
+        });
+        // FullCalendar Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                events: [
+                    // Fetch events dynamically from your database or add static events here
+                    {}
+                ],
+                selectable: true,
+                select: function(info) {
+                    var title = prompt('Enter Event Title:');
+                    var eventData;
+                    if (title) {
+                        eventData = {
+                            title: title,
+                            start: info.startStr,
+                            end: info.endStr
+                        };
+                        calendar.addEvent(eventData);
+                        // Optionally, save the event to your database via AJAX
+                    }
+                    calendar.unselect();
+                },
+                eventClick: function(info) {
+                    if (confirm("Are you sure you want to delete this event?")) {
+                        info.event.remove();
+                        // Optionally, remove the event from your database via AJAX
+                    }
+                }
+            });
+            calendar.render();
+        });
+    </script>
+
 @endsection

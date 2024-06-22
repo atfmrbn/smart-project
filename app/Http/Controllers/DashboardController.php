@@ -20,6 +20,7 @@ use App\Models\TeacherClassroomRelationship;
 use App\Models\StudentExtracurricularRelationship;
 use App\Models\StudentTeacherHomeroomRelationship;
 use App\Models\TeacherSchedule;
+use App\Models\Tuition;
 
 class DashboardController extends Controller
 {
@@ -30,12 +31,14 @@ class DashboardController extends Controller
 
         // Fetch the logged-in student details
         $admin = User::where('id', $userId)
-                        ->where('role', 'Admin')
-                        ->firstOrFail();
+            ->where('role', 'Admin')
+            ->firstOrFail();
 
         $adminCount = User::where('role', 'Admin')->count();
 
         $teacherCount = User::where('role', 'Teacher')->count();
+
+        $teachers = User::where('role', 'Teacher')->paginate(3);
 
         $studentCount = User::where('role', 'Student')->count();
 
@@ -49,6 +52,8 @@ class DashboardController extends Controller
 
         $curriculumCount = Curriculum::count();
 
+        $tuitionCount = Tuition::count();
+
         $data = [
             "title" => "Admin Dashboard",
             "admin" => $admin,
@@ -60,6 +65,8 @@ class DashboardController extends Controller
             "subjectCount" => $subjectCount,
             "classroomCount" => $classroomCount,
             "curriculumCount" => $curriculumCount,
+            "tuitionCount" => $tuitionCount,
+            "teachers" => $teachers,
         ];
 
         return view("dashboard.admin", $data);
@@ -106,12 +113,12 @@ class DashboardController extends Controller
             'teacherClassroomRelationship.teacherSubjectRelationship.teacher',
             'teacherClassroomRelationship.teacherSubjectRelationship.subject'
         ])
-        ->whereHas('teacherClassroomRelationship.teacherSubjectRelationship', function ($query) use ($teacherId) {
-            $query->where('teacher_id', $teacherId);
-        })
-        ->orderBy('schedule_day')
-        ->orderBy('schedule_time_start')
-        ->get();
+            ->whereHas('teacherClassroomRelationship.teacherSubjectRelationship', function ($query) use ($teacherId) {
+                $query->where('teacher_id', $teacherId);
+            })
+            ->orderBy('schedule_day')
+            ->orderBy('schedule_time_start')
+            ->get();
 
         // Mengambil data absensi guru
         $attendances = Attendance::whereHas('studentTeacherHomeroomRelationship', function ($query) use ($teacherId) {
@@ -239,19 +246,19 @@ class DashboardController extends Controller
 
         // Count borrowing books for the logged-in student
         $studentBorrowCount = BorrowingBook::where('student_id', $userId)
-                                        ->where('status', 'borrowing')
-                                        ->count();
+            ->where('status', 'borrowing')
+            ->count();
 
         // Count returned books for the logged-in student
         $studentReturnedCount = BorrowingBook::where('student_id', $userId)
-                                            ->where('status', 'returned')
-                                            ->count();
+            ->where('status', 'returned')
+            ->count();
 
         // Fetch the logged-in student details
         $student = User::with(['studentTeacherHomeroom.teacherHomeroomRelationship.classroom', 'attendances'])
-                        ->where('id', $userId)
-                        ->where('role', 'Student')
-                        ->firstOrFail();
+            ->where('id', $userId)
+            ->where('role', 'Student')
+            ->firstOrFail();
 
         // Use optional chaining and conditional checks to handle null cases
         $classroomId = optional(optional(optional($student->studentTeacherHomeroom)->teacherHomeroomRelationship)->classroom)->id;
@@ -262,23 +269,23 @@ class DashboardController extends Controller
         // Fetch teacher schedules if classroom_id exists
         if ($classroomId) {
             $teacherSchedules = TeacherSchedule::with('teacherClassroomRelationship.teacherHomeroomRelationship.classroom.classroomType', 'teacherClassroomRelationship.teacherSubjectRelationship.teacher', 'teacherClassroomRelationship.teacherSubjectRelationship.subject')
-                                            ->whereHas('teacherClassroomRelationship.teacherHomeroomRelationship', function($query) use ($classroomId) {
-                                                $query->where('classroom_id', $classroomId);
-                                            })
-                                            ->get()
-                                            ->sortBy('schedule_day') // Sort schedules by day if needed
-                                            ->groupBy('schedule_day'); // Group schedules by day
+                ->whereHas('teacherClassroomRelationship.teacherHomeroomRelationship', function ($query) use ($classroomId) {
+                    $query->where('classroom_id', $classroomId);
+                })
+                ->get()
+                ->sortBy('schedule_day') // Sort schedules by day if needed
+                ->groupBy('schedule_day'); // Group schedules by day
         }
 
         // Fetch extracurricular activities for the logged-in student
         $extracurriculars = StudentExtracurricularRelationship::join('extracurriculars as extra', 'student_extracurricular_relationships.extracurricular_id', '=', 'extra.id')
-                                                            ->select([
-                                                                'extra.name as extracurricular_name',
-                                                                'extra.description as extracurricular_description',
-                                                                'student_extracurricular_relationships.id'
-                                                            ])
-                                                            ->where('student_extracurricular_relationships.student_id', $userId)
-                                                            ->get();
+            ->select([
+                'extra.name as extracurricular_name',
+                'extra.description as extracurricular_description',
+                'student_extracurricular_relationships.id'
+            ])
+            ->where('student_extracurricular_relationships.student_id', $userId)
+            ->get();
 
         // Count total subjects and students
         $subjectCount = Subject::count();

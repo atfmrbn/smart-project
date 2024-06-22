@@ -214,11 +214,15 @@
                                 <div class="icon">
                                     <i class="ion ion-card"></i>
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
                 @endif
+                <div class="col-12">
+                    <div id='calendar' class="equal-height"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -252,5 +256,69 @@
             </div>
         </div>
     </div>
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+    <style>
+        .equal-height {
+            height: 100%;
+            /* Adjust the height as needed */
+        }
 
+        .row.equal-height {
+            display: flex;
+            height: 600px;
+            /* Adjust this value as needed */
+        }
+
+        .col-6 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Align items vertically centered if needed */
+        }
+
+        .canvas-container,
+        #calendar {
+            flex: 1;
+        }
+    </style>
+    <script>
+        // FullCalendar Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                events: [
+                    // Fetch events dynamically from your database or add static events here
+                    {}
+                ],
+                selectable: true,
+                select: function(info) {
+                    var title = prompt('Enter Event Title:');
+                    var eventData;
+                    if (title) {
+                        eventData = {
+                            title: title,
+                            start: info.startStr,
+                            end: info.endStr
+                        };
+                        calendar.addEvent(eventData);
+                        // Optionally, save the event to your database via AJAX
+                    }
+                    calendar.unselect();
+                },
+                eventClick: function(info) {
+                    if (confirm("Are you sure you want to delete this event?")) {
+                        info.event.remove();
+                        // Optionally, remove the event from your database via AJAX
+                    }
+                }
+            });
+            calendar.render();
+        });
+    </script>
 @endsection
