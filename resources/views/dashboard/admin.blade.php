@@ -1,7 +1,6 @@
 @extends('layouts.main')
-@section('title', $title)
 @section('container')
-    <div class="container mt-5">
+    {{-- <div class="container mt-5"> --}}
         <!-- Breadcrumbs -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background-color: transparent; border: none;">
@@ -11,23 +10,15 @@
                 @endif
             </ol>
         </nav>
-        <div class="card shadow-sm">
+        {{-- <div class="card shadow-sm"> --}}
             <div class="card-header">
                 @if (Auth::user()->role == 'Admin')
                     <h3 class="mb-0">Welcome to your Admin Dashboard, {{ Auth::user()->name }}!</h3>
                 @endif
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <canvas id="combinedChart1" class="equal-height"></canvas>
-                    </div>
-                    <div class="col-6">
-                        <div id='calendar' class="equal-height"></div>
-                    </div>
-                </div>
                 <div class="row mt-5">
-                    <div class="col-lg-4 col-sm-4">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -42,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -51,7 +42,7 @@
                                         <h3 class="card-text text-white">{{ $teacherCount }}</h3>
                                     </div>
                                     <div>
-                                        <i class="fas fa-user fa-2x"></i>
+                                        <i class="fas fa-chalkboard-teacher fa-2x"></i>
                                     </div>
                                 </div>
                                 <a href="{{ URL::to('/teacher/teacher-list') }}"
@@ -60,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -69,7 +60,7 @@
                                         <h3 class="card-text text-white">{{ $studentCount }}</h3>
                                     </div>
                                     <div>
-                                        <i class="fas fa-user fa-2x"></i>
+                                        <i class="fas fa-graduation-cap fa-2x"></i>
                                     </div>
                                 </div>
                                 <a href="{{ URL::to('/student/student-list') }}"
@@ -78,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -96,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -108,13 +99,13 @@
                                         <i class="fas fa-user fa-2x"></i>
                                     </div>
                                 </div>
-                                <a href="{{ URL::to('librarian/librarian-list') }}"
+                                {{-- <a href="{{ URL::to('librarian/librarian-list') }}"
                                     class="small-box-footer text-white mt-2 {{ request()->is('librarian/librarian-list') ? 'active' : '' }}">More
-                                    info <i class="fas fa-arrow-circle-right"></i></a>
+                                    info <i class="fas fa-arrow-circle-right"></i></a> --}}
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -132,7 +123,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -150,7 +141,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
+                    <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -159,7 +150,7 @@
                                         <h3 class="card-text text-white">{{ $tuitionCount }}</h3>
                                     </div>
                                     <div>
-                                        <i class="fas fa-book fa-2x"></i>
+                                        <i class="fas fa-money-bill-wave fa-2x"></i>
                                     </div>
                                 </div>
                                 <a href="{{ URL::to('/tuition') }}"
@@ -168,7 +159,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-4">
+                    {{-- <div class="col-lg-3 col-sm-4">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 133px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -185,10 +176,30 @@
                                     info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
+                    </div> --}}
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card mb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                            <div class="card-header" style="background-color: #3d5ee1ee; color:white"><strong>Overview</strong></div>
+                            <div class="card-body" style="background-color: #f8f9fa;">
+                                <canvas id="combinedChart1" class="equal-height"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="card mb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                            <div class="card-header" style="background-color: #3d5ee1ee; color:white"><strong>Calendar</strong></div>
+                            <div class="card-body" style="background-color: #f8f9fa;">
+                                <div id='calendar' class="equal-height"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                @if (Auth::user()->role == 'Admin')
+
+                {{-- @if (Auth::user()->role == 'Admin')
                     <div class="table-responsive mt-5">
                         <table class="table table-bordered">
                             <tbody>
@@ -223,10 +234,10 @@
                             </tbody>
                         </table>
                     </div>
-                @endif
+                @endif --}}
             </div>
-        </div>
-    </div>
+        {{-- </div> --}}
+    {{-- </div> --}}
 
     <!-- Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -261,28 +272,21 @@
         }
     </style>
     <script>
-        // Doughnut Chart for Teachers, Students, Librarian, and Parent
         var ctx = document.getElementById('combinedChart1').getContext('2d');
         var combinedChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ['Teachers', 'Students', 'Librarians', 'Parents'],
                 datasets: [{
-                    // label: 'Users',
+                    label: 'Users',
                     data: [{{ $teacherCount }}, {{ $studentCount }}, {{ $librarianCount }},
                         {{ $parentCount }}
                     ],
                     backgroundColor: [
-                        'rgba(64, 154, 148, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
+                        '#3D5EE1'
                     ],
                     borderColor: [
-                        'rgba(64, 154, 148, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(54, 162, 235, 1)'
+                        '#3D5EE1'
                     ],
                     borderWidth: 1
                 }]
