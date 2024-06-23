@@ -62,16 +62,16 @@ class BookBorrowDetailController extends Controller
 
             BorrowingBookDetail::create($data);
             $message = 'Buku berhasil ditambahkan ke peminjaman.';
-            $messageType = 'success';
+            $messageType = 'successMessage';
         } catch (\Illuminate\Validation\ValidationException $e) {
             $message = $e->getMessage();
-            $messageType = 'error';
+            $messageType = 'errorMessage';
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             $message = $e->getMessage();
-            $messageType = 'error';
+            $messageType = 'errorMessage';
         } finally {
-            if ($messageType === 'success') {
+            if ($messageType === 'successMessage') {
                 return redirect('book-borrow/'.$data['borrowing_book_id'].'/edit')->with($messageType, $message);
             } else {
                 return redirect()->back()->with($messageType, $message)->withInput();
@@ -114,12 +114,18 @@ class BookBorrowDetailController extends Controller
         $borrowDetail = BorrowingBookDetail::with("borrowingBook")->findOrFail($id);
 
         $now = Carbon::now();
-        $borrowDetail->returned_date = $now; // Set the return date to current date
+        $borrowDetail->returned_date = $now; 
 
-        // Calculate the penalty
+        // hitung denda
         $dueDate = Carbon::parse($borrowDetail->borrowingBook->due_date);
-        $diffInDays = $dueDate->diffInDays($now);
-        $borrowDetail->penalty = $diffInDays * $configuration->book_penalty;
+        if ($now->greaterThan($dueDate)){
+            $diffInDays = $dueDate->diffInDays($now);
+            $borrowDetail->penalty = $diffInDays * $configuration->book_penalty;
+        }
+        else{
+            $borrowDetail->penalty = 0;
+        }
+
 
         $borrowDetail->save();
 
@@ -128,7 +134,6 @@ class BookBorrowDetailController extends Controller
         $returnedDetails = BorrowingBookDetail::where([['borrowing_book_id', $borrowDetail->borrowing_book_id], ['penalty', '0']])
         ->whereNotNull('returned_date')->get();
         
-        //->get();
         //dd($borrowDetails);
         if($borrowingDetails->count() == $returnedDetails->count())
         { 
@@ -136,9 +141,7 @@ class BookBorrowDetailController extends Controller
             $borrowingBook->update(['status' => 'returned']);
         }
 
-        // Redirect back to the borrowing book details page
-        //TODO buat penalty muncul
-        return redirect()->back()->with('success', 'Book returned successfully with a penalty of ');
+        return redirect()->back()->with('successMessage', 'Book returned successfully');
     }
 
     public function download($id)

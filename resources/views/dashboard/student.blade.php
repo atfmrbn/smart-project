@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('title', $title)
 @section('container')
-    <div class="container mt-5">
+    {{-- <div class="container mt-5"> --}}
         <!-- Breadcrumbs -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background-color: transparent; border: none;">
@@ -11,7 +11,7 @@
                 @endif
             </ol>
         </nav>
-        <div class="card shadow-sm">
+        {{-- <div class="card shadow-sm"> --}}
             <div class="card-header">
                 @if (Auth::user()->role == 'Student')
                     <h3 class="mb-0">Welcome to your Student Dashboard, {{ Auth::user()->name }}!</h3>
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-sm-6">
+                    {{-- <div class="col-lg-6 col-sm-6">
                         <div class="card text-white mb-3" style="background-color: #3D5EE1">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -63,9 +63,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-lg-6 col-sm-6">
-                        <div class="card text-white mb-3" style="background-color: #3D5EE1">
+                        <div class="card text-white mb-3" style="background-color: #3D5EE1; height: 127px">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
@@ -79,12 +79,33 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card text-white mb-3" style="background-color: #3D5EE1">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong class="card-title">Extracurricular Activities</strong>
+                                        <h3 class="card-text text-white">{{ $extracurricularCount }}</h3>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-user-graduate fa-2x"></i>
+                                    </div>
+                                </div>
+                                <a href="#" class="small-box-footer text-white" data-toggle="modal"
+                                    data-target="#extracurricularModal">More
+                                    info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-card"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Teacher Schedules Section -->
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card text-white mb-3">
-                            <div class="card-body" style="border: 1px solid #dee2e6; border-radius: 0.25rem;">
+                            <div class="card-body" style="border: 1px solid #dee2e6; border-radius: 0.25rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                                 <div class="d-flex justify-content-between align-items-center"
                                     style="border-bottom: 1px solid #dee2e6; padding: 10px;">
                                     <div class="text-center" style="width: 100%">
@@ -129,17 +150,17 @@
 
 
                 @if (Auth::user()->role != 'Admin')
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="border-radius: 0.25rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                         <table class="table table-bordered">
                             <tbody>
-                                <tr>
+                                {{-- <tr>
                                     <th>Name</th>
                                     <td>{{ $student->name }}</td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
                                     <td>{{ $student->email }}</td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <th>Class</th>
                                     <td>
@@ -167,10 +188,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Roll Number</th>
+                                    <th>Identity Number</th>
                                     <td>{{ $student->identity_number }}</td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th>Phone</th>
                                     <td>{{ $student->phone }}</td>
                                 </tr>
@@ -189,39 +210,17 @@
                                 <tr>
                                     <th>Student's Parent</th>
                                     <td>{{ $student->parent ? $student->parent->name : 'N/A' }}</td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <div class="card text-white mb-3" style="background-color: #3D5EE1">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <strong class="card-title">Extracurricular Activities</strong>
-                                            <h3 class="card-text text-white">{{ $extracurricularCount }}</h3>
-                                        </div>
-                                        <div>
-                                            <i class="fas fa-user-graduate fa-2x"></i>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="small-box-footer text-white" data-toggle="modal"
-                                        data-target="#extracurricularModal">More
-                                        info <i class="fas fa-arrow-circle-right"></i></a>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-card"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 @endif
+                <div class="col-12 mt-5 p-3" style="border-radius: 0.25rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div id='calendar' class="equal-height"></div>
+                </div>
             </div>
-        </div>
-    </div>
+        {{-- </div> --}}
+    {{-- </div> --}}
 
     <!-- Modal -->
     <div class="modal fade" id="extracurricularModal" tabindex="-1" role="dialog"
@@ -252,5 +251,69 @@
             </div>
         </div>
     </div>
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+    <style>
+        .equal-height {
+            height: 100%;
+            /* Adjust the height as needed */
+        }
 
+        .row.equal-height {
+            display: flex;
+            height: 600px;
+            /* Adjust this value as needed */
+        }
+
+        .col-6 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Align items vertically centered if needed */
+        }
+
+        .canvas-container,
+        #calendar {
+            flex: 1;
+        }
+    </style>
+    <script>
+        // FullCalendar Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                events: [
+                    // Fetch events dynamically from your database or add static events here
+                    {}
+                ],
+                selectable: true,
+                select: function(info) {
+                    var title = prompt('Enter Event Title:');
+                    var eventData;
+                    if (title) {
+                        eventData = {
+                            title: title,
+                            start: info.startStr,
+                            end: info.endStr
+                        };
+                        calendar.addEvent(eventData);
+                        // Optionally, save the event to your database via AJAX
+                    }
+                    calendar.unselect();
+                },
+                eventClick: function(info) {
+                    if (confirm("Are you sure you want to delete this event?")) {
+                        info.event.remove();
+                        // Optionally, remove the event from your database via AJAX
+                    }
+                }
+            });
+            calendar.render();
+        });
+    </script>
 @endsection

@@ -71,7 +71,7 @@
                                     </form>
                                 @elseif(auth()->user()->role === 'Student' && $tuition->studentTeacherHomeroomRelationship->student->id === auth()->user()->id)
                                     @if ($tuition->status === 'Paid')
-                                        <a href="{{ URL::to('invoice/' . $tuition->id) }}" title="Invoice" class="btn btn-sm btn-outline-warning me-2">
+                                        <a href="{{ URL::to('invoice/' . $tuition->id) }}" title="Detail Payment" class="btn btn-sm btn-outline-warning me-2">
                                             <i class="fas fa-receipt"></i>
                                         </a>
                                     @else

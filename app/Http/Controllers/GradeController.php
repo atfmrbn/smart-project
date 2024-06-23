@@ -7,16 +7,41 @@ use App\Models\TaskType;
 use App\Models\StudentTeacherHomeroomRelationship;
 use App\Models\TeacherClassroomRelationship;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GradeController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
+
+        // Fetch task types
         $taskTypes = TaskType::all();
-        $teacherClassroomRelationships = TeacherClassroomRelationship::with(['teacherHomeroomRelationship','teacherSubjectRelationship.teacher','teacherSubjectRelationship.subject'])->get();
 
-        $gradesQuery = Grade::with(['taskType', 'teacherClassroomRelationship.teacherHomeroomRelationship']);
+        // Fetch teacher classroom relationships based on user role
+        if ($user->role === 'Admin' || $user->role === 'Super Admin') {
+            $teacherClassroomRelationships = TeacherClassroomRelationship::with([
+                'teacherHomeroomRelationship',
+                'teacherSubjectRelationship.teacher',
+                'teacherSubjectRelationship.subject'
+            ])->get();
+        } else {
+            $teacherClassroomRelationships = TeacherClassroomRelationship::with([
+                'teacherHomeroomRelationship',
+                'teacherSubjectRelationship.teacher',
+                'teacherSubjectRelationship.subject'
+            ])->whereHas('teacherSubjectRelationship.teacher', function ($query) use ($user) {
+                $query->where('id', $user->id); // Menggunakan 'id' karena kita mencari berdasarkan 'teacher_id' di 'teacher_subject_relationships'
+            })->get();
+        }
 
+        // Build the grades query
+        $gradesQuery = Grade::with([
+            'taskType',
+            'teacherClassroomRelationship.teacherHomeroomRelationship'
+        ]);
+
+        // Apply filters if provided
         if ($request->filled('task_type_id')) {
             $gradesQuery->where('task_type_id', $request->task_type_id);
         }
@@ -25,8 +50,17 @@ class GradeController extends Controller
             $gradesQuery->where('teacher_classroom_relationship_id', $request->teacher_classroom_relationship_id);
         }
 
+        // Filter grades based on user role
+        if ($user->role !== 'Admin' && $user->role !== 'Super Admin') {
+            $gradesQuery->whereHas('teacherClassroomRelationship.teacherSubjectRelationship.teacher', function ($query) use ($user) {
+                $query->where('id', $user->id); // Menggunakan 'id' karena kita mencari berdasarkan 'teacher_id' di 'teacher_subject_relationships'
+            });
+        }
+
+        // Get the filtered grades
         $grades = $gradesQuery->get();
 
+        // Prepare the data for the view
         $data = [
             'title' => 'Grades',
             'grades' => $grades,
@@ -34,18 +68,26 @@ class GradeController extends Controller
             'teacherClassroomRelationships' => $teacherClassroomRelationships,
         ];
 
+        // Return the view with data
         return view('teacher.grade.index', $data);
     }
 
 
     public function create()
     {
-        $taskTypes = TaskType::all();
-        $teacherClassroomRelationships = TeacherClassroomRelationship::all();
+        $user = Auth::user();
+
+        // Fetch task types and teacher classroom relationships only for the logged-in teacher
+        $taskTypes = TaskType::all(); // Sesuaikan dengan relasi TaskType yang dimiliki oleh guru yang sedang login
+        $teacherClassroomRelationships = TeacherClassroomRelationship::whereHas('teacherSubjectRelationship.teacher', function ($query) use ($user) {
+            $query->where('id', $user->id);
+        })->get(); // Ambil hanya relasi kelas yang terkait dengan guru yang sedang login
+
         $title = 'Add Grade';
 
         return view('teacher.grade.form', compact('taskTypes', 'teacherClassroomRelationships', 'title'));
     }
+
 
     public function store(Request $request)
     {
@@ -62,12 +104,19 @@ class GradeController extends Controller
 
     public function edit(Grade $grade)
     {
-        $taskTypes = TaskType::all();
-        $teacherClassroomRelationships = TeacherClassroomRelationship::all();
+        $user = Auth::user();
+
+        // Fetch task types and teacher classroom relationships only for the logged-in teacher
+        $taskTypes = TaskType::all(); // Sesuaikan dengan relasi TaskType yang dimiliki oleh guru yang sedang login
+        $teacherClassroomRelationships = TeacherClassroomRelationship::whereHas('teacherSubjectRelationship.teacher', function ($query) use ($user) {
+            $query->where('id', $user->id);
+        })->get(); // Ambil hanya relasi kelas yang terkait dengan guru yang sedang login
+
         $title = 'Edit Grade';
 
         return view('teacher.grade.form', compact('grade', 'taskTypes', 'teacherClassroomRelationships', 'title'));
     }
+
 
     public function update(Request $request, Grade $grade)
     {

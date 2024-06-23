@@ -104,12 +104,12 @@ class AttendanceController extends Controller
             'note' => 'required',
             'status' => 'required',
         ]);
-    
+
         try
         {
             $attendance = Attendance::findOrFail($id);
             $attendance->update($data);
-    
+
             return redirect()->route('attendance.index')->with('successMessage', 'Data successfully updated');
         }
         catch (Exception $ex)

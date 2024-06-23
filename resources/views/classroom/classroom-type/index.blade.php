@@ -32,11 +32,13 @@
             <div class="col">
                 <h3 class="page-title">{{ $title }}</h3>
             </div>
-            <div class="col-auto text-end float-end ms-auto download-grp">
-                <a href="{{ URL::to('classroom/classroom-type/create') }}" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> New
-                </a>
-            </div>
+            @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                <div class="col-auto text-end float-end ms-auto download-grp">
+                    <a href="{{ URL::to('classroom/classroom-type/create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> New
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -47,7 +49,9 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Action</th>
+                    @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                        <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -56,25 +60,27 @@
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $classroom_type->name }}</td>
                         <td>{{ $classroom_type->description }}</td>
-                        <td class="align-middle text-center">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <a href="{{ URL::to('classroom/classroom-type/' . $classroom_type->id) }}"
-                                    class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
-                                <a href="{{ URL::to('classroom/classroom-type/' . $classroom_type->id) . '/edit' }}"
-                                    class="btn btn-sm btn-outline-primary me-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form method="POST"
-                                    action="{{ URL::to('classroom/classroom-type/' . $classroom_type->id) }}">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Anda yakin mau menghapus siswa {{ $classroom_type->name }} ?')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+                        @if (auth()->user()->role === 'Super Admin' || auth()->user()->role === 'Admin')
+                            <td class="align-middle text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="{{ URL::to('classroom/classroom-type/' . $classroom_type->id) }}"
+                                        class="btn btn-sm btn-outline-info me-2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ URL::to('classroom/classroom-type/' . $classroom_type->id) . '/edit' }}"
+                                        class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form method="POST"
+                                        action="{{ URL::to('classroom/classroom-type/' . $classroom_type->id) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Anda yakin mau menghapus siswa {{ $classroom_type->name }} ?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endif
 
                     </tr>
                 @endforeach

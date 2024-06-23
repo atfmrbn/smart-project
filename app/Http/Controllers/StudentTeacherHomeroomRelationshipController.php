@@ -147,4 +147,21 @@ class StudentTeacherHomeroomRelationshipController extends Controller
             return redirect()->route('student-teacher-homeroom.index')->with('error', $th->getMessage());
         }
     }
+
+    public function download()
+    {
+    $studentTeacherHomeroomRelationships = StudentTeacherHomeroomRelationship::with(['student', 'teacherHomeroomRelationship.teacher', 'teacherHomeroomRelationship.classroom'])->get();
+
+    $data = [
+        'title' => 'Student-Teacher Homeroom Report',
+        'studentTeacherHomeroomRelationships' => $studentTeacherHomeroomRelationships
+    ];
+
+    $pdf = \Barryvdh\DomPDF\Facade\PDF::loadView('student.student-teacher-homeroom.report', $data);
+    $pdf->setPaper('a4', 'landscape');
+
+    return $pdf->download('student_teacher_homeroom_report.pdf');
+    }
+
+
 }

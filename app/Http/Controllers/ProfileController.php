@@ -68,7 +68,6 @@ class ProfileController extends Controller
     // public function updateImage(Request $request)
     // {
     //     $request->validate([
-    //         // Validasi lainnya
     //         'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     //     ]);
 

@@ -22,13 +22,6 @@ class UserController extends Controller
         ];
 
         return view('user.index', $data);
-        // $data = [
-        //     'subject' => 'Tagihan SPP',
-        //     'view' => 'email',
-        //     'description' => 'ini adalah tagihan pembayaran spp'
-        // ];
-
-        // Mail::to('saputlingga@gmail.com')->send(new SendEmail($data));
     }
 
     /**

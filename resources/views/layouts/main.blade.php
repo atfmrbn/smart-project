@@ -17,10 +17,16 @@
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+
+
+
 </head>
 
 <body>
-    <link rel="icon" type="image/x-icon" href="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png">  
+    <link rel="icon" type="image/x-icon"
+        href="https://seeklogo.com/images/S/smarts-logo-8F737FF005-seeklogo.com.png">
 
     {{-- @yield('container')
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -46,6 +52,8 @@
                                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
                                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                                <!-- FullCalendar JS -->
+                                <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
                             </div>
                         </div>
                     </div>

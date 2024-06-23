@@ -28,8 +28,10 @@
                     <div class="btn-group" role="group" aria-label="Actions">
                         <a href="{{ route('grade.download') }}" class="btn btn-outline-primary me-2"><i
                                 class="fas fa-download"></i> Download</a>
+                        @if (auth()->user()->role === 'Teacher')
                         <a href="{{ route('grade.create') }}" class="btn btn-primary"><i class="fas fa-plus me-1"></i> Add
                             New</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -78,7 +80,9 @@
                         <th>Task Type</th>
                         <th>Teacher Homeroom</th>
                         <th>Percentage (%)</th>
-                        <th>Action</th>
+                        @if (auth()->user()->role === 'Teacher')
+                            <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -93,22 +97,24 @@
                                 {{ $grade->teacherClassroomRelationship->teacherSubjectRelationship->teacher->name }}-{{ $grade->teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
                             </td>
                             <td class="text-center">{{ $grade->percentage }}</td>
-                            <td class="text-center">
-                                <div class="btn-group" role="group" aria-label="Grade Actions">
-                                    <a href="{{ route('grade.edit', $grade->id) }}"
-                                        class="btn btn-sm btn-outline-primary me-1">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form method="POST" action="{{ route('grade.destroy', $grade->id) }}"
-                                        onsubmit="return confirm('Are you sure you want to delete this grade?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
+                            @if (auth()->user()->role === 'Teacher')
+                                <td class="text-center">
+                                    <div class="btn-group" role="group" aria-label="Grade Actions">
+                                        <a href="{{ route('grade.edit', $grade->id) }}"
+                                            class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form method="POST" action="{{ route('grade.destroy', $grade->id) }}"
+                                            onsubmit="return confirm('Are you sure you want to delete this grade?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
