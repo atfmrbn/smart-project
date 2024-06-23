@@ -169,7 +169,7 @@
                     </li>
                 @endif
 
-                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Librarian']))
+                @if (in_array(auth()->user()->role, ['Super Admin', 'Librarian']))
                     <li class="submenu {{ request()->is('librarian*') ? 'active' : '' }}">
                         <a href="#"><i class="fas fa-book-reader"></i> <span> Librarians</span> <span
                                 class="menu-arrow"></span></a>
@@ -188,7 +188,7 @@
                     </li>
                 @endif
 
-                @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Librarian', 'Student', 'Teacher']))
+                @if (in_array(auth()->user()->role, ['Super Admin',  'Librarian', 'Student', 'Teacher']))
                     <li
                         class="submenu {{ request()->is('book*') || request()->is('book-category') || request()->is('book-borrow') || request()->is('book-return') ? 'active' : '' }}">
                         <a href="#"><i class="fas fa-book"></i> <span> Library</span> <span

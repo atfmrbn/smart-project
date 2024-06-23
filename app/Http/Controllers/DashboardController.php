@@ -74,20 +74,61 @@ class DashboardController extends Controller
 
     public function superAdmin()
     {
-        $teacherCount = User::where('role', 'Teacher')->count();
-        $studentCount = User::where('role', 'Student')->count();
+        $userId = Auth::id();
+
+        // Fetch the logged-in student details
+        $superAdmin = User::where('id', $userId)
+            ->where('role', 'Super Admin')
+            ->firstOrFail();
+
         $adminCount = User::where('role', 'Admin')->count();
+
+        $teacherCount = User::where('role', 'Teacher')->count();
+
+        $teachers = User::where('role', 'Teacher')->paginate(3);
+
+        $studentCount = User::where('role', 'Student')->count();
+
         $parentCount = User::where('role', 'Parent')->count();
+
         $librarianCount = User::where('role', 'Librarian')->count();
+
+        $subjectCount = Subject::count();
+
+        $classroomCount = Classroom::count();
+
+        $curriculumCount = Curriculum::count();
+
+        $tuitionCount = Tuition::count();
 
         $data = [
             "title" => "Super Admin Dashboard",
+            "superAdmin" => $superAdmin,
+            "adminCount" => $adminCount,
             "teacherCount" => $teacherCount,
             "studentCount" => $studentCount,
-            "adminCount" => $adminCount,
             "parentCount" => $parentCount,
             "librarianCount" => $librarianCount,
+            "subjectCount" => $subjectCount,
+            "classroomCount" => $classroomCount,
+            "curriculumCount" => $curriculumCount,
+            "tuitionCount" => $tuitionCount,
+            "teachers" => $teachers,
         ];
+        // $teacherCount = User::where('role', 'Teacher')->count();
+        // $studentCount = User::where('role', 'Student')->count();
+        // $adminCount = User::where('role', 'Admin')->count();
+        // $parentCount = User::where('role', 'Parent')->count();
+        // $librarianCount = User::where('role', 'Librarian')->count();
+
+        // $data = [
+        //     "title" => "Super Admin Dashboard",
+        //     "teacherCount" => $teacherCount,
+        //     "studentCount" => $studentCount,
+        //     "adminCount" => $adminCount,
+        //     "parentCount" => $parentCount,
+        //     "librarianCount" => $librarianCount,
+        // ];
 
         return view("dashboard.superAdmin", $data);
     }

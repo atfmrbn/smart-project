@@ -1,9 +1,6 @@
 @extends('layouts.main')
-
-@section('title', $title)
-
 @section('container')
-<div class="container">
+{{-- <div class="container"> --}}
     <h1>Welcome {{ Auth::user()->name }}!</h1>
     <div class="row mb-4 mt-5">
         <div class="col-lg-4 col-sm-6">
@@ -100,7 +97,7 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <div class="card mb-3">
+            <div class="card mb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                 <div class="card-header" style="background-color: #3d5ee1ee; color:white"><strong>Overview</strong></div>
                 <div class="card-body" style="background-color: #f8f9fa;">
                     <canvas id="overviewChart"></canvas>
@@ -108,7 +105,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card mb-3">
+            <div class="card mb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                 <div class="card-header" style="background-color: #3d5ee1ee; color:white"><strong>Number of Borrowed Books</strong></div>
                 <div class="card-body" style="background-color: #f8f9fa;">
                     <canvas id="borrowsChart"></canvas>
@@ -116,7 +113,7 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
