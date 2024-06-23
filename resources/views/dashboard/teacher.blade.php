@@ -4,6 +4,16 @@
 
 {{-- <div class="container mt-5"> --}}
     {{-- <div class="card shadow-sm"> --}}
+    <div class="container mt-5">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" style="background-color: transparent; border: none;">
+                @if (Auth::user()->role == 'Teacher')
+                    <li class="breadcrumb-item"><a href="{{ route('teacher.dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Teacher Dashboard</li>
+                @endif
+            </ol>
+        </nav>
         <div class="card-header">
             @if (Auth::user()->role == 'Admin')
                 <h3 class="mb-0">Admin Dashboard</h3>
