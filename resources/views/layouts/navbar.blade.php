@@ -72,13 +72,16 @@
                       </div>
                   </span>
               </a>
-              <div class="dropdown-menu">
-                  <div class="user-header">
-                      <a class="dropdown-item" href="{{ URL::to('/profile') }}">My Profile</a>
-                      <a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i><span> Logout</span></a>
-                  </div>
-              </div>
-
+              <div class="dropdown-menu dropdown-menu-right">
+                <div class="user-header">
+                    <div class="user-text">
+                        <h8>{{ Auth::user()->name }}</h8>
+                        <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
+                    </div>
+                </div>
+                <a class="dropdown-item" href="{{ URL::to('/profile') }}">My Profile</a>
+                {{-- <a class="dropdown-item" href="{{ route('logout') }}">Logout</a> --}}
+            </div>
           </li>
         </ul>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>

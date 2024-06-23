@@ -4,88 +4,93 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-
         $data = [
             "title" => "Profile",
             "user" => $user,
         ];
         return view('profile.index', $data);
     }
-    
-    public function editProfile()
-    {
-        $user = Auth::user();
 
-        $data = [
-            "title" => "Edit Profile",
-            "user" => $user,
-        ];
-
-        return view('profile.edit-profile', $data);
-    }
-
-    /**
-     * Update the profile.
-     */
     public function updateProfile(Request $request)
     {
         $request->validate([
-            'identity_number' => 'required',
-            'name' => 'required',
-            'username' => 'required',
-            'email' => 'required|email',
-            'gender' => 'required|in:male,female',
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . Auth::id(),
+            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            'gender' => 'required|string|in:Laki-laki,Perempuan',
             'born_date' => 'required|date',
-            'phone' => 'required',
-            'nik' => 'required',
-            'address' => 'required',
-            'image' => 'nullable|image|max:2048',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
         ]);
 
         $user = Auth::user();
-        $user->identity_number = $request->identity_number;
-        $user->name = $request->name;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->gender = $request->gender;
-        $user->born_date = $request->born_date;
-        $user->phone = $request->phone;
-        $user->nik = $request->nik;
-        $user->address = $request->address;
-
-        if ($request->hasFile('image')) {
-            $filePath = $request->file('image')->store('images', 'public');
-            $user->image = $filePath;
-        }
-
+        // Update data user
+        $user->name = $request->input('name');
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->gender = $request->input('gender');
+        $user->born_date = $request->input('born_date');
+        $user->phone = $request->input('phone');
+        $user->address = $request->input('address');
         $user->save();
 
-        return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
+        return back()->with('success', 'Profile updated successfully.');
     }
-  
 
     public function updatePassword(Request $request)
     {
-        $user = Auth::user();
-
         $request->validate([
-            'password' => 'required|min:6|confirmed',
+            'current_password' => 'required',
+            'password' => 'required|string|confirmed',
         ]);
 
-        $user->update([
-            'password' => Hash::make($request->password),
-        ]);
+        // Cek apakah current password sesuai dengan password user yang sedang login
+        if (!Hash::check($request->input('current_password'), Auth::user()->password)) {
+            return back()->withErrors(['current_password' => 'Current password is incorrect.']);
+        }
 
-        return redirect()->route('profile.index')->with('successMessage', 'Password updated successfully.');
+        // Update password user
+        $user = Auth::user();
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        return back()->with('success', 'Password updated successfully.');
     }
 
-}
+    // public function updateImage(Request $request)
+    // {
+    //     $request->validate([
+    //         'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
 
+    //     $user = Auth::user();
+
+    //     if ($request->hasFile('profile_picture')) {
+    //         // Menghapus foto profil lama jika ada
+    //         if ($user->profile_picture && Storage::exists('profile_pictures/' . $user->profile_picture)) {
+    //             Storage::delete('profile_pictures/' . $user->profile_picture);
+    //         }
+
+    //         // Menyimpan foto profil baru
+    //         $fileName = time() . '.' . $request->profile_picture->extension();
+    //         $request->profile_picture->storeAs('profile_pictures', $fileName);
+    //         $user->profile_picture = $fileName;
+    //     }
+
+    //     // Update field lainnya
+    //     // $user->field_lain = $request->input('field_lain');
+
+    //     $user->save();
+
+    //     return back()->with('success', 'Profile updated successfully.');
+    // }
+
+}
