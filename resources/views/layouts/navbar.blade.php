@@ -73,14 +73,8 @@
                   </span>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                <div class="user-header">
-                    <div class="user-text">
-                        <h8>{{ Auth::user()->name }}</h8>
-                        <p class="text-muted mb-0">{{ Auth::user()->role }}</p>
-                    </div>
-                </div>
-                <a class="dropdown-item" href="{{ URL::to('/profile') }}">My Profile</a>
-                {{-- <a class="dropdown-item" href="{{ route('logout') }}">Logout</a> --}}
+                <a class="dropdown-item" href="{{ URL::to('/profile') }}"><i class="fas fa-user"></i> My Profile</a>
+                <a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
           </li>
         </ul>

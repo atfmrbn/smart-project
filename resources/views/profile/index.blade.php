@@ -48,7 +48,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                {{-- <div class="profile-header">
+                <div class="profile-header">
                     <div class="row align-items-center">
                         <div class="col-auto profile-image">
                             @if ($user->image)
@@ -59,11 +59,11 @@
                         @endif
                         </div>
                         <div class="col-auto profile-btn">
-                            <a class="edit-link" data-bs-toggle="modal" href="#edit_profile_image"><i class="far fa-edit me-1"></i>Edit Photo</a>
+                            {{-- <a class="edit-link" data-bs-toggle="modal" href="#edit_profile_image"><i class="far fa-edit me-1"></i>Edit Photo</a> --}}
                         </div>
                     </div>
-                </div> --}}
-                <div class="profile-menu">
+                </div>
+                <div class="profile-menu" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <ul class="nav nav-tabs nav-tabs-solid">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#per_details_tab">About</a>
@@ -77,9 +77,9 @@
 
                     <div class="tab-pane fade show active" id="per_details_tab">
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-12">
                                 <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-body" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                                         <h5 class="card-title d-flex justify-content-between">
                                             <span>Personal Details</span>
                                             <a class="edit-link" data-bs-toggle="modal" href="#edit_personal_details"><i class="far fa-edit me-1"></i>Edit</a>
@@ -119,22 +119,22 @@
                     </div>
 
                     <div id="password_tab" class="tab-pane fade">
-                        <div class="card">
+                        <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                             <div class="card-body">
                                 <h5 class="card-title">Change Password</h5>
                                 <div class="row">
-                                    <div class="col-md-10 col-lg-6">
+                                    <div class="col-12">
                                         <form action="{{ URL::to('/profile/update-password') }}" method="POST">
                                             @csrf
-                                            <div class="mb-3">
+                                            <div class="col-12 mb-3">
                                                 <label for="current_password" class="form-label">Current Password</label>
                                                 <input type="password" class="form-control" id="current_password" name="current_password" required>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-12 mb-3">
                                                 <label for="password" class="form-label">New Password</label>
                                                 <input type="password" class="form-control" id="password" name="password" required>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="col-12 mb-3">
                                                 <label for="password_confirmation" class="form-label">Confirm New Password</label>
                                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                                             </div>
