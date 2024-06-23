@@ -58,6 +58,7 @@ use App\Http\Controllers\StudentTeacherClassroomRelationshipController;
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    Route::get('/profile', [ProfileController::class, 'index']);
     Route::post('/profile/update-profile', [ProfileController::class, 'updateProfile']);
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword']);
     // Route::post('/profile/update-image', [ProfileController::class, 'updateImage']);
