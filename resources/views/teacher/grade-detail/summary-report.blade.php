@@ -70,7 +70,7 @@
             <tr>
                 <th>NO</th>
                 <th>Subject</th>                
-                <th>Average</th>
+                <th>Average Class</th>
                 <th>Grade</th>
             </tr>
         </thead>
@@ -78,9 +78,9 @@
             @foreach ($gradeDetails as $index => $gradeDetail)
                 <tr>
                     <td>{{ $index+1 }}</td>
-                    <td>{{ $gradeDetail->subject_name }}</td>
-                    <td>{{ $gradeDetail->total_grade_value }}</td>
+                    <td style="text-align: left">{{ $gradeDetail->subject_name }}</td>
                     <td>{{ $gradeDetail->average_grade_value }}</td>                    
+                    <td>{{ $gradeDetail->total_grade_value }}</td>
                 </tr>
             @endforeach
         </tbody>
