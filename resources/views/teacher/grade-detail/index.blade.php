@@ -74,12 +74,21 @@
                     </select>
                 @endif
             </div>
-        </div>
+       </div>
+        <div class="row mb-3">
         @if (auth()->user()->role === 'Teacher' || auth()->user()->role === 'Student')
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <button type="submit" class="btn btn-primary">Filter</button>
             </div>
+
+            @if($student_id)
+            <div class="col-md-2">
+                <a href="{{ route('grade-detail.report-download', ['id' => $student_id]) }}" class="btn btn-outline-success"><i
+                                class="fas fa-download"></i> Report</a>
+            </div>
+            @endif
         @endif
+        </div>
     </form>
 
     <div class="table-responsive">

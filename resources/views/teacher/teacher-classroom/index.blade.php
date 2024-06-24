@@ -33,24 +33,26 @@
         </div>
     </div>
 
-    <form id="filterForm" method="GET" action="{{ route('teacher-classroom.index') }}">
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <select name="classroom" id="classroom" class="form-select">
-                    <option value="" {{ request('classroom') == '' ? 'selected' : '' }}>All Classes</option>
-                    @foreach ($classrooms as $classroom)
-                        <option value="{{ $classroom->id }}"
-                            {{ request('classroom') == $classroom->id ? 'selected' : '' }}>
-                            {{ $classroom->classroomType->name }} - {{ $classroom->name }}
-                        </option>
-                    @endforeach
-                </select>
+    @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
+        <form id="filterForm" method="GET" action="{{ route('teacher-classroom.index') }}">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <select name="classroom" id="classroom" class="form-select">
+                        <option value="" {{ request('classroom') == '' ? 'selected' : '' }}>All Classes</option>
+                        @foreach ($classrooms as $classroom)
+                            <option value="{{ $classroom->id }}"
+                                {{ request('classroom') == $classroom->id ? 'selected' : '' }}>
+                                {{ $classroom->classroomType->name }} - {{ $classroom->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    @endif
 
     <div class="table-responsive">
         <table id="example" class="table table-striped table-bordered" style="width:100%">

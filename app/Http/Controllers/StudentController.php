@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -13,11 +16,34 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = User::where('role', 'Student')->get();
+        $title = 'Students';
+        $students = User::select('users.*', 'c.name as classroom_name')
+            ->join('student_teacher_homeroom_relationships as sthr', 'users.id', '=', 'sthr.student_id')
+            ->join('teacher_homeroom_relationships as thr', 'sthr.teacher_homeroom_relationship_id', '=', 'thr.id')
+            ->join('classrooms as c', 'thr.classroom_id', '=', 'c.id')
+            ->where('role', 'Student')
+            ->where('thr.curriculum_id', $this->defaultCurriculum->id);
+        $user = Auth::user();
+        
+        // if ($user->role === 'Teacher'){
+        //     $students->where('thr.teacher_id',  $user->id);
+
+        //     $title =  $title  . " in Teacher Homeroom";
+        // } else if($user->role === 'Student'){
+        //     $classroom = Classroom::select('classrooms.*')
+        //     ->join('teacher_homeroom_relationships as thr', 'classrooms.id', '=', 'thr.classroom_id')
+        //     ->join('student_teacher_homeroom_relationships as sthr', 'thr.id', '=', 'sthr.teacher_homeroom_relationship_id')
+        //     ->join('users as u', 'u.id', '=', 'sthr.student_id')
+        //     ->where('u.id', $user->id)
+        //     ->where('thr.curriculum_id', $this->defaultCurriculum->id)
+        //     ->first();
+
+        //     $students->where('c.id',  $classroom->id);
+        // }
 
         $data = [
-            'title' => 'Students',
-            'students' => $students,
+            'title' =>  $title ,
+            'students' => $students->orderBy('c.name')->orderBy('users.name')->get(),
         ];
 
         // if($students->isEmpty()) {

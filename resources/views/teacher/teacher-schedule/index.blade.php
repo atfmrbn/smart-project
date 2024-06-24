@@ -32,31 +32,32 @@
             </div>
         </div>
     </div>
-
-    <form id="filterForm" method="GET" action="{{ route('teacher-schedule.index') }}">
-        <div class="row mb-3">
-            <div class="col-md-5">
-                <select name="teacher_classroom_relationship_id" id="teacher_classroom_relationship_id"
-                    class="form-control data-select-2">
-                    <option value="" {{ request('teacher_classroom_relationship_id') == '' ? 'selected' : '' }}>All
-                        Classes</option>
-                    @foreach ($teacherClassroomRelationships as $teacherClassroomRelationship)
-                        <option value="{{ $teacherClassroomRelationship->id }}"
-                            {{ request('teacher_classroom_relationship_id') == $teacherClassroomRelationship->id ? 'selected' : '' }}>
-                            {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }}
-                            -
-                            {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }} -
-                            {{ $teacherClassroomRelationship->teacherSubjectRelationship->teacher->name }} -
-                            {{ $teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
-                        </option>
-                    @endforeach
-                </select>
+    @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
+        <form id="filterForm" method="GET" action="{{ route('teacher-schedule.index') }}">
+            <div class="row mb-3">
+                <div class="col-md-5">
+                    <select name="teacher_classroom_relationship_id" id="teacher_classroom_relationship_id"
+                        class="form-control data-select-2">
+                        <option value="" {{ request('teacher_classroom_relationship_id') == '' ? 'selected' : '' }}>All
+                            Classes</option>
+                        @foreach ($teacherClassroomRelationships as $teacherClassroomRelationship)
+                            <option value="{{ $teacherClassroomRelationship->id }}"
+                                {{ request('teacher_classroom_relationship_id') == $teacherClassroomRelationship->id ? 'selected' : '' }}>
+                                {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->classroomType->name }}
+                                -
+                                {{ $teacherClassroomRelationship->teacherHomeroomRelationship->classroom->name }} -
+                                {{ $teacherClassroomRelationship->teacherSubjectRelationship->teacher->name }} -
+                                {{ $teacherClassroomRelationship->teacherSubjectRelationship->subject->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    @endif
 
     <table class="table table-striped table-responsive" id="example">
         <thead class="teacher-schedule-thread">

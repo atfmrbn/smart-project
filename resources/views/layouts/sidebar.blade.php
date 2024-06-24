@@ -64,7 +64,7 @@
                         <a href="#"><i class="fas fa-graduation-cap"></i> <span> Students</span> <span
                                 class="menu-arrow"></span></a>
                         <ul>
-                            @if (in_array(auth()->user()->role, ['Super Admin', 'Admin', 'Student', 'Teacher', 'Parent']))
+                            @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
                                 <li><a href="{{ URL::to('/student/student-list') }}"
                                         class="{{ request()->is('student/student-list') ? 'active' : '' }}">Student
                                         List</a></li>

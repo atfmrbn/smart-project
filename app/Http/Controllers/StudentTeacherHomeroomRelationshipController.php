@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\TeacherHomeroomRelationship;
 use App\Models\StudentTeacherHomeroomRelationship;
+use Illuminate\Support\Facades\Auth;
 
 class StudentTeacherHomeroomRelationshipController extends Controller
 {
@@ -27,6 +28,13 @@ class StudentTeacherHomeroomRelationshipController extends Controller
                 'classrooms.name as classroom_name',
             ]);
 
+        $user = Auth::user();
+        
+        if ($user->role === 'Teacher'){
+            $query->where('thr.teacher_id',  $user->id);
+        }elseif ($user->role === 'Student'){
+            $query->where('classrooms');
+        }
         // Filter berdasarkan classroom
         if ($classroom_id) {
             $query->where('classrooms.id', $classroom_id);

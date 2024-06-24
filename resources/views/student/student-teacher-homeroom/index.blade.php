@@ -46,7 +46,7 @@
             @endif
         </div>
     </div>
-
+    @if (in_array(auth()->user()->role, ['Super Admin', 'Admin']))
     <form id="filterForm" method="GET" action="{{ route('student-teacher-homeroom.index') }}" class="mb-4">
         <div class="row mb-3">
             <div class="col-md-3">
@@ -64,7 +64,7 @@
             </div>
         </div>
     </form>
-
+    @endif
     <div class="table-responsive">
         <table id="example" class="table table-bordered table-striped">
             <thead>

@@ -59,7 +59,7 @@
                     <th>Gender</th>
                     <th>Date of Birth</th>
                     <th>Phone</th>
-                    {{-- <th>NIK</th> --}}
+                    <th>Class</th>
                     {{-- <th>Address</th> --}}
                     <th>Action</th>
                 </tr>
@@ -75,7 +75,7 @@
                         <td>{{ $student->gender }}</td>
                         <td>{{ $student->born_date }}</td>
                         <td>{{ $student->phone }}</td>
-                        {{-- <td>{{ $student->nik }}</td> --}}
+                        <td>{{ $student->classroom_name }}</td>
                         {{-- <td>{{ $student->address }}</td> --}}
                         <td class="align-middle text-center">
                             <div class="d-flex justify-content-center align-items-center">

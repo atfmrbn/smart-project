@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Configuration;
 use App\Models\GradeDetail;
 use App\Models\Grade;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\PDF;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class GradeDetailController extends Controller
@@ -85,6 +87,7 @@ class GradeDetailController extends Controller
             'grades' => $grades,
             'students' => $students,
             'userRole' => $user->role,
+            'student_id' => $request->input('student_id')
         ];
 
         return view('teacher.grade-detail.index', $data);
@@ -225,5 +228,26 @@ class GradeDetailController extends Controller
         $pdf->setPaper('a4', 'landscape');
 
         return $pdf->download('grade-details.pdf');
+    }
+
+    public function reportDownload($id)
+    {
+        $student = User::where('role', 'student')->find($id);
+
+        $gradeDetails = GradeDetail::getGradeDetail($this->defaultCurriculum->id, $id); 
+        
+
+        $data = [
+            'title' => 'Summary Report ' . $this->defaultCurriculum->name,
+            'gradeDetails' => $gradeDetails,
+            'configuration' => Configuration::first(),
+            'student' => $student,
+            'date' => Carbon::now(),     
+        ];
+
+        $pdf = PDF::loadView('teacher.grade-detail.summary-report', $data);
+        // $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->download('grade-details-'. $student->id .'.pdf');
     }
 }
